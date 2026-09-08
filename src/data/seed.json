@@ -1,0 +1,554 @@
+[
+  {
+    "id": "warfarin",
+    "genericName": "Warfarin",
+    "brandNamesIran": ["Warfarin Orion", "Coumadin", "Warfarin Arya"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL", "DRUG_INTERACTION"],
+    "recommendation": "Avoid starting warfarin as initial therapy for venous thromboembolism (VTE) or nonvalvular atrial fibrillation unless DOACs are contraindicated or cost/formulary barriers exist. Long-term users with stable INR (>70% time in therapeutic range) and no adverse effects may reasonably continue.",
+    "rationale": "Higher risk of major bleeding, especially intracranial hemorrhage, and equal or lower effectiveness compared with direct oral anticoagulants (DOACs).",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": ["Apixaban (preferred DOAC)", "Dabigatran"],
+    "drugDrugInteractions": [
+      {
+        "id": "warfarin-ddi-0",
+        "targetDrugOrClass": "SSRIs (e.g., Sertraline, Fluoxetine, Citalopram)",
+        "severity": "Avoid",
+        "rationale": "Increased bleeding risk due to platelet aggregation inhibition.",
+        "clinicalAction": "Avoid combination or monitor closely for bleeding."
+      },
+      {
+        "id": "warfarin-ddi-1",
+        "targetDrugOrClass": "Ciprofloxacin",
+        "severity": "Avoid",
+        "rationale": "Significant increase in INR and major hemorrhage.",
+        "clinicalAction": "Use alternative antibiotic or reduce warfarin dose and check INR."
+      },
+      {
+        "id": "warfarin-ddi-2",
+        "targetDrugOrClass": "Amiodarone",
+        "severity": "Avoid",
+        "rationale": "Potent CYP2C9 inhibition doubling warfarin levels.",
+        "clinicalAction": "Empirically decrease warfarin dose by 30-50%."
+      },
+      {
+        "id": "warfarin-ddi-3",
+        "targetDrugOrClass": "Oral NSAIDs",
+        "severity": "Avoid",
+        "rationale": "Severe gastrointestinal bleeding and ulceration.",
+        "clinicalAction": "Avoid concurrent use."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "rivaroxaban",
+    "genericName": "Rivaroxaban",
+    "brandNamesIran": ["Xarelto", "Rivaroxaban Abidi", "Zirabax", "Rivanex"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL", "RENAL_ADJUSTMENT"],
+    "recommendation": "Avoid rivaroxaban for long-term treatment of nonvalvular atrial fibrillation or VTE in favor of safer anticoagulant alternatives such as apixaban.",
+    "rationale": "Higher risk of major bleeding and gastrointestinal bleeding in older adults compared with other DOACs (especially apixaban). Acceptable only in special scenarios such as when once-daily dosing is mandatory for adherence.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": [
+      "Apixaban (5 mg or 2.5 mg twice daily based on age/weight/creatinine)"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "rivaroxaban-ddi-0",
+        "targetDrugOrClass": "Oral NSAIDs",
+        "severity": "Avoid",
+        "rationale": "Compounded bleeding risk.",
+        "clinicalAction": "Avoid co-administration."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 15 mL/min",
+      "action": "Avoid",
+      "guidance": "Avoid if CrCl < 15 mL/min. For CrCl 15-50 mL/min, reduce dose per indication (e.g., 15 mg once daily for AF).",
+      "rationale": "Higher risk of major bleeding and gastrointestinal bleeding in older adults compared with other DOACs (especially apixaban). Acceptable only in special scenarios such as when once-daily dosing is mandatory for adherence."
+    }
+  },
+  {
+    "id": "aspirin-primary-prevention",
+    "genericName": "Aspirin (Primary Prevention)",
+    "brandNamesIran": ["Aspirin", "ASA", "Aspirin Chemi Darou", "Plasafe"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "Avoid initiating aspirin for primary prevention of cardiovascular disease in older adults. For older adults already taking aspirin for primary prevention, consider deprescribing. Note: This recommendation does NOT apply to secondary prevention in patients with established CVD.",
+    "rationale": "Lack of net cardiovascular benefit combined with a markedly increased risk of major bleeding (particularly intracranial and gastrointestinal hemorrhage).",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": [
+      "Non-pharmacologic lifestyle interventions",
+      "Optimized blood pressure control",
+      "Statin therapy for dyslipidemia"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "aspirin-primary-prevention-ddi-0",
+        "targetDrugOrClass": "Anticoagulants (Warfarin, DOACs, Heparin)",
+        "severity": "Avoid",
+        "rationale": "Marked increase in gastrointestinal and systemic bleeding.",
+        "clinicalAction": "Do not combine for primary prevention."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "nitrofurantoin",
+    "genericName": "Nitrofurantoin",
+    "brandNamesIran": ["Nitrofurantoin Iran Hormone", "Urofurin"],
+    "therapeuticCategory": "Anti-infective",
+    "beersCategories": ["PIM_GENERAL", "RENAL_ADJUSTMENT"],
+    "recommendation": "Avoid in individuals with creatinine clearance (CrCl) < 30 mL/min or for long-term suppression of urinary tract infections.",
+    "rationale": "Potential for severe pulmonary toxicity (fibrosis), hepatotoxicity, and peripheral neuropathy, especially with long-term exposure; ineffective in renal impairment due to inadequate urinary drug concentration.",
+    "qualityOfEvidence": "Low",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": [
+      "Fosfomycin trometamol (single dose)",
+      "Cefixime or Cephalexin (if organism susceptible)",
+      "Ciprofloxacin (short course, if renal function allows)"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "Avoid if CrCl < 30 mL/min or for chronic bacterial suppression.",
+      "rationale": "Potential for severe pulmonary toxicity (fibrosis), hepatotoxicity, and peripheral neuropathy, especially with long-term exposure; ineffective in renal impairment due to inadequate urinary drug concentration."
+    }
+  },
+  {
+    "id": "alprazolam",
+    "genericName": "Alprazolam",
+    "brandNamesIran": [
+      "Xanax",
+      "Alprazolam Sobhan",
+      "Alprazolam Arya",
+      "Zolam"
+    ],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "DRUG_INTERACTION"],
+    "recommendation": "Avoid. Benzodiazepines should be avoided for insomnia, agitation, or delirium. Appropriate only for seizure disorders, rapid eye movement sleep behavior disorder, severe ethanol or benzodiazepine withdrawal, or periprocedural anesthesia.",
+    "rationale": "Older adults have increased sensitivity and decreased clearance. Markedly increases risk of cognitive impairment, delirium, falls, hip fractures, and motor vehicle crashes.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "saferAlternatives": [
+      "Cognitive Behavioral Therapy for Insomnia (CBT-I)",
+      "Melatonin (1-3 mg)",
+      "Buspirone (for chronic anxiety)"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "alprazolam-ddi-0",
+        "targetDrugOrClass": "Opioids (Tramadol, Methadone, Morphine, Codeine)",
+        "severity": "Avoid",
+        "rationale": "High risk of profound sedation, respiratory depression, coma, and fatal overdose.",
+        "clinicalAction": "Avoid combination strictly."
+      },
+      {
+        "id": "alprazolam-ddi-1",
+        "targetDrugOrClass": "Any combination of \u22653 CNS-active agents",
+        "severity": "Avoid",
+        "rationale": "Synergistic impairment of motor control and severe fall/fracture hazard.",
+        "clinicalAction": "Taper and eliminate unnecessary psychotropic medications."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "May precipitate or worsen acute delirium."
+      },
+      {
+        "condition": "Dementia / Cognitive Impairment",
+        "recommendation": "Avoid",
+        "rationale": "Accelerates cognitive decline and increases sedation."
+      },
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "Causes ataxia and impaired psychomotor coordination."
+      }
+    ],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "amitriptyline",
+    "genericName": "Amitriptyline",
+    "brandNamesIran": ["Amitriptyline Chemi Darou", "Tryptizol"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "DRUG_INTERACTION"],
+    "recommendation": "Avoid. Strong anticholinergic antidepressant.",
+    "rationale": "Highly anticholinergic, highly sedating, and causes severe orthostatic hypotension. Cumulative anticholinergic exposure is tied to increased dementia, delirium, and falls.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": true,
+    "saferAlternatives": [
+      "Sertraline",
+      "Escitalopram",
+      "Duloxetine (for neuropathic pain)",
+      "Gabapentin (with renal dose adjustment for neuropathic pain)"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "amitriptyline-ddi-0",
+        "targetDrugOrClass": "Anticholinergic agents (Table 7)",
+        "severity": "Avoid",
+        "rationale": "Cumulative anticholinergic toxicity, urinary retention, severe constipation, confusion.",
+        "clinicalAction": "Minimize concurrent anticholinergics."
+      },
+      {
+        "id": "amitriptyline-ddi-1",
+        "targetDrugOrClass": "\u22653 CNS-active drugs",
+        "severity": "Avoid",
+        "rationale": "Ataxia, sedation, and severe falls.",
+        "clinicalAction": "Avoid co-administration."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Syncope",
+        "recommendation": "Avoid",
+        "rationale": "Orthostatic hypotension and conduction disturbances."
+      },
+      {
+        "condition": "Dementia",
+        "recommendation": "Avoid",
+        "rationale": "Worsens cognitive dysfunction via central muscarinic blockade."
+      },
+      {
+        "condition": "Benign Prostatic Hyperplasia (BPH) / LUTS",
+        "recommendation": "Avoid",
+        "rationale": "Reduces bladder detrusor contractility causing acute urinary retention."
+      }
+    ],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "glibenclamide-glyburide",
+    "genericName": "Glibenclamide (Glyburide)",
+    "brandNamesIran": ["Daonil", "Glibenclamide Sobhan", "Glibenclamide Hakim"],
+    "therapeuticCategory": "Endocrine",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "Avoid all sulfonylureas as first- or second-line therapy in older adults. If a sulfonylurea must be used, short-acting agents like glipizide or gliclazide are preferred over long-acting agents like glibenclamide.",
+    "rationale": "Higher risk of severe, prolonged hypoglycemia, cardiovascular events, and all-cause mortality compared with modern antidiabetic agents.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": [
+      "Metformin (if eGFR > 30 mL/min)",
+      "DPP-4 inhibitors (e.g., Linagliptin, Sitagliptin)",
+      "SGLT2 inhibitors (with monitoring)"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "omeprazole",
+    "genericName": "Omeprazole",
+    "brandNamesIran": [
+      "Losec",
+      "Omeprazole Chemi Darou",
+      "Omehexal",
+      "Prazole"
+    ],
+    "therapeuticCategory": "Gastrointestinal",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "Avoid scheduled use for greater than 8 weeks unless for documented high-risk indications (e.g., concurrent chronic oral corticosteroids or chronic NSAID use, erosive esophagitis, Barrett's esophagus, or severe hypersecretory conditions).",
+    "rationale": "Associated with increased risk of Clostridioides difficile colitis, community-acquired pneumonia, osteoporotic bone loss, hip fractures, and hypomagnesemia.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": [
+      "Trial of deprescribing / step-down to as-needed (PRN) use",
+      "H2-receptor antagonists (Famotidine) at appropriate renal dose",
+      "Dietary and lifestyle adjustments"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "indomethacin",
+    "genericName": "Indomethacin",
+    "brandNamesIran": [
+      "Indocid",
+      "Indomethacin Arya",
+      "Indomethacin Pars Darou"
+    ],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "RENAL_ADJUSTMENT"],
+    "recommendation": "Avoid. Has the worst adverse effect profile of all NSAIDs.",
+    "rationale": "Higher risk of severe gastrointestinal bleeding, acute kidney injury, fluid retention, cardiovascular events, and prominent central nervous system toxicities (confusion, headache).",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": [
+      "Acetaminophen (Paracetamol) up to 2-3 g/day",
+      "Topical NSAIDs (Diclofenac gel)",
+      "Physical therapy and non-pharmacologic pain interventions"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Heart Failure",
+        "recommendation": "Avoid",
+        "rationale": "Promotes sodium/fluid retention and precipitates decompensation."
+      },
+      {
+        "condition": "Peptic Ulcer Disease",
+        "recommendation": "Avoid",
+        "rationale": "Exacerbates ulceration and causes life-threatening perforation."
+      }
+    ],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "Avoid completely in moderate to severe kidney disease.",
+      "rationale": "Higher risk of severe gastrointestinal bleeding, acute kidney injury, fluid retention, cardiovascular events, and prominent central nervous system toxicities (confusion, headache)."
+    }
+  },
+  {
+    "id": "baclofen",
+    "genericName": "Baclofen",
+    "brandNamesIran": ["Lioresal", "Baclofen Sobhan", "Baclofen Chemi Darou"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["RENAL_ADJUSTMENT"],
+    "recommendation": "Avoid in older adults with estimated glomerular filtration rate (eGFR) < 60 mL/min. If unavoidable, use lowest effective dose and monitor mental status.",
+    "rationale": "Substantially increased risk of acute encephalopathy, delirium, confusion, and hospitalization in patients with impaired renal function.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "saferAlternatives": [
+      "Physical rehabilitation",
+      "Topical analgesics",
+      "Carefully titrated Tizanidine (with monitoring)"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care.",
+    "renalConsiderations": {
+      "threshold": "eGFR < 60 mL/min",
+      "action": "Avoid",
+      "guidance": "Avoid in renal impairment. Cleared renally; accumulation induces severe neurotoxicity.",
+      "rationale": "Substantially increased risk of acute encephalopathy, delirium, confusion, and hospitalization in patients with impaired renal function."
+    }
+  },
+  {
+    "id": "doxazosin",
+    "genericName": "Doxazosin",
+    "brandNamesIran": ["Cardura", "Doxazosin Arya", "Doxazosin Hakim"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "DRUG_INTERACTION"],
+    "recommendation": "Avoid use as an antihypertensive medication. For BPH, safer uroselective agents or alternative classes are available.",
+    "rationale": "Non-selective peripheral alpha-1 blockade causes severe orthostatic hypotension, syncope, and fall-related fractures.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": [
+      "Standard first-line antihypertensives (ACE inhibitors, ARBs, DHP-CCBs like Amlodipine)",
+      "Uroselective alpha-blockers (Tamsulosin) for BPH"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "doxazosin-ddi-0",
+        "targetDrugOrClass": "Loop Diuretics (Furosemide)",
+        "severity": "Avoid",
+        "rationale": "Marked increase in urinary incontinence in older women.",
+        "clinicalAction": "Avoid combination in older women."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Syncope",
+        "recommendation": "Avoid",
+        "rationale": "Precipitates orthostatic fainting."
+      },
+      {
+        "condition": "Urinary Incontinence in Women",
+        "recommendation": "Avoid",
+        "rationale": "Aggravates or causes stress incontinence."
+      }
+    ],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "dapagliflozin",
+    "genericName": "Dapagliflozin",
+    "brandNamesIran": ["Forxiga", "Gliflozin", "Dapagliflozin Abidi"],
+    "therapeuticCategory": "Endocrine",
+    "beersCategories": ["USE_WITH_CAUTION"],
+    "recommendation": "Use with caution. Monitor closely for mycotic urogenital infections and euglycemic diabetic ketoacidosis (euDKA).",
+    "rationale": "Older adults, especially women in the first month of initiation, have increased risk of fungal genital infections and atypical ketoacidosis with normal glucose.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Weak",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": [
+      "DPP-4 inhibitors",
+      "GLP-1 receptor agonists (if tolerated)"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "tramadol",
+    "genericName": "Tramadol",
+    "brandNamesIran": ["Tramadol Chemi Darou", "Tramadol Arya", "Biotramadol"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": [
+      "USE_WITH_CAUTION",
+      "RENAL_ADJUSTMENT",
+      "DRUG_INTERACTION"
+    ],
+    "recommendation": "Use with caution. Avoid extended-release forms if CrCl < 30 mL/min. Avoid combining with other serotonergic agents or sedatives.",
+    "rationale": "Can precipitate Syndrome of Inappropriate Antidiuretic Hormone secretion (SIADH) and severe hyponatremia. Lowers seizure threshold and causes neurotoxicity in kidney failure.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "saferAlternatives": [
+      "Acetaminophen",
+      "Topical Lidocaine patches",
+      "Carefully managed Buprenorphine transdermal"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "tramadol-ddi-0",
+        "targetDrugOrClass": "Benzodiazepines or Opioids",
+        "severity": "Avoid",
+        "rationale": "Severe central respiratory depression and death.",
+        "clinicalAction": "Avoid co-administration."
+      },
+      {
+        "id": "tramadol-ddi-1",
+        "targetDrugOrClass": "SSRIs / SNRIs",
+        "severity": "Use with caution",
+        "rationale": "Risk of Serotonin Syndrome and SIADH.",
+        "clinicalAction": "Monitor electrolytes and neuro symptoms."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Dose Reduction",
+      "guidance": "Avoid extended-release; reduce immediate-release maximum dose to 50 mg every 12 hours.",
+      "rationale": "Can precipitate Syndrome of Inappropriate Antidiuretic Hormone secretion (SIADH) and severe hyponatremia. Lowers seizure threshold and causes neurotoxicity in kidney failure."
+    }
+  },
+  {
+    "id": "metoclopramide",
+    "genericName": "Metoclopramide",
+    "brandNamesIran": [
+      "Plasil",
+      "Metoclopramide Sobhan",
+      "Metoclopramide Chemi Darou"
+    ],
+    "therapeuticCategory": "Gastrointestinal",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "Avoid, unless indicated for confirmed diabetic gastroparesis with treatment duration strictly limited to under 12 weeks.",
+    "rationale": "Potent central dopamine antagonism causes severe extrapyramidal symptoms, including tardive dyskinesia, akathisia, and Parkinsonism. The risk is elevated in frail older adults.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "saferAlternatives": [
+      "Domperidone (with cardiac QTc monitoring)",
+      "Ondansetron (for nausea)",
+      "Dietary modifications for gastroparesis"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Parkinson Disease",
+        "recommendation": "Avoid",
+        "rationale": "Blocks striatal dopamine D2 receptors, severely worsening motor symptoms."
+      }
+    ],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "diphenhydramine-oral",
+    "genericName": "Diphenhydramine (Oral)",
+    "brandNamesIran": [
+      "Diphenhydramine Chemi Darou",
+      "Benadryl",
+      "Diphenhydramine Arya"
+    ],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "Avoid oral use as a hypnotic or for mild allergies. Acceptable only in acute emergency management of severe allergic reactions/anaphylaxis.",
+    "rationale": "Potent first-generation anticholinergic and antihistaminic. Clearance decreases with age. Causes acute confusion, sedation, dry mouth, urinary retention, and significant risk of falls.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": true,
+    "saferAlternatives": [
+      "Second-generation non-sedating antihistamines (Cetirizine, Loratadine, Fexofenadine)",
+      "Non-pharmacologic sleep hygiene"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "Anticholinergic toxicity triggers and worsens acute delirium."
+      },
+      {
+        "condition": "Dementia",
+        "recommendation": "Avoid",
+        "rationale": "Antagonizes central acetylcholine, exacerbating cognitive deficits."
+      },
+      {
+        "condition": "BPH / LUTS in men",
+        "recommendation": "Avoid",
+        "rationale": "Precipitates acute urinary retention."
+      }
+    ],
+    "lastUpdated": "2026-09-08",
+    "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  }
+]
