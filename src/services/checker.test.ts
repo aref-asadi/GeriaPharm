@@ -13,6 +13,7 @@ const custom = (name: string, classes: string[] = []): DrugRecord => ({
   ...drug("baclofen"),
   id: name,
   genericName: name,
+  genericNameFa: name,
   drugClasses: classes,
   beersCategories: [],
   renalConsiderations: undefined,

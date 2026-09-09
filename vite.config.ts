@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
+  server: { proxy: { "/api": "http://127.0.0.1:3001" } },
   plugins: [
     react(),
     tailwindcss(),
@@ -10,11 +11,13 @@ export default defineConfig({
       registerType: "prompt",
       includeAssets: ["icon.svg", "icon-192.png", "icon-512.png"],
       manifest: {
-        name: "GeriaPharm",
-        short_name: "GeriaPharm",
-        description: "Geriatric medication reference",
-        theme_color: "#0F2942",
-        background_color: "#F8FAFC",
+        name: "جریافارم | مرجع دارودرمانی سالمندان",
+        short_name: "جریافارم",
+        lang: "fa",
+        dir: "rtl",
+        description: "مرجع فارسی داروهای سالمندان و بررسی نسخه",
+        theme_color: "#123e48",
+        background_color: "#f5f8f9",
         display: "standalone",
         start_url: "/",
         icons: [
@@ -30,6 +33,8 @@ export default defineConfig({
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         navigateFallback: "index.html",
+        navigateFallbackDenylist: [/^\/api\//],
+        runtimeCaching: [{ urlPattern: /\/api\//, handler: "NetworkOnly" }],
       },
     }),
   ],

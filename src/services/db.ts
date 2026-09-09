@@ -34,7 +34,7 @@ export async function replaceRegistry(rows: DrugRecord[]) {
     await db.table("state").put({ key: "registry", value: valid });
   } catch (error) {
     throw new Error(
-      "Could not save the registry. Export your work and check available device storage.",
+      "ذخیره آفلاین انجام نشد. فضای ذخیره‌سازی مرورگر را بررسی کنید.",
       { cause: error },
     );
   }
@@ -61,9 +61,16 @@ export async function exportDatabaseToJson() {
   );
 }
 export function parseImport(json: string) {
-  const parsed = JSON.parse(json);
+  let parsed;
+  try {
+    parsed = JSON.parse(json);
+  } catch {
+    throw new Error("فایل JSON معتبر نیست.");
+  }
+  if (parsed === null || typeof parsed !== "object")
+    throw new Error("ساختار فایل پشتیبان معتبر نیست.");
   if (!Array.isArray(parsed) && parsed.schemaVersion !== 1)
-    throw new Error("Unsupported backup version");
+    throw new Error("نسخه فایل پشتیبان پشتیبانی نمی‌شود.");
   return registrySchema.parse(
     Array.isArray(parsed) ? parsed : parsed.medications,
   );

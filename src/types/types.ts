@@ -7,10 +7,15 @@ export const categories = [
   "RENAL_ADJUSTMENT",
 ] as const;
 export type BeersCategory = (typeof categories)[number];
-const text = z.string().trim().min(1);
+const text = z.string().trim().min(1, "این فیلد الزامی است").max(10000);
 export const drugSchema = z.object({
-  id: text,
+  id: z
+    .string()
+    .min(1)
+    .max(150)
+    .regex(/^[a-zA-Z0-9_-]+$/, "شناسه نامعتبر است"),
   genericName: text,
+  genericNameFa: z.string().trim().max(200).optional(),
   brandNamesIran: z.array(text),
   therapeuticCategory: text,
   beersCategories: z.array(z.enum(categories)),
@@ -55,5 +60,8 @@ export const registrySchema = z
   .max(10000)
   .superRefine((rows, ctx) => {
     if (new Set(rows.map((r) => r.id)).size !== rows.length)
-      ctx.addIssue({ code: "custom", message: "Duplicate medication IDs" });
+      ctx.addIssue({
+        code: "custom",
+        message: "شناسه داروها نباید تکراری باشد",
+      });
   });

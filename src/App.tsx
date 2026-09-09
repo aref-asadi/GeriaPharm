@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { Choice } from "./components/ui/Choice";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
   Activity,
-  ArrowRight,
+  ArrowLeft,
   Bookmark,
   BookOpen,
   Check,
-  ChevronRight,
+  ChevronLeft,
   Database,
   FlaskConical,
   HeartPulse,
@@ -13,95 +14,59 @@ import {
   Layers,
   Pill,
   Plus,
+  RefreshCw,
   Search,
   Settings2,
   ShieldCheck,
   ShieldAlert,
-  SlidersHorizontal,
   Stethoscope,
-  Wifi,
   WifiOff,
+  Menu,
   X,
 } from "lucide-react";
-import { getAllMedications, storageMode } from "./services/db";
+import { getAllMedications } from "./services/db";
+import {
+  syncRegistry,
+  cacheRegistry,
+  getSession,
+  logout,
+  type Registry,
+  type Session,
+} from "./services/api";
 import type { DrugRecord } from "./types/types";
 import { Modal } from "./components/Modal";
-const tables = [
-  {
-    id: "PIM_GENERAL",
-    title: "Potentially inappropriate medications",
-    short: "General avoid",
-    desc: "Medications to avoid in most older adults",
-    icon: ShieldAlert,
-    color: "orange",
-  },
-  {
-    id: "DRUG_DISEASE",
-    title: "Drug–disease interactions",
-    short: "Disease interactions",
-    desc: "Risks specific to a disease or syndrome",
-    icon: HeartPulse,
-    color: "purple",
-  },
-  {
-    id: "USE_WITH_CAUTION",
-    title: "Use with caution",
-    short: "Use with caution",
-    desc: "Medications that need closer monitoring",
-    icon: Activity,
-    color: "amber",
-  },
-  {
-    id: "DRUG_INTERACTION",
-    title: "Drug–drug interactions",
-    short: "Drug interactions",
-    desc: "Potentially harmful medication combinations",
-    icon: Layers,
-    color: "blue",
-  },
-  {
-    id: "RENAL_ADJUSTMENT",
-    title: "Reduced kidney function",
-    short: "Renal alerts",
-    desc: "Avoidance and dose adjustment considerations",
-    icon: FlaskConical,
-    color: "teal",
-  },
-  {
-    id: "ANTICHOLINERGIC",
-    title: "Strong anticholinergics",
-    short: "Anticholinergics",
-    desc: "Medications with anticholinergic properties",
-    icon: Stethoscope,
-    color: "rose",
-  },
+import { Checker } from "./components/Checker";
+import { Login } from "./components/Login";
+import {
+  Button,
+  IconButton,
+  SearchField,
+  MedicationCard,
+  EmptyState,
+  Notice,
+  RiskBadge,
+  risk,
+} from "./components/ui/Primitives";
+import { tables, fa, number, date, drugName, matchesSearch } from "./lib/fa";
+import { useRegisterSW } from "virtual:pwa-register/react";
+const Admin = lazy(() =>
+  import("./components/Admin").then((m) => ({ default: m.Admin })),
+);
+const icons = [
+  ShieldAlert,
+  HeartPulse,
+  Activity,
+  Layers,
+  FlaskConical,
+  Stethoscope,
 ];
-const therapeutic = [
-  "All specialties",
-  "Cardiovascular & Antithrombotics",
-  "Central Nervous System",
-  "Pain Medications",
-  "Gastrointestinal",
-  "Anti-infective",
-  "Endocrine",
+const nav = [
+  { id: "home", label: "خانه", icon: Home },
+  { id: "library", label: "مرجع داروها", icon: Search },
+  { id: "regimen", label: "بررسی نسخه", icon: ShieldCheck },
+  { id: "bookmarks", label: "نشانک‌ها", icon: Bookmark },
+  { id: "admin", label: "مدیریت", icon: Settings2 },
 ];
-export const risk = (d: DrugRecord) =>
-  d.beersCategories.includes("PIM_GENERAL")
-    ? "avoid"
-    : d.beersCategories.includes("USE_WITH_CAUTION")
-      ? "caution"
-      : "renal";
-export function Badge({ drug }: { drug: DrugRecord }) {
-  return (
-    <span className={"badge " + risk(drug)}>
-      {risk(drug) === "avoid"
-        ? "Avoid / conditional"
-        : risk(drug) === "caution"
-          ? "Use with caution"
-          : "Renal alert"}
-    </span>
-  );
-}
 function initialList(key: string) {
   try {
     const value: unknown = JSON.parse(localStorage.getItem(key) || "[]");
@@ -112,59 +77,151 @@ function initialList(key: string) {
     return [];
   }
 }
+function currentPage() {
+  const page = location.hash.slice(1);
+  return nav.some((n) => n.id === page) ? page : "home";
+}
 export default function App() {
   const [drugs, setDrugs] = useState<DrugRecord[]>([]),
-    [view, setView] = useState("Home"),
+    [page, setPage] = useState(currentPage),
     [query, setQuery] = useState(""),
     [table, setTable] = useState("All"),
-    [specialty, setSpecialty] = useState("All specialties"),
+    [specialty, setSpecialty] = useState("All"),
     [detail, setDetail] = useState<DrugRecord | null>(null),
-    [bookmarks, setBookmarks] = useState<string[]>(() =>
-      initialList("gp-bookmarks"),
-    ),
-    [regimen, setRegimen] = useState<string[]>(() => initialList("gp-regimen")),
+    [bookmarks, setBookmarks] = useState(() => initialList("gp-bookmarks")),
+    [regimen, setRegimen] = useState(() => initialList("gp-regimen")),
     [error, setError] = useState(""),
     [loaded, setLoaded] = useState(false),
     [online, setOnline] = useState(navigator.onLine),
-    [cached, setCached] = useState(false),
-    [toast, setToast] = useState("");
-  async function reload() {
-    try {
-      setDrugs(await getAllMedications());
-      setLoaded(true);
-    } catch {
-      setError(
-        "The saved registry could not be read. Your stored data has not been overwritten. Check browser storage and reload.",
+    [synced, setSynced] = useState(false),
+    [syncing, setSyncing] = useState(false),
+    [toast, setToast] = useState(""),
+    [session, setSession] = useState<Session>({ user: null }),
+    [authLoading, setAuthLoading] = useState(true),
+    [lastSync, setLastSync] = useState(""),
+    [mobileOpen, setMobileOpen] = useState(false);
+  const heading = useRef<HTMLHeadingElement>(null);
+  const {
+    offlineReady: [offlineReady],
+    needRefresh: [needRefresh, setNeedRefresh],
+    updateServiceWorker,
+  } = useRegisterSW();
+  async function acceptRegistry(r: Registry) {
+    setDrugs(r.medications);
+    setLoaded(true);
+    setSynced(true);
+    setLastSync(r.updatedAt);
+    if (!(await cacheRegistry(r.medications)))
+      setToast(
+        "داده سرور دریافت شد، اما ذخیره آفلاین ممکن نبود. فضای مرورگر را بررسی کنید.",
       );
+  }
+  async function refresh() {
+    setSyncing(true);
+    try {
+      await acceptRegistry(await syncRegistry());
+      setError("");
+    } catch {
+      setSynced(false);
+      setToast("سرور در دسترس نیست؛ نسخه ذخیره‌شده نمایش داده می‌شود.");
+    } finally {
+      setSyncing(false);
     }
   }
   useEffect(() => {
-    void reload();
-    const on = () => setOnline(navigator.onLine);
-    window.addEventListener("online", on);
-    window.addEventListener("offline", on);
-    if ("serviceWorker" in navigator)
-      navigator.serviceWorker.ready.then(() => setCached(true));
+    let mounted = true;
+    void (async () => {
+      try {
+        const rows = await getAllMedications();
+        if (mounted) {
+          setDrugs(rows);
+          setLoaded(true);
+        }
+      } catch {
+        if (mounted)
+          setError(
+            "خواندن داده ذخیره‌شده ممکن نبود. برای بازیابی از سرور، همگام‌سازی کنید.",
+          );
+      }
+      if (mounted) await refresh();
+    })();
+    void getSession()
+      .then((s) => {
+        if (mounted) setSession(s);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (mounted) setAuthLoading(false);
+      });
+    const onOnline = () => {
+      setOnline(navigator.onLine);
+      if (navigator.onLine) {
+        void refresh();
+        void getSession()
+          .then(setSession)
+          .catch(() => setSession({ user: null }));
+      }
+    };
+    const expired = () => {
+      setSession({ user: null });
+      setToast("نشست مدیریت پایان یافت. دوباره وارد شوید.");
+    };
+    const route = () => {
+      setPage(currentPage());
+      setQuery("");
+      setTable("All");
+      setSpecialty("All");
+      setDetail(null);
+      setMobileOpen(false);
+    };
+    window.addEventListener("hashchange", route);
+    window.addEventListener("online", onOnline);
+    window.addEventListener("offline", onOnline);
+    window.addEventListener("gp-session-expired", expired);
     return () => {
-      window.removeEventListener("online", on);
-      window.removeEventListener("offline", on);
+      mounted = false;
+      window.removeEventListener("hashchange", route);
+      window.removeEventListener("online", onOnline);
+      window.removeEventListener("offline", onOnline);
+      window.removeEventListener("gp-session-expired", expired);
     };
   }, []);
   useEffect(() => {
+    if (!session.expiresAt) return;
+    const t = setTimeout(
+      () => setSession({ user: null }),
+      Math.max(0, session.expiresAt - Date.now()),
+    );
+    return () => clearTimeout(t);
+  }, [session.expiresAt]);
+  useEffect(() => {
     if (toast) {
-      const t = setTimeout(() => setToast(""), 4000);
+      const t = setTimeout(() => setToast(""), 5000);
       return () => clearTimeout(t);
     }
   }, [toast]);
-  function persist(key: string, rows: string[], setter: (r: string[]) => void) {
+  function navigate(id: string) {
+    if (page === id) {
+      setQuery("");
+      setTable("All");
+      setSpecialty("All");
+    } else location.hash = id;
+    setMobileOpen(false);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function persist(
+    key: string,
+    rows: string[],
+    setter: (rows: string[]) => void,
+  ) {
     try {
       localStorage.setItem(key, JSON.stringify(rows));
       setter(rows);
     } catch {
-      setToast("Could not save on this device. Check browser storage.");
+      setToast("ذخیره روی این دستگاه انجام نشد. فضای مرورگر را بررسی کنید.");
     }
   }
-  function bookmark(id: string) {
+  const bookmark = (id: string) =>
     persist(
       "gp-bookmarks",
       bookmarks.includes(id)
@@ -172,384 +229,400 @@ export default function App() {
         : [...bookmarks, id],
       setBookmarks,
     );
-  }
   function add(id: string) {
-    if (!regimen.includes(id))
+    if (!regimen.includes(id)) {
       persist("gp-regimen", [...regimen, id], setRegimen);
-    setToast("Medication added to regimen");
+      setToast("دارو به نسخه افزوده شد.");
+    }
   }
-  function navigate(v: string) {
-    setView(v);
-    setQuery("");
-    setTable("All");
-    setSpecialty("All specialties");
+  async function signOut() {
+    try {
+      await logout();
+      setSession({ user: null });
+      setToast("از حساب مدیریت خارج شدید.");
+    } catch (e) {
+      setToast((e as Error).message);
+    }
   }
   const filtered = drugs.filter(
     (d) =>
-      (view !== "Bookmarks" || bookmarks.includes(d.id)) &&
+      (page !== "bookmarks" || bookmarks.includes(d.id)) &&
       (table === "All" ||
         (table === "ANTICHOLINERGIC"
           ? d.isStrongAnticholinergic
           : d.beersCategories.includes(table as never))) &&
-      (specialty === "All specialties" ||
-        specialty === d.therapeuticCategory) &&
-      [
-        d.genericName,
-        ...d.brandNamesIran,
-        d.therapeuticCategory,
-        ...d.drugDiseaseInteractions.map((r) => r.condition),
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(query.toLowerCase().trim()),
+      (specialty === "All" || d.therapeuticCategory === specialty) &&
+      matchesSearch(d, query),
   );
-  const nav = [
-    { name: "Home", icon: Home },
-    { name: "Search", icon: Search },
-    { name: "Regimen check", icon: ShieldCheck },
-    { name: "Bookmarks", icon: Bookmark },
-    { name: "Admin CMS", icon: Settings2 },
-  ];
+  const titles: Record<string, [string, string]> = {
+    home: [
+      "نسخه‌ای آگاهانه‌تر، مراقبتی ایمن‌تر.",
+      "مرجع کاربردی دارودرمانی سالمندان؛ همراه شما در تصمیم‌های بالینی.",
+    ],
+    library: [
+      "مرجع داروها",
+      "توصیه‌ها، تداخل‌ها و گزینه‌های جایگزین را در یک نگاه مرور کنید.",
+    ],
+    regimen: [
+      "بررسی ایمنی نسخه",
+      "داروها را در کنار بیماری‌های زمینه‌ای و عملکرد کلیه ارزیابی کنید.",
+    ],
+    bookmarks: [
+      "نشانک‌های شما",
+      "راهنماهایی که برای مراجعه سریع کنار گذاشته‌اید.",
+    ],
+    admin: [
+      "مدیریت اطلاعات بالینی",
+      "فهرست مشترک داروها، پشتیبان‌گیری و کنترل تغییرات.",
+    ],
+  };
   return (
     <div className="app">
-      <aside className="sidebar">
-        <a
-          className="brand"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("Home");
-          }}
-        >
+      <a
+        className="skip-link"
+        href="#main-content"
+        onClick={(e) => {
+          e.preventDefault();
+          heading.current?.focus();
+        }}
+      >
+        رفتن به محتوای اصلی
+      </a>
+      {mobileOpen && (
+        <button
+          className="nav-scrim"
+          aria-label="بستن فهرست"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+      <aside className={"sidebar " + (mobileOpen ? "is-open" : "")}>
+        <a className="brand" href="#home">
           <span className="brand-mark">
-            <Pill />
+            <Pill size={26} />
           </span>
-          <span>
-            GeriaPharm<small>GERIATRIC PHARMACOTHERAPY</small>
-          </span>
+          <div>
+            <strong>جریافارم</strong>
+            <small>GERIAPHARM</small>
+          </div>
         </a>
-        <div className="sidebar-label">CLINICAL WORKSPACE</div>
-        <nav>
+        <div className="sidebar-label">فضای کار بالینی</div>
+        <nav aria-label="ناوبری اصلی">
           {nav.map((n) => (
             <button
-              key={n.name}
-              className={view === n.name ? "nav-item active" : "nav-item"}
-              onClick={() => navigate(n.name)}
+              key={n.id}
+              aria-current={page === n.id ? "page" : undefined}
+              className={"nav-item " + (page === n.id ? "active" : "")}
+              onClick={() => navigate(n.id)}
             >
-              <n.icon size={20} />
-              <span>{n.name}</span>
-              {n.name === "Regimen check" && regimen.length > 0 && (
-                <span className="nav-count">{regimen.length}</span>
+              <n.icon size={21} />
+              <span>{n.label}</span>
+              {n.id === "regimen" && regimen.length > 0 && (
+                <span className="nav-count">{number(regimen.length)}</span>
               )}
+              {page === n.id && <ChevronLeft className="nav-arrow" size={15} />}
             </button>
           ))}
         </nav>
         <div className="sidebar-bottom">
           <div className="edition">
-            <BookOpen size={21} />
+            <BookOpen size={22} />
             <div>
-              2023 Beers Criteria®<small>Reference edition</small>
+              معیارهای بیرز ۲۰۲۳<small>نسخه مرجع انجمن سالمندان آمریکا</small>
             </div>
           </div>
           <p>
-            For healthcare professionals
+            برای متخصصان سلامت
             <br />
-            Caring for adults 65 and older
+            در مراقبت از افراد ۶۵ سال و بیشتر
           </p>
-          <span className="device-status">
-            <span className="dot" />
-            {cached ? "Available offline" : "Local-first workspace"}
-          </span>
+          <div className="device-status">
+            <span className="status-dot" />
+            {offlineReady ? "مطالعه آفلاین آماده است" : "مرجع دارویی همراه شما"}
+          </div>
         </div>
       </aside>
       <div className="main-shell">
         <header className="topbar">
           <div className="breadcrumb">
-            Clinical workspace <ChevronRight size={14} />
-            <strong>{view}</strong>
+            <IconButton
+              label="باز کردن فهرست"
+              className="menu-button"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              <Menu size={22} />
+            </IconButton>
+            <span>فضای کار بالینی</span>
+            <ChevronLeft size={15} />
+            <strong>{nav.find((n) => n.id === page)?.label}</strong>
           </div>
           <div className="top-right">
-            <span className="connection">
-              {online ? <Wifi size={15} /> : <WifiOff size={15} />}{" "}
-              {online ? "Online" : "Offline"}
+            <button
+              className="sync-status"
+              onClick={() => void refresh()}
+              disabled={syncing}
+              title={
+                lastSync
+                  ? "آخرین تغییر فهرست: " + date(lastSync)
+                  : "دریافت آخرین نسخه فهرست"
+              }
+            >
+              {!online ? (
+                <WifiOff size={16} />
+              ) : (
+                <RefreshCw size={15} className={syncing ? "spin" : ""} />
+              )}
+              <span>
+                {syncing
+                  ? "در حال همگام‌سازی"
+                  : !online
+                    ? "حالت آفلاین"
+                    : synced
+                      ? "متصل به سرور"
+                      : "نسخه ذخیره‌شده"}
+              </span>
+            </button>
+            <span
+              className="avatar"
+              title={session.user ? "مدیر وارد شده" : "کاربر مرجع"}
+            >
+              {session.user ? "مد" : "ج‌ف"}
             </span>
-            <span className="divider" />
-            <span className="avatar">GP</span>
           </div>
         </header>
-        <main>
+        <main id="main-content">
           <div className="page-heading">
             <div>
-              <div className="eyebrow">GERIATRIC CLINICAL REFERENCE</div>
-              <h1>
-                {view === "Home"
-                  ? "Better-informed prescribing."
-                  : view === "Search"
-                    ? "Medication library"
-                    : view === "Regimen check"
-                      ? "Regimen risk checker"
-                      : view === "Bookmarks"
-                        ? "Your bookmarked medications"
-                        : "Clinical registry"}
+              <div className="eyebrow">دانش دارویی، در خدمت سالمندی</div>
+              <h1 ref={heading} tabIndex={-1}>
+                {titles[page][0]}
               </h1>
-              <p>
-                {view === "Home"
-                  ? "A focused medication reference for safer care in older adults."
-                  : view === "Search"
-                    ? "Find medication guidance, interactions, and alternatives."
-                    : view === "Regimen check"
-                      ? "Review medications together with the patient’s clinical context."
-                      : view === "Bookmarks"
-                        ? "Keep frequently consulted guidance close at hand."
-                        : "Manage the medication content saved on this device."}
-              </p>
+              <p>{titles[page][1]}</p>
             </div>
             <span className="edition-tag">
-              AGS BEERS <b>2023</b>
+              معیارهای بیرز <b>۲۰۲۳</b>
             </span>
           </div>
           {error && (
-            <div role="alert" className="notice">
+            <Notice tone="error">
               {error}
-              <button onClick={() => location.reload()}>Reload</button>
-            </div>
+              <Button variant="ghost" onClick={() => void refresh()}>
+                همگام‌سازی
+              </Button>
+            </Notice>
           )}
-          {view === "Home" && (
-            <>
-              <div className="search-hero">
-                <Search size={23} />
-                <input
-                  aria-label="Search medication library"
-                  placeholder="Search a medication, Iranian brand, or condition…"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-                <button
-                  onClick={() => {
-                    setView("Search");
-                  }}
-                  aria-label="Open search"
-                >
-                  <ArrowRight size={20} />
-                </button>
+          {!online && (
+            <Notice tone="info">
+              در حالت آفلاین، اطلاعات ذخیره‌شده روی همین دستگاه نمایش داده
+              می‌شود.
+            </Notice>
+          )}
+          {needRefresh && (
+            <Notice tone="info">
+              نسخه جدید برنامه آماده است. قبل از به‌روزرسانی، ویرایش‌های باز را
+              ذخیره کنید.
+              <div className="actions">
+                <Button onClick={() => void updateServiceWorker(true)}>
+                  به‌روزرسانی برنامه
+                </Button>
+                <Button variant="ghost" onClick={() => setNeedRefresh(false)}>
+                  بعداً
+                </Button>
               </div>
-              <div className="hero-hints">
-                <span>Search by generic or brand name</span>
+            </Notice>
+          )}
+          {page === "home" && (
+            <>
+              <SearchField
+                value={query}
+                onChange={setQuery}
+                label="جست‌وجوی سریع دارو"
+              />
+              <div className="search-hints">
+                <span>جست‌وجو با نام فارسی، ژنریک یا برند</span>
                 <span>
-                  <Database size={13} /> {drugs.length} medications in your
-                  registry
+                  <Database size={14} />
+                  {number(drugs.length)} دارو در فهرست
                 </span>
               </div>
               {!query && (
                 <>
                   <div className="section-heading">
-                    <h2>Explore the criteria</h2>
-                    <span>Six ways to review medication risk</span>
+                    <h2>مرور معیارهای بیرز</h2>
+                    <span>شش مسیر برای بررسی خطر داروها</span>
                   </div>
                   <div className="category-grid">
-                    {tables.map((t, i) => (
-                      <button
-                        className="category-card"
-                        key={t.id}
-                        onClick={() => {
-                          setView("Search");
-                          setTable(t.id);
-                        }}
-                      >
-                        <div className="card-top">
-                          <span className={"category-icon " + t.color}>
-                            <t.icon size={23} />
-                          </span>
-                          <span className="table-label">TABLE {i + 2}</span>
-                        </div>
-                        <h3>{t.title}</h3>
-                        <p>{t.desc}</p>
-                        <div className="card-bottom">
-                          <span>
-                            {
-                              drugs.filter((d) =>
-                                t.id === "ANTICHOLINERGIC"
-                                  ? d.isStrongAnticholinergic
-                                  : d.beersCategories.includes(t.id as never),
-                              ).length
-                            }{" "}
-                            medications
-                          </span>
-                          <ArrowRight size={17} />
-                        </div>
-                      </button>
-                    ))}
+                    {tables.map((t, i) => {
+                      const Icon = icons[i];
+                      return (
+                        <button
+                          className="category-card"
+                          key={t.id}
+                          onClick={() => {
+                            history.pushState(null, "", "#library");
+                            setPage("library");
+                            setTable(t.id);
+                            setQuery("");
+                          }}
+                        >
+                          <div className="card-top">
+                            <span className={"category-icon " + t.color}>
+                              <Icon size={25} />
+                            </span>
+                            <span className="table-label">
+                              جدول {number(i + 2)}
+                            </span>
+                          </div>
+                          <h3>{t.title}</h3>
+                          <p>{t.description}</p>
+                          <div className="card-bottom">
+                            <span>
+                              {number(
+                                drugs.filter((d) =>
+                                  t.id === "ANTICHOLINERGIC"
+                                    ? d.isStrongAnticholinergic
+                                    : d.beersCategories.includes(t.id as never),
+                                ).length,
+                              )}{" "}
+                              دارو
+                            </span>
+                            <ArrowLeft size={18} />
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                   <div className="regimen-banner">
                     <span className="banner-icon">
-                      <ShieldCheck size={30} />
+                      <ShieldCheck size={33} />
                     </span>
                     <div>
-                      <h2>See the whole regimen.</h2>
+                      <h2>نسخه را یک‌جا ببینید.</h2>
                       <p>
-                        Check interactions, cumulative burden, and
-                        patient-specific risks.
+                        تداخل‌ها، بار تجمعی داروها و خطرهای مرتبط با شرایط بیمار
+                        را بررسی کنید.
                       </p>
                     </div>
-                    <button
-                      className="button light"
-                      onClick={() => navigate("Regimen check")}
+                    <Button
+                      variant="secondary"
+                      onClick={() => navigate("regimen")}
                     >
-                      Check a regimen <ArrowRight size={17} />
-                    </button>
+                      بررسی یک نسخه <ArrowLeft size={17} />
+                    </Button>
                   </div>
                 </>
               )}
             </>
           )}
-          {(["Search", "Bookmarks"].includes(view) ||
-            (view === "Home" && query)) && (
+          {["library", "bookmarks"].includes(page) && (
             <>
-              <div className="search-hero compact">
-                <Search size={21} />
-                <input
-                  aria-label="Search medications"
-                  placeholder="Search generic, brand, category, or disease…"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-                {query && (
-                  <button
-                    aria-label="Clear search"
-                    onClick={() => setQuery("")}
-                  >
-                    <X size={18} />
-                  </button>
-                )}
-              </div>
+              <SearchField value={query} onChange={setQuery} />
               <div className="filter-row">
-                <SlidersHorizontal size={17} />
-                <select
-                  aria-label="Filter therapeutic specialty"
+                <label className="sr-only" htmlFor="specialty">
+                  گروه درمانی
+                </label>
+                <Choice
+                  id="specialty"
+                  label="گروه درمانی"
                   value={specialty}
-                  onChange={(e) => setSpecialty(e.target.value)}
-                >
-                  {[
-                    ...new Set([
-                      ...therapeutic,
-                      ...drugs.map((d) => d.therapeuticCategory),
-                    ]),
-                  ].map((c) => (
-                    <option key={c}>{c}</option>
-                  ))}
-                </select>
-                <select
-                  aria-label="Filter Beers category"
+                  onChange={setSpecialty}
+                  options={[
+                    { value: "All", label: "همه گروه‌های درمانی" },
+                    ...[
+                      ...new Set(drugs.map((d) => d.therapeuticCategory)),
+                    ].map((c) => ({ value: c, label: fa(c) })),
+                  ]}
+                />
+                <label className="sr-only" htmlFor="beers">
+                  دسته معیار بیرز
+                </label>
+                <Choice
+                  id="beers"
+                  label="دسته معیار بیرز"
                   value={table}
-                  onChange={(e) => setTable(e.target.value)}
-                >
-                  <option value="All">All Beers categories</option>
-                  {tables.map((t) => (
-                    <option value={t.id} key={t.id}>
-                      {t.short}
-                    </option>
-                  ))}
-                </select>
-                <span>{filtered.length} results</span>
+                  onChange={setTable}
+                  options={[
+                    { value: "All", label: "همه معیارها" },
+                    ...tables.map((t) => ({ value: t.id, label: t.short })),
+                  ]}
+                />
+                {(specialty !== "All" || table !== "All") && (
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setSpecialty("All");
+                      setTable("All");
+                    }}
+                  >
+                    پاک کردن فیلترها
+                  </Button>
+                )}
+                <span>{number(filtered.length)} نتیجه</span>
               </div>
             </>
           )}
-          {(view === "Home" || view === "Search" || view === "Bookmarks") && (
+          {["home", "library", "bookmarks"].includes(page) && (
             <>
               <div className="section-heading">
                 <h2>
-                  {view === "Home" && !query
-                    ? "Medication quick reference"
-                    : "Medications"}{" "}
-                  <span className="count">
-                    {view === "Home" && !query ? drugs.length : filtered.length}
-                  </span>
+                  {page === "home" && !query
+                    ? "دسترسی سریع به داروها"
+                    : "فهرست داروها"}{" "}
+                  <span className="count">{number(filtered.length)}</span>
                 </h2>
-                {view === "Home" && !query && (
-                  <button
-                    className="text-button"
-                    onClick={() => navigate("Search")}
-                  >
-                    View all medications <ArrowRight size={16} />
-                  </button>
+                {page === "home" && !query && (
+                  <Button variant="ghost" onClick={() => navigate("library")}>
+                    مشاهده همه داروها <ArrowLeft size={16} />
+                  </Button>
                 )}
               </div>
               {!loaded && !error ? (
-                <div className="empty">Loading your medication registry…</div>
-              ) : filtered.length === 0 ? (
-                <div className="empty">
-                  <Search />
-                  <h3>
-                    {view === "Bookmarks"
-                      ? "No bookmarked medications"
-                      : "No matching medications"}
-                  </h3>
-                  <p>
-                    {view === "Bookmarks"
-                      ? "Use the bookmark icon on a medication to save it here."
-                      : "Try a different name or clear your filters."}
-                  </p>
+                <div className="loading-state" role="status">
+                  در حال دریافت فهرست داروها…
                 </div>
+              ) : filtered.length === 0 ? (
+                <EmptyState
+                  heading={
+                    page === "bookmarks"
+                      ? "هنوز دارویی نشانک‌گذاری نکرده‌اید"
+                      : "نتیجه‌ای پیدا نشد"
+                  }
+                  action={
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        navigate("library");
+                        setQuery("");
+                      }}
+                    >
+                      مرور همه داروها
+                    </Button>
+                  }
+                >
+                  {page === "bookmarks"
+                    ? "با لمس نشانک هر دارو، آن را برای مراجعه بعدی ذخیره کنید."
+                    : "املای نام دارو را بررسی کنید یا فیلترها را تغییر دهید."}
+                </EmptyState>
               ) : (
                 <div className="medication-grid">
-                  {(view === "Home" && !query
+                  {(page === "home" && !query
                     ? filtered.slice(0, 4)
                     : filtered
                   ).map((d) => (
-                    <article className="med-card" key={d.id}>
-                      <div className="med-top">
-                        <Badge drug={d} />
-                        <button
-                          className={
-                            "icon-button " +
-                            (bookmarks.includes(d.id) ? "saved" : "")
-                          }
-                          aria-label={
-                            (bookmarks.includes(d.id)
-                              ? "Remove bookmark for "
-                              : "Bookmark ") + d.genericName
-                          }
-                          onClick={() => bookmark(d.id)}
-                        >
-                          <Bookmark
-                            size={19}
-                            fill={
-                              bookmarks.includes(d.id) ? "currentColor" : "none"
-                            }
-                          />
-                        </button>
-                      </div>
-                      <button
-                        className="med-title"
-                        onClick={() => setDetail(d)}
-                      >
-                        {d.genericName}
-                        <ChevronRight size={18} />
-                      </button>
-                      <p className="brands">
-                        {d.brandNamesIran.slice(0, 3).join(" · ")}
-                      </p>
-                      <div className="med-bottom">
-                        <span>{d.therapeuticCategory}</span>
-                        <button
-                          className="icon-button"
-                          aria-label={"Add " + d.genericName + " to regimen"}
-                          onClick={() => add(d.id)}
-                        >
-                          {regimen.includes(d.id) ? (
-                            <Check size={18} />
-                          ) : (
-                            <Plus size={18} />
-                          )}
-                        </button>
-                      </div>
-                    </article>
+                    <MedicationCard
+                      key={d.id}
+                      drug={d}
+                      saved={bookmarks.includes(d.id)}
+                      inRegimen={regimen.includes(d.id)}
+                      onOpen={() => setDetail(d)}
+                      onBookmark={() => bookmark(d.id)}
+                      onAdd={() => add(d.id)}
+                    />
                   ))}
                 </div>
               )}
             </>
           )}
-          {view === "Regimen check" && (
+          {page === "regimen" && (
             <Checker
               drugs={drugs}
               ids={regimen}
@@ -557,190 +630,225 @@ export default function App() {
               onOpen={setDetail}
             />
           )}
-          {view === "Admin CMS" && (
-            <Admin drugs={drugs} onChange={reload} notify={setToast} />
-          )}
+          {page === "admin" &&
+            (authLoading ? (
+              <div className="loading-state">در حال بررسی دسترسی…</div>
+            ) : !session.user ? (
+              <Login
+                onBack={() => navigate("home")}
+                onLogin={(s) => {
+                  setSession(s);
+                  void refresh();
+                  setToast("به پنل مدیریت خوش آمدید.");
+                }}
+              />
+            ) : (
+              <Suspense
+                fallback={
+                  <div className="loading-state">در حال آماده‌سازی پنل…</div>
+                }
+              >
+                <Admin
+                  drugs={drugs}
+                  onRegistry={(r) => void acceptRegistry(r)}
+                  notify={setToast}
+                  email={session.user.email}
+                  onLogout={() => void signOut()}
+                  onPasswordChanged={() => {
+                    setSession({ user: null });
+                    setToast("رمز عبور تغییر کرد. با رمز جدید وارد شوید.");
+                  }}
+                  onSync={refresh}
+                  online={online}
+                />
+              </Suspense>
+            ))}
           <footer>
             <span>
-              <ShieldCheck size={16} /> Clinical judgment remains essential.
+              <ShieldCheck size={17} />
+              همراه تصمیم بالینی؛ نه جایگزین قضاوت متخصص
             </span>
             <p>
-              15-record starter reference, not the complete criteria. Supplied
-              clinical content requires review.{" "}
+              این فهرست اولیه، همه داروها و تداخل‌های معیارهای بیرز را پوشش
+              نمی‌دهد. محتوای بالینی نیازمند بازبینی متخصص است.
+            </p>
+            <div>
               <a
                 href="https://doi.org/10.1111/jgs.18372"
                 target="_blank"
                 rel="noreferrer"
               >
-                Read the official 2023 AGS publication ↗
+                مطالعه منبع رسمی AGS ↗
               </a>
-            </p>
-            <small>
-              Device-local data · {storageMode} · No patient identifiers
-              collected
-            </small>
+              <span>اطلاعات هویتی بیمار دریافت نمی‌شود.</span>
+            </div>
           </footer>
         </main>
       </div>
-      <nav className="mobile-nav">
+      <nav className="mobile-nav" aria-label="ناوبری تلفن همراه">
         {nav.map((n) => (
           <button
-            key={n.name}
-            className={view === n.name ? "active" : ""}
-            onClick={() => navigate(n.name)}
+            key={n.id}
+            aria-current={page === n.id ? "page" : undefined}
+            className={page === n.id ? "active" : ""}
+            onClick={() => navigate(n.id)}
           >
-            <n.icon size={20} />
-            <span>
-              {n.name === "Regimen check"
-                ? "Regimen"
-                : n.name === "Admin CMS"
-                  ? "Admin"
-                  : n.name}
-            </span>
+            <n.icon size={21} />
+            <span>{n.label}</span>
           </button>
         ))}
       </nav>
       {toast && (
         <div className="toast" role="status">
-          <Check size={18} />
+          <Check size={19} />
           {toast}
+          <IconButton label="بستن پیام" onClick={() => setToast("")}>
+            <X size={16} />
+          </IconButton>
         </div>
       )}
       {detail && (
-        <Modal title={detail.genericName} onClose={() => setDetail(null)}>
-          <div className="detail-body">
+        <Modal title={drugName(detail)} onClose={() => setDetail(null)}>
+          <div className="modal-body">
             <div className="detail-meta">
-              <Badge drug={detail} />
-              <span>{detail.therapeuticCategory}</span>
+              <RiskBadge drug={detail} />
+              <span>{fa(detail.therapeuticCategory)}</span>
             </div>
+            <p className="detail-generic" dir="ltr">
+              {detail.genericName}
+            </p>
             <div className="tags">
               {detail.brandNamesIran.map((b) => (
-                <span key={b}>{b}</span>
+                <span dir="auto" key={b}>
+                  {b}
+                </span>
               ))}
             </div>
             <div className="actions">
-              <button
-                className="button secondary"
-                onClick={() => bookmark(detail.id)}
-              >
+              <Button variant="secondary" onClick={() => bookmark(detail.id)}>
                 <Bookmark size={17} />
-                {bookmarks.includes(detail.id) ? "Bookmarked" : "Bookmark"}
-              </button>
-              <button className="button" onClick={() => add(detail.id)}>
+                {bookmarks.includes(detail.id) ? "حذف نشانک" : "نشانک‌گذاری"}
+              </Button>
+              <Button
+                disabled={regimen.includes(detail.id)}
+                onClick={() => add(detail.id)}
+              >
                 <Plus size={17} />
-                {regimen.includes(detail.id) ? "In regimen" : "Add to regimen"}
-              </button>
+                {regimen.includes(detail.id)
+                  ? "در نسخه موجود است"
+                  : "افزودن به نسخه"}
+              </Button>
             </div>
             <section className={"clinical-box " + risk(detail)}>
-              <h3>Clinical recommendation</h3>
+              <h3>توصیه بالینی</h3>
               <p>{detail.recommendation}</p>
-              <h4>Rationale</h4>
+              <h4>دلیل توصیه</h4>
               <p>{detail.rationale}</p>
-              <div className="tags">
-                <span>Evidence: {detail.qualityOfEvidence}</span>
-                <span>Recommendation: {detail.strengthOfRecommendation}</span>
+              <div className="evidence-tags">
+                <span>
+                  کیفیت شواهد: <b>{fa(detail.qualityOfEvidence)}</b>
+                </span>
+                <span>
+                  قدرت توصیه: <b>{fa(detail.strengthOfRecommendation)}</b>
+                </span>
               </div>
             </section>
             <section className="clinical-box alternatives">
-              <h3>Alternatives to consider</h3>
+              <h3>گزینه‌های جایگزین قابل بررسی</h3>
               <ul>
                 {detail.saferAlternatives.map((a) => (
                   <li key={a}>{a}</li>
                 ))}
               </ul>
               <small>
-                Choice depends on indication, patient factors and local
-                availability.
+                انتخاب درمان به اندیکاسیون، شرایط بیمار و دسترسی دارویی بستگی
+                دارد.
               </small>
             </section>
             <details open>
               <summary>
-                Drug–drug interactions{" "}
-                <span>{detail.drugDrugInteractions.length}</span>
+                تداخل‌های دارویی{" "}
+                <span>{number(detail.drugDrugInteractions.length)}</span>
               </summary>
               {detail.drugDrugInteractions.length ? (
                 detail.drugDrugInteractions.map((r) => (
                   <div className="interaction" key={r.id}>
-                    <h4>
-                      {r.targetDrugOrClass}{" "}
-                      <span
-                        className={
-                          "badge " +
-                          (r.severity === "Avoid" ? "avoid" : "caution")
-                        }
-                      >
-                        {r.severity}
-                      </span>
-                    </h4>
+                    <h4>{fa(r.targetDrugOrClass)}</h4>
+                    <span
+                      className={
+                        "badge " +
+                        (r.severity === "Avoid" ? "avoid" : "caution")
+                      }
+                    >
+                      {fa(r.severity)}
+                    </span>
                     <p>{r.rationale}</p>
                     <p>
-                      <strong>Action:</strong> {r.clinicalAction}
+                      <strong>اقدام بالینی: </strong>
+                      {r.clinicalAction}
                     </p>
                   </div>
                 ))
               ) : (
-                <p>
-                  No interactions recorded. This does not establish absence of
-                  risk.
-                </p>
+                <p>تداخلی ثبت نشده است؛ این به معنای نبود خطر نیست.</p>
               )}
             </details>
             <details>
               <summary>
-                Drug–disease interactions{" "}
-                <span>{detail.drugDiseaseInteractions.length}</span>
+                تداخل با بیماری{" "}
+                <span>{number(detail.drugDiseaseInteractions.length)}</span>
               </summary>
               {detail.drugDiseaseInteractions.length ? (
                 detail.drugDiseaseInteractions.map((r, i) => (
                   <div className="interaction" key={i}>
                     <h4>
-                      {r.condition} · {r.recommendation}
+                      {fa(r.condition)} · {fa(r.recommendation)}
                     </h4>
                     <p>{r.rationale}</p>
                   </div>
                 ))
               ) : (
-                <p>No disease interactions recorded.</p>
+                <p>تداخل با بیماری در این رکورد ثبت نشده است.</p>
               )}
             </details>
             <details>
-              <summary>Renal considerations</summary>
+              <summary>ملاحظات عملکرد کلیه</summary>
               {detail.renalConsiderations ? (
                 <div className="interaction">
                   <h4>
-                    {detail.renalConsiderations.threshold} ·{" "}
-                    {detail.renalConsiderations.action}
+                    <bdi>{detail.renalConsiderations.threshold}</bdi> ·{" "}
+                    {fa(detail.renalConsiderations.action)}
                   </h4>
                   <p>{detail.renalConsiderations.guidance}</p>
                   <p>{detail.renalConsiderations.rationale}</p>
                 </div>
               ) : (
                 <p>
-                  No renal rule recorded. Check indication-specific prescribing
-                  information.
+                  قاعده کلیوی ثبت نشده است؛ اطلاعات تجویز را متناسب با
+                  اندیکاسیون بررسی کنید.
                 </p>
               )}
             </details>
             {(detail.isCnsActive || detail.isStrongAnticholinergic) && (
-              <div className="notice">
+              <Notice tone="warning">
                 {detail.isStrongAnticholinergic && (
-                  <p>Strong anticholinergic: consider cumulative exposure.</p>
+                  <p>آنتی‌کولینرژیک قوی؛ مواجهه تجمعی بیمار را بررسی کنید.</p>
                 )}
                 {detail.isCnsActive && (
                   <p>
-                    CNS-active flag in supplied registry: review sedation and
-                    falls risk.
+                    فعال بر سیستم عصبی مرکزی؛ خطر خواب‌آلودگی و سقوط را بررسی
+                    کنید.
                   </p>
                 )}
-              </div>
+              </Notice>
             )}
-            <p className="muted">{detail.notes}</p>
-            <small>Updated {detail.lastUpdated}</small>
+            <p className="source-note">{detail.notes}</p>
+            <small className="muted">
+              آخرین ویرایش: {date(detail.lastUpdated)}
+            </small>
           </div>
         </Modal>
       )}
     </div>
   );
 }
-import { Checker } from "./components/Checker";
-import { Admin } from "./components/Admin";

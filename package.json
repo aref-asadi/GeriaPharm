@@ -4,30 +4,54 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "build": "tsc -b && vite build",
+    "dev": "concurrently -k -n API,WEB \"npm:dev:api\" \"npm:dev:web\"",
+    "build": "tsc -b && vite build && node scripts/build-server.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "test": "vitest run",
-    "format": "prettier --write src vite.config.ts README.md"
+    "format": "prettier --write src server scripts vite.config.ts README.md",
+    "dev:web": "vite --host 0.0.0.0",
+    "dev:api": "NODE_ENV=development node --env-file-if-exists=.env --import tsx --watch server/index.ts",
+    "start": "NODE_ENV=production node --env-file-if-exists=.env dist-server/index.mjs",
+    "setup": "node scripts/setup.mjs",
+    "admin:reset": "node --env-file-if-exists=.env --import tsx scripts/reset-admin.ts",
+    "test:e2e": "playwright test",
+    "backup": "node --env-file-if-exists=.env --import tsx scripts/backup.ts"
   },
   "dependencies": {
+    "@fontsource-variable/vazirmatn": "^5.3.0",
+    "cookie-parser": "^1.4.7",
     "dexie": "^4.0.11",
+    "express": "^5.2.1",
+    "helmet": "^8.3.0",
     "lucide-react": "^0.468.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "zod": "^3.24.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "^4.1.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.5.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "@types/supertest": "^7.2.1",
     "@vitejs/plugin-react": "^4.5.0",
+    "concurrently": "^10.0.5",
+    "esbuild": "^0.28.2",
     "fake-indexeddb": "^6.2.5",
     "prettier": "^3.9.6",
+    "supertest": "^7.2.2",
     "tailwindcss": "^4.1.0",
+    "tsx": "^4.23.13",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
     "vite-plugin-pwa": "^1.0.0",
     "vitest": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=22.16.0"
   }
 }

@@ -1,76 +1,183 @@
-<<<<<<< HEAD
-# GeriaPharm
-=======
-# GeriaPharm
+# جریافارم — GeriaPharm
 
-A React + TypeScript clinical reference PWA built from the Aref Project specification. Includes all 15 supplied medication records, instant generic/Iranian-brand/disease search, six Beers table views, detailed monographs, bookmarks, a live regimen checker, and a device-local clinician CMS.
+مرجع فارسی دارودرمانی سالمندان با رابط راست‌به‌چپ، فونت محلی **وزیرمتن**، مطالعه آفلاین، بررسی نسخه و پنل مدیریت متصل به بک‌اند.
 
-## Run locally
-
-Requires Node.js 22.12+ and npm.
+## اجرای سریع روی این دستگاه
 
 ```sh
 npm ci
+npm run setup
 npm run dev
 ```
 
-Open the local URL printed by Vite. To check and build:
+به نشانی `http://localhost:5173` بروید. دستور توسعه، رابط و API را هم‌زمان اجرا می‌کند. در این فضای کاری، فایل خصوصی `.env` و حساب اولیه محلی از قبل ساخته شده‌اند:
+
+- ایمیل محلی: `admin@geriapharm.local`
+- رمز اولیه: مقدار `ADMIN_PASSWORD` در فایل `.env`
+- فایل `.env` در Git، بسته سورس و تصویر Docker قرار نمی‌گیرد؛ مجوز دسترسی آن فقط برای مالک فایل است.
+- `npm run setup` تنظیمات موجود را بازنویسی نمی‌کند. در نصب تازه، ایمیل و دامنه را می‌پرسد و رمز تصادفی قوی تولید می‌کند.
+
+بعد از ورود، رمز را در بخش مدیریت تغییر دهید. مقدار اولیه محیط فقط برای ایجاد اولین حساب استفاده می‌شود؛ تغییر دادن آن پس از ساخت دیتابیس، رمز حساب موجود را تغییر نمی‌دهد.
+
+## استقرار پیشنهادی؛ Docker و HTTPS خودکار
+
+پیش‌نیاز: یک سرور لینوکسی با Docker Compose، دامنه‌ای که DNS آن به سرور اشاره کند، و دسترسی ورودی پورت‌های ۸۰ و ۴۴۳.
+
+۱. سورس را روی سرور قرار دهید. یک `.env` با اطلاعات واقعی بسازید؛ رمز نمونه فایل `.env.example` قابل استفاده نیست.
+
+```dotenv
+ADMIN_EMAIL=your-email@example.com
+ADMIN_PASSWORD=YOUR_UNIQUE_RANDOM_PASSWORD_AT_LEAST_12_CHARACTERS
+SITE_HOST=geriapharm.your-domain.com
+```
+
+۲. برنامه را بسازید و اجرا کنید:
+
+```sh
+docker compose up -d --build
+docker compose ps
+docker compose logs --tail=100 app caddy
+```
+
+Caddy گواهی HTTPS را برای دامنه دریافت و تمدید می‌کند. API مستقیماً روی اینترنت باز نیست و فقط از پراکسی در دسترس است. فایل Compose، نشانی مجاز درخواست‌ها و کوکی امن را از دامنه تنظیم می‌کند. دیتابیس در volume پایدار `registry` قرار دارد؛ به‌روزرسانی تصویر، اطلاعات را پاک نمی‌کند. سرویس با کاربر غیرریشه اجرا می‌شود، healthcheck دارد و پس از خطا مجدداً راه‌اندازی می‌شود.
+
+۳. به `https://YOUR_DOMAIN/#admin` بروید، وارد شوید و رمز اولیه را تغییر دهید.
+
+برای انتشار به‌روزرسانی، همان دستور `docker compose up -d --build` کافی است. از `docker compose down -v` استفاده نکنید مگر آنکه عمداً بخواهید دیتابیس و داده‌های گواهی‌ها پاک شوند.
+
+**وضعیت اعتبارسنجی این محیط:** ساخت تولیدی و اجرای واقعی Node/API و مرورگر بررسی شده‌اند. ساختار Compose معتبر است؛ Docker daemon این دستگاه فعال نبود، بنابراین ساخت و اجرای تصویر کانتینر و صدور گواهی واقعی در این محیط آزمایش نشده‌اند. اتصال دامنه، DNS و پورت‌ها به محیط سرور شما وابسته‌اند.
+
+## اجرای تولیدی بدون Docker
+
+Node.js نسخه ۲۲٫۱۶ یا جدیدتر لازم است؛ نسخه ۲۴ LTS در Docker استفاده می‌شود.
+
+```sh
+npm ci
+npm run build
+npm start
+```
+
+تنظیمات محیط:
+
+| متغیر                  | کاربرد                                                                                                                    |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `APP_ORIGIN`           | نشانی دقیق سایت مانند `https://geriapharm.example.com`؛ بدون مسیر و اسلش پایانی                                           |
+| `ADMIN_EMAIL`          | ایمیل مدیر اولیه یا حساب هدف در بازیابی رمز                                                                               |
+| `ADMIN_PASSWORD`       | رمز اولیه؛ حداقل ۱۲ نویسه، بدون مقدار پیش‌فرض عمومی                                                                       |
+| `ADMIN_PASSWORD_FILE`  | جایگزین اختیاری برای خواندن رمز از فایل secret                                                                            |
+| `DATABASE_PATH`        | مسیر SQLite؛ پیش‌فرض `data/geriapharm.sqlite`                                                                             |
+| `PORT`                 | پیش‌فرض ۳۰۰۱                                                                                                              |
+| `HOST`                 | پیش‌فرض `127.0.0.1`؛ در Docker برابر `0.0.0.0`                                                                            |
+| `COOKIE_SECURE`        | در تولید `true`؛ فقط برای آزمون HTTP محلی `false`                                                                         |
+| `TRUST_LOOPBACK_PROXY` | فقط در صورت وجود پراکسی مورد اعتماد روی loopback فعال شود                                                                 |
+| `TRUST_PROXY_HOPS`     | مقدار `1` فقط وقتی API پشت دقیقاً یک پراکسی مورد اعتماد و بدون دسترسی مستقیم عمومی است؛ Compose این وضعیت را فراهم می‌کند |
+| `BACKUP_DIR`           | مسیر پشتیبان کامل SQLite؛ پیش‌فرض `data/backups`                                                                          |
+
+در اجرای مستقیم، پراکسی HTTPS و مدیر پردازش مانند systemd را تنظیم کنید. `npm start` فایل‌های `dist` و API را از یک مبدأ ارائه می‌کند. `npm run preview` فقط پیش‌نمایش فرانت‌اند است و جایگزین سرور تولیدی نیست.
+
+این نسخه دیگر یک سایت صرفاً استاتیک نیست. فایل `.openai/hosting.json` مربوط به ثبت پیش‌نمایش نسخه قبلی است؛ انتشار فقط `dist` در میزبان استاتیک، بک‌اند و ورود مدیر را راه‌اندازی نمی‌کند. مسیر آماده این نسخه، Docker/Node است و هیچ انتشار خارجی جدیدی انجام نشده است.
+
+## ورود و امنیت مدیریت
+
+- رمز با `scrypt`، salt تصادفی و مقایسه زمان‌ثابت بررسی می‌شود؛ رمز خام در دیتابیس ذخیره نمی‌شود.
+- نشست تصادفی هشت‌ساعته در کوکی `HttpOnly` و `SameSite=Strict` قرار می‌گیرد. در HTTPS، کوکی `Secure` است. فقط هش شناسه نشست روی سرور ذخیره می‌شود.
+- همه مسیرهای `/api/admin/*` به نشست معتبر نیاز دارند؛ مخفی بودن پنل، تنها لایه محافظت نیست.
+- درخواست‌های تغییر داده، علاوه بر مبدأ مجاز به CSRF token متصل به نشست نیاز دارند.
+- ورود محدودیت تلاش دارد: هشت تلاش در پانزده دقیقه برای IP و سی تلاش برای حساب. تلاش‌های ناموفق و فعالیت‌های مدیریت ثبت می‌شوند.
+- تغییر رمز همه نشست‌های آن حساب را باطل می‌کند. خروج نیز نشست را در سرور حذف می‌کند.
+- ویرایش‌ها با شماره نسخه فهرست کنترل می‌شوند؛ درخواست قدیمی با کد `409` رد می‌شود تا تغییر مدیر دیگر بی‌صدا بازنویسی نشود.
+- ورودی API و فایل‌های پشتیبان با Zod اعتبارسنجی می‌شوند؛ شناسه تکراری و ساختار ناقص رد می‌شوند. درون‌ریزی جایگزینی کامل و تراکنشی است.
+- Helmet هدرهای امنیتی و CSP را تنظیم می‌کند. API، اطلاعات احراز هویت و تاریخچه در Service Worker کش نمی‌شوند.
+- پنل فقط به حساب مدیر اولیه دسترسی می‌دهد؛ ثبت‌نام عمومی وجود ندارد. مدیریت چندکاربره، نقش‌های متفاوت و بازیابی رمز با ایمیل جزو این نسخه نیستند.
+
+### بازیابی رمز مدیر توسط مالک سرور
+
+در نصب Node، مقادیر `ADMIN_EMAIL` و `ADMIN_PASSWORD` را در `.env` با ایمیل حساب موجود و رمز جدید تنظیم کنید و اجرا کنید:
+
+```sh
+npm run admin:reset
+```
+
+در Docker، تنظیمات محیط مدیر را در فایل خصوصی تغییر دهید، سپس:
+
+```sh
+docker compose run --rm --no-deps app node dist-server/reset-admin.mjs
+```
+
+دستور از volume همان دیتابیس استفاده می‌کند، رمز حساب موجود را تغییر می‌دهد و نشست‌ها را می‌بندد. هیچ حساب جدیدی از مسیر عمومی برنامه ساخته نمی‌شود. دستور بازیابی نیازمند دسترسی مالک سرور است؛ رمز را در آرگومان خط فرمان وارد نکنید.
+
+## پشتیبان‌گیری
+
+از پنل مدیریت، فایل JSON فهرست داروها را دریافت کنید. این خروجی شامل حساب، رمز یا نشست‌ها نیست. برای پشتیبان کامل SQLite از API پشتیبان‌گیری سازگار با WAL استفاده می‌شود:
+
+```sh
+npm run backup
+# یا در کانتینر در حال اجرا:
+docker compose exec app node dist-server/backup.mjs
+```
+
+پشتیبان در `data/backups` یا `BACKUP_DIR` قرار می‌گیرد. فایل را در محل امن خارج از سرور هم نگهداری کنید؛ پشتیبان داخل همان volume در برابر خرابی سرور کافی نیست.
+
+برای بازیابی کامل، سرویس را متوقف کنید، از فایل فعلی نیز پشتیبان بگیرید، فایل SQLite پشتیبان را به مسیر `DATABASE_PATH` برگردانید و فایل‌های جانبی قدیمی `-wal` و `-shm` را فقط در حالت خاموش بودن سرویس کنار بگذارید. مالکیت فایل باید با کاربر اجرای برنامه سازگار باشد. سپس سرویس را دوباره اجرا کنید.
+
+## رفتار آفلاین و همگام‌سازی
+
+اولین بار، برنامه را آنلاین از HTTPS یا localhost باز کنید. Service Worker پوسته برنامه، فونت وزیرمتن و آیکون‌ها را ذخیره می‌کند. آخرین فهرست دریافت‌شده از سرور در IndexedDB نگه داشته می‌شود و در صورت در دسترس نبودن IndexedDB، LocalStorage نقش جایگزین دارد.
+
+- مطالعه، جست‌وجو، نشانک‌ها و بررسی نسخه در حالت آفلاین کار می‌کنند.
+- مدیریت و ویرایش به سرور نیاز دارند؛ هیچ تغییر آفلاینی به‌عنوان تغییر موفق سرور نمایش داده نمی‌شود.
+- API مرجع، منبع اصلی داده است؛ اطلاعات مرورگر فقط نسخه مطالعه آفلاین است.
+- عنوان وضعیت نشان می‌دهد داده از سرور دریافت شده یا نسخه ذخیره‌شده نمایش داده می‌شود.
+- شرایط بیمار و عملکرد کلیه در حافظه همان صفحه‌اند. تنها شناسه داروهای نسخه و نشانک‌ها روی دستگاه حفظ می‌شوند. اطلاعات هویتی بیمار جمع‌آوری نمی‌شود.
+- نصب روی Android/Chrome از منوی نصب برنامه و روی iOS از افزودن به صفحه اصلی انجام می‌شود. بازشدن آفلاین در Chromium آزموده شده؛ نصب روی سخت‌افزار واقعی iOS و Android همچنان باید در محیط نهایی بررسی شود.
+
+## رابط فارسی و محتوا
+
+- رابط فارسی RTL با فونت محلی `Vazirmatn Variable`؛ فایل‌های فونت از CDN دریافت نمی‌شوند.
+- نام فارسی دارو همراه با نام ژنریک انگلیسی و برندهای علمی نمایش داده می‌شود. حروف ی/ک عربی و فارسی و نیم‌فاصله در جست‌وجو همسان‌سازی می‌شوند.
+- اعداد شمارشی فارسی و تاریخ‌ها بر اساس تقویم فارسی نمایش داده می‌شوند؛ شناسه‌ها، نام کلاس‌های علمی و آستانه‌های محاسباتی در داده استاندارد باقی می‌مانند.
+- کامپوننت‌های مشترک برای دکمه، دکمه آیکونی، جست‌وجو، پیام، حالت خالی، برچسب خطر، کارت دارو و مودال ساخته شده‌اند.
+- ناوبری موبایل، وضعیت بارگذاری و قطع ارتباط، خطای ورود، محافظت از فرم تغییرکرده و تأیید حذف/جایگزینی پیاده شده‌اند.
+- محتوای اصلی ۱۵ دارو و متن توصیه‌ها، دلایل، تداخل‌ها و جایگزین‌ها فارسی است.
+
+`src/data/seed.json` نسخه اصلی انگلیسی سند است. `src/data/seed.fa.json` نسخه فارسی و اصلاح‌شده مورد استفاده برنامه است. دوز ثابت تأییدنشده ترامادول از راهنمای کلیوی حذف شده و دیفن‌هیدرامین از شمارش کلاس‌های CNS جدول ۵ خارج شده؛ هشدار آنتی‌کولینرژیک آن باقی است. انتخاب دوز دقیق، مدت درمان و جایگزین همچنان به ارزیابی بالینی نیاز دارد.
+
+این محتوا همه معیارهای بیرز را پوشش نمی‌دهد و محصول رسمی AGS نیست. ترجمه و داده بالینی قبل از استفاده برای مراقبت بیمار نیازمند بازبینی متخصص است. منبع: [مقاله رسمی معیارهای بیرز ۲۰۲۳](https://doi.org/10.1111/jgs.18372).
+
+## آزمون‌ها
 
 ```sh
 npm test
 npm run build
-npm run preview
+npm run test:e2e
 ```
 
-The compiled static application is in `dist/`. Deploy that directory to an HTTPS static host with SPA fallback to `index.html`. No server, API credentials, or database service is required. The included Sites configuration identifies the private preview created for this project; remove that association before registering an independent Site.
+برای تست مرورگر در محیط بدون Chrome:
 
-## Offline installation
+```sh
+npx playwright install --with-deps chromium
+npm run test:e2e
+```
 
-Service workers are generated for the production build, not the development server. Open the production URL online once and wait for “Available offline.” Install through the browser's app-install menu on desktop or Add to Home Screen on iOS. The service worker precaches HTML, JavaScript, CSS and icons. Local registry data is stored in IndexedDB, with LocalStorage used if IndexedDB cannot initialize. The app does not cache any remote clinical API.
+تست‌های مرورگر از دیتابیس و حساب آزمایشی موقت جداگانه استفاده می‌کنند؛ داده و رمز واقعی شما را تغییر نمی‌دهند. گزارش HTML در `playwright-report` و تصاویر بررسی رابط در `artifacts` تولید می‌شود.
 
-To verify on a deployment: load the app once, wait for offline readiness, close it, disable the network, reopen it and exercise search, monographs, bookmarks, the regimen and CMS. Browser/device offline restart and installation behavior still require acceptance testing; build verification alone does not prove that flow. Private hosted authentication may require connectivity on first access or when authentication expires. For controlled clinical deployment, use an organization-managed HTTPS static host.
+پوشش شامل منطق تداخل، مرزهای کلیوی، بار تجمعی، پایگاه داده محلی، API، ورود و خروج، CSRF، نشست منقضی، محدودیت ورود، ویرایش هم‌زمان، CMS، نشانک، نمای موبایل، فونت محلی و راه‌اندازی مجدد آفلاین است. بررسی دسترس‌پذیری خودکار با axe برای صفحات اصلی انجام می‌شود؛ این بررسی جایگزین تمام آزمون‌های دستی دسترس‌پذیری نیست.
 
-Browser storage is device/profile/origin specific. Clearing site data, private browsing or storage eviction may remove edits. Export backups regularly. Storage failures are surfaced rather than silently claiming to save. An intentionally empty registry stays empty and is not automatically reseeded.
+## ساختار پروژه
 
-## Registry and CMS
+| مسیر                                      | مسئولیت                                             |
+| ----------------------------------------- | --------------------------------------------------- |
+| `src/components/ui/Primitives.tsx`        | کامپوننت‌های شخصی‌سازی‌شده و مشترک                  |
+| `src/components/Admin.tsx`                | مدیریت، فرم دارو، رمز عبور و تاریخچه                |
+| `src/components/Login.tsx`                | فرم ورود فارسی                                      |
+| `src/components/Checker.tsx`              | ورودی‌های بالینی و گزارش نسخه                       |
+| `src/lib/fa.ts`                           | واژه‌نامه، نمایش فارسی و جست‌وجو                    |
+| `src/services/api.ts`                     | ارتباط با سرور و مدیریت نسخه/CSRF                   |
+| `src/services/checker.ts`                 | موتور مستقل بررسی دارویی                            |
+| `src/services/db.ts`                      | کش آفلاین و اعتبارسنجی پشتیبان                      |
+| `server/app.ts`                           | API، احراز هویت، تراکنش‌ها و دیتابیس                |
+| `server/index.ts`                         | تنظیمات و راه‌اندازی سرور                           |
+| `scripts`                                 | راه‌اندازی، ساخت بک‌اند، بازیابی رمز و پشتیبان‌گیری |
+| `Dockerfile`, `compose.yaml`, `Caddyfile` | استقرار و HTTPS                                     |
 
-Use Admin CMS to create, edit, duplicate or delete records. Forms support all supplied schema fields, brand tags, custom therapeutic categories, explicit interaction classes, dynamic drug and disease interactions, renal rules, evidence, flags, alternatives and source notes. Class tags permit newly added medicines to participate in class matching.
-
-Export creates a versioned JSON backup with medications and an export timestamp. Import supports that format or a legacy bare array, validates every record and unique IDs, previews the replacement count, and requires confirmation before replacing the registry. Invalid imports leave the existing registry unchanged. Reset restores the shipped seed. The CMS is intentionally local and has no authentication; users sharing a browser profile share access to its registry.
-
-## Regimen behavior
-
-- Patient-independent Table 2 and Table 4 guidance is presented as conditional recommendations, including exceptions supplied in the registry.
-- Each medication pair is checked in both directions, with one combined result per pair. Known class membership and explicit admin tags support class targets. Generic-name and brand matching do not equate an entire therapeutic specialty with a specific pharmacologic class.
-- Opioid/benzodiazepine and opioid/gabapentinoid combinations have explicit additional screening. Dual RAS blockade prompts contextual review; it is not asserted to be universally contraindicated.
-- Two or more strong anticholinergic flags and three or more CNS-active flags trigger cumulative burden alerts. Repeated IDs do not inflate the counts.
-- CrCl and eGFR are separate inputs. Missing, invalid or unsupported renal data produces an incomplete-check notice. Rules support strict/inclusive comparison operators and inclusive ranges. No renal measure is inferred from the other.
-- Disease aliases normalize BPH, dementia/cognitive impairment, falls/fractures, urinary incontinence and Parkinson disease.
-- Patient conditions and renal values remain in memory. Bookmarks and medication IDs persist locally; no patient identifiers are collected.
-- “No recorded alerts triggered” does not mean a regimen is safe. Unregistered medicines, unknown classes, absent rules, indications, dose, duration, sex-specific applicability and some exceptions require clinical review. The seed includes only one renal rule per medication; contextual dose adjustments elsewhere in narrative guidance are not automatically parsed.
-
-## Clinical provenance and release status
-
-The supplied document is a product specification and seed source, not independently validated clinical evidence. `src/data/seed.json` preserves all 15 supplied records, including Iranian brands, alternatives, dosing and flags. The UI identifies the registry as a starter reference requiring clinical review; it is not an official AGS product or a complete implementation of the Beers Criteria.
-
-Authoritative reference: [American Geriatrics Society 2023 updated AGS Beers Criteria](https://doi.org/10.1111/jgs.18372). [AGS pocket guide](https://aging.rush.edu/wp-content/uploads/2023/10/AGS-Beers-Pocket-Guide-2023.pdf).
-
-Clinical release requires qualified review of each supplied recommendation, evidence rating, interaction, alternative, brand and dose. Known review points include the supplied tramadol renal dose, the diphenhydramine CNS-active flag relative to Table 5 classes, and indication-specific anticoagulant advice. The raw input is preserved in `seed.json`. `seedData.ts` removes the unsupported fixed tramadol renal dose and excludes diphenhydramine from the Table 5 CNS class count while retaining its anticholinergic flag and warnings. Both corrections are noted in the monographs; the remaining supplied guidance still requires review. Do not use the seed as a validated prescribing authority. Drug changes and deprescribing require clinical judgment.
-
-## Source structure
-
-- `src/App.tsx`: navigation, library, filters, monographs and persistent bookmarks/regimen IDs.
-- `src/components/Checker.tsx`: clinical inputs and live audit presentation.
-- `src/components/Admin.tsx`: CMS, modular editor and backup flows.
-- `src/components/Modal.tsx`: native modal dialog with focus restoration and Escape handling.
-- `src/services/checker.ts`: pure regimen screening and renal-rule parsing.
-- `src/services/db.ts`: persistence, schema validation and transactional whole-registry replacement.
-- `src/types/types.ts`: TypeScript types and Zod runtime schemas.
-- `src/data/seed.json`, `src/data/seedData.ts`: supplied clinical content and validation.
-- `src/styles.css`: responsive clinical design, including mobile bottom navigation.
-- `vite.config.ts`: React, Tailwind and PWA setup.
-
-## Validation
-
-Automated tests cover clinical pairing and class matching, cumulative thresholds, repeated IDs, renal boundaries and missing metrics, disease aliases, invalid JSON and duplicate IDs, plus IndexedDB create/update/delete/reset, backup round trips and empty-registry persistence. Production build includes TypeScript checking and generated service-worker precache output. Browser visual, accessibility, install and offline-restart acceptance testing remains outstanding.
->>>>>>> 4094b90 (Implement GeriaPharm offline clinical reference and regimen workspace)
+مجوز فونت وزیرمتن در `public/fonts/OFL.txt` موجود است. فونت تحت SIL Open Font License ارائه می‌شود.

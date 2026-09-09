@@ -1,3 +1,4 @@
+import { drugName, fa, labels, normalizeFa, number } from "../lib/fa";
 import type { DrugRecord } from "../types/types";
 export const conditions = [
   "Heart Failure",
@@ -10,11 +11,16 @@ export const conditions = [
   "BPH / LUTS in men",
   "Syncope",
 ];
-const normalize = (s: string) =>
-  s
+const normalize = (s: string) => {
+  const canonical =
+    Object.entries(labels).find(
+      ([, v]) => normalizeFa(v) === normalizeFa(s),
+    )?.[0] ?? s;
+  return canonical
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
     .trim();
+};
 const classMembers: Record<string, string[]> = {
   ssris: [
     "sertraline",
@@ -87,7 +93,7 @@ export function matchesTarget(target: string, d: DrugRecord) {
   if (t.includes("anticholinergic") && d.isStrongAnticholinergic) return true;
   const base = name.split(" ")[0];
   return (
-    new RegExp(`(?:^| )${base}(?: |$)`).test(t) ||
+    (!!base && new RegExp(`(?:^| )${base}(?: |$)`).test(t)) ||
     classesFor(d).some((c) => t.includes(c)) ||
     d.brandNamesIran.some((b) => normalize(b) === t)
   );
@@ -158,7 +164,7 @@ export function auditRegimen(
         severity: d.beersCategories.includes("PIM_GENERAL")
           ? "avoid"
           : "caution",
-        title: d.genericName,
+        title: drugName(d),
         detail: d.recommendation,
         action: d.rationale,
       });
@@ -171,10 +177,10 @@ export function auditRegimen(
         push({
           id: d.id + "disease" + i,
           type: "Disease",
-          severity: r.recommendation.toLowerCase().includes("avoid")
+          severity: /avoid|پرهیز/.test(r.recommendation.toLowerCase())
             ? "avoid"
             : "caution",
-          title: d.genericName + " · " + r.condition,
+          title: drugName(d) + " · " + fa(r.condition),
           detail: r.rationale,
           action: r.recommendation,
         });
@@ -187,17 +193,21 @@ export function auditRegimen(
           id: d.id + "renal-review",
           type: "Review needed",
           severity: "info",
-          title: d.genericName + " · renal assessment incomplete",
+          title: drugName(d) + " · ارزیابی کلیوی کامل نیست",
           detail: rule
-            ? "Enter " + rule.metric + " to assess " + r.threshold + "."
-            : "Unrecognized threshold: " + r.threshold + ". Review manually.",
+            ? "برای بررسی آستانه " +
+              r.threshold +
+              "، مقدار " +
+              rule.metric +
+              " را وارد کنید."
+            : "آستانه ناشناخته است: " + r.threshold + "؛ بررسی دستی لازم است.",
         });
       else if (rule.test(value))
         push({
           id: d.id + "renal",
           type: "Renal",
           severity: r.action === "Avoid" ? "avoid" : "caution",
-          title: d.genericName + " · " + r.threshold,
+          title: drugName(d) + " · " + r.threshold,
           detail: r.guidance,
           action: r.rationale,
         });
@@ -228,18 +238,18 @@ export function auditRegimen(
           severity: "Avoid",
           targetDrugOrClass: "CNS depressants",
           rationale:
-            "Concurrent CNS depressants can increase sedation and respiratory depression.",
+            "همراهی داروهای تضعیف‌کننده سیستم عصبی مرکزی می‌تواند خواب‌آلودگی و سرکوب تنفسی را افزایش دهد.",
           clinicalAction:
-            "Review combination and indication, including any supervised transition or opioid-reduction plan.",
+            "ترکیب و اندیکاسیون را بررسی کنید؛ تغییر درمان یا کاهش اپیوئید باید تحت نظر باشد.",
         });
       if (ca.includes("ras inhibitors") && cb.includes("ras inhibitors"))
         push({
           id: a.id + b.id + "ras",
           type: "Review needed",
           severity: "caution",
-          title: a.genericName + " + " + b.genericName,
+          title: drugName(a) + " + " + drugName(b),
           detail:
-            "Dual renin–angiotensin system blockade: review indication, kidney disease status, potassium and renal function.",
+            "مهار دوگانه سامانه رنین–آنژیوتانسین: اندیکاسیون، بیماری کلیوی، پتاسیم و عملکرد کلیه را بررسی کنید.",
         });
       if (rules.length)
         push({
@@ -248,7 +258,7 @@ export function auditRegimen(
           severity: rules.some((r) => r.severity === "Avoid")
             ? "avoid"
             : "caution",
-          title: a.genericName + " + " + b.genericName,
+          title: drugName(a) + " + " + drugName(b),
           detail: [...new Set(rules.map((r) => r.rationale))].join(" "),
           action: [...new Set(rules.map((r) => r.clinicalAction))].join(" "),
         });
@@ -260,20 +270,20 @@ export function auditRegimen(
       id: "anti",
       type: "Cumulative load",
       severity: "avoid",
-      title: "High anticholinergic burden · " + anti.length + " medications",
-      detail: anti.map((d) => d.genericName).join(", "),
+      title: "بار آنتی‌کولینرژیک بالا · " + number(anti.length) + " دارو",
+      detail: anti.map(drugName).join("، "),
       action:
-        "Review cumulative anticholinergic exposure and minimize concurrent use.",
+        "مواجهه تجمعی با آنتی‌کولینرژیک‌ها را بررسی و مصرف هم‌زمان را به حداقل برسانید.",
     });
   if (cns.length >= 3)
     push({
       id: "cns",
       type: "Cumulative load",
       severity: "avoid",
-      title: "CNS cumulative load · " + cns.length + " medications",
-      detail: cns.map((d) => d.genericName).join(", "),
+      title: "بار تجمعی سیستم عصبی مرکزی · " + number(cns.length) + " دارو",
+      detail: cns.map(drugName).join("، "),
       action:
-        "Review sedation, falls and fracture risk. Counts use registry flags; verify drug classes against Table 5.",
+        "خطر خواب‌آلودگی، سقوط و شکستگی را بررسی کنید. شمارش بر اساس پرچم‌های فهرست است؛ کلاس‌ها را با جدول ۵ تطبیق دهید.",
     });
   return alerts;
 }

@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-server
+.git
+.env
+.env.*
+/data
+artifacts
+test-results
+playwright-report
+.openai
+*.tsbuildinfo

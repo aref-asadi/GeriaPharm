@@ -1,5 +1,6 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useId, type ReactNode } from "react";
 import { X } from "lucide-react";
+import { IconButton } from "./ui/Primitives";
 export function Modal({
   title,
   onClose,
@@ -11,7 +12,8 @@ export function Modal({
   children: ReactNode;
   wide?: boolean;
 }) {
-  const ref = useRef<HTMLDialogElement>(null);
+  const ref = useRef<HTMLDialogElement>(null),
+    id = useId();
   useEffect(() => {
     const prev = document.activeElement as HTMLElement;
     ref.current?.showModal();
@@ -23,23 +25,19 @@ export function Modal({
   }, []);
   return (
     <dialog
-      className={wide ? "modal wide" : "modal"}
+      className={`modal ${wide ? "wide" : ""}`}
       ref={ref}
-      onCancel={onClose}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
       }}
-      aria-labelledby="modal-title"
+      aria-labelledby={id}
     >
       <div className="modal-head">
-        <h2 id="modal-title">{title}</h2>
-        <button
-          className="icon-button"
-          onClick={onClose}
-          aria-label="Close dialog"
-        >
-          <X />
-        </button>
+        <h2 id={id}>{title}</h2>
+        <IconButton label="بستن پنجره" onClick={onClose}>
+          <X size={21} />
+        </IconButton>
       </div>
       {children}
     </dialog>
