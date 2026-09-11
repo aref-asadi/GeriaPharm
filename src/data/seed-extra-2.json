@@ -1,0 +1,838 @@
+[
+  {
+    "id": "glimepiride",
+    "genericName": "Glimepiride",
+    "brandNamesIran": ["Amaryl", "Glimepiride Abidi", "Glimepiride Sobhan"],
+    "therapeuticCategory": "Endocrine",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از سولفونیل‌اوره‌ها به‌عنوان خط اول یا دوم درمان دیابت در سالمندان پرهیز کنید؛ در صورت ضرورت، عوامل کوتاه‌اثر ترجیح دارند.",
+    "rationale": "خطر هیپوگلیسمی شدید و طولانی‌مدت بالاتر از داروهای جدیدتر دیابت؛ در سالمندان و نارسایی کلیه خطر بیشتر است.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "متفورمین با ارزیابی عملکرد کلیه",
+      "مهارکننده DPP-4 مانند لیناگلیپتین",
+      "مهارکننده SGLT2 یا آگونیست GLP-1 با ارزیابی مناسب"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "گلیمپیرید"
+  },
+  {
+    "id": "gliclazide",
+    "genericName": "Gliclazide",
+    "brandNamesIran": ["Diamicron", "Gliclazide Sobhan", "Gliclazide Abidi"],
+    "therapeuticCategory": "Endocrine",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از سولفونیل‌اوره‌ها به‌عنوان خط اول یا دوم درمان دیابت در سالمندان پرهیز کنید؛ در صورت ضرورت، گلیکلازید از عوامل کوتاه‌اثر و ارجح‌تر است.",
+    "rationale": "خطر هیپوگلیسمی شدید نسبت به داروهای جدیدتر بیشتر است؛ عوامل کوتاه‌اثر کم‌خطرتر از عوامل طولانی‌اثر هستند.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "متفورمین با ارزیابی عملکرد کلیه",
+      "مهارکننده DPP-4",
+      "مهارکننده SGLT2 با پایش"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "گلیکلازید"
+  },
+  {
+    "id": "glipizide",
+    "genericName": "Glipizide",
+    "brandNamesIran": ["Glipizide Sobhan", "Glucotrol"],
+    "therapeuticCategory": "Endocrine",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از سولفونیل‌اوره‌ها به‌عنوان خط اول یا دوم درمان دیابت در سالمندان پرهیز کنید؛ در صورت ضرورت، گلیپیزاید کوتاه‌اثر از گزینه‌های کم‌خطرتر این گروه است.",
+    "rationale": "خطر هیپوگلیسمی شدید؛ در صورت اجتناب‌ناپذیر بودن سولفونیل‌اوره، عوامل کوتاه‌اثر مانند گلیپیزاید ترجیح دارند.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": false,
+    "saferAlternatives": [
+      "متفورمین با ارزیابی عملکرد کلیه",
+      "مهارکننده DPP-4",
+      "مهارکننده SGLT2 با پایش"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "گلیپیزاید"
+  },
+  {
+    "id": "empagliflozin",
+    "genericName": "Empagliflozin",
+    "brandNamesIran": ["Jardiance", "Empagliflozin Abidi"],
+    "therapeuticCategory": "Endocrine",
+    "beersCategories": ["USE_WITH_CAUTION"],
+    "recommendation": "با احتیاط مصرف شود؛ عفونت ادراری‌تناسلی، کاهش حجم و کتواسیدوز یوگلیسمیک را پایش کنید.",
+    "rationale": "در سالمندان خطر عفونت قارچی تناسلی، هیپوولمی و کتواسیدوز دیابتی با قند طبیعی بیشتر است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Weak",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مهارکننده DPP-4",
+      "آگونیست GLP-1 در صورت تحمل"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "امپاگلیفلوزین"
+  },
+  {
+    "id": "pantoprazole",
+    "genericName": "Pantoprazole",
+    "brandNamesIran": ["Pantoprazole Abidi", "Controloc", "Pantoprazole Sobhan"],
+    "therapeuticCategory": "Gastrointestinal",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از مصرف برنامه‌ریزی‌شده بیش از ۸ هفته پرهیز کنید، مگر برای اندیکاسیون‌های مستند پرخطر (مصرف مزمن NSAID/کورتیکواستروئید، خونریزی گوارشی قبلی، مری بارت).",
+    "rationale": "مصرف طولانی‌مدت با خطر عفونت C. difficile، پنومونی، شکستگی لگن و هیپومنیزیمی همراه است.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "کاهش دوز، قطع پلکانی یا مصرف در صورت نیاز",
+      "فاموتیدین با تنظیم دوز کلیوی"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "پنتوپرازول"
+  },
+  {
+    "id": "esomeprazole",
+    "genericName": "Esomeprazole",
+    "brandNamesIran": ["Nexium", "Esomeprazole Abidi", "Esomeprazole Bakhtar Bioshimi"],
+    "therapeuticCategory": "Gastrointestinal",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از مصرف برنامه‌ریزی‌شده بیش از ۸ هفته پرهیز کنید، مگر برای اندیکاسیون‌های مستند پرخطر.",
+    "rationale": "مصرف طولانی‌مدت با خطر عفونت C. difficile، پنومونی، شکستگی لگن و هیپومنیزیمی همراه است.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "کاهش دوز، قطع پلکانی یا مصرف در صورت نیاز",
+      "فاموتیدین با تنظیم دوز کلیوی"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "زومپرازول"
+  },
+  {
+    "id": "lansoprazole",
+    "genericName": "Lansoprazole",
+    "brandNamesIran": ["Lansoprazole Abidi", "Lanzor"],
+    "therapeuticCategory": "Gastrointestinal",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از مصرف برنامه‌ریزی‌شده بیش از ۸ هفته پرهیز کنید، مگر برای اندیکاسیون‌های مستند پرخطر.",
+    "rationale": "مصرف طولانی‌مدت با خطر عفونت C. difficile، پنومونی، شکستگی لگن و هیپومنیزیمی همراه است.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "کاهش دوز، قطع پلکانی یا مصرف در صورت نیاز",
+      "فاموتیدین با تنظیم دوز کلیوی"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "لانزوپرازول"
+  },
+  {
+    "id": "hyoscine",
+    "genericName": "Hyoscine (Scopolamine)",
+    "brandNamesIran": ["Hyoscine Darou Pakhsh", "Buscopan", "Hyoscine Sobhan"],
+    "therapeuticCategory": "Gastrointestinal",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از آنتی‌کولینرژیک‌های قوی مانند هیوسین در سالمندان پرهیز کنید؛ به‌ویژه در مردان با بزرگی پروستات.",
+    "rationale": "خطر گیجی، خشکی دهان، احتباس ادرار، یبوست شدید و تشدید گلوکوم زاویه‌بسته.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "پپریدین/دومپریدون برای اسپاسم گوارشی با احتیاط",
+      "مداخلات غیردارویی و اصلاح رژیم"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "hyoscine-ddi-0",
+        "targetDrugOrClass": "Anticholinergic agents (Table 7)",
+        "severity": "Avoid",
+        "rationale": "افزایش بار آنتی‌کولینرژیک تجمعی.",
+        "clinicalAction": "مصرف هم‌زمان را به حداقل برسانید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "خطر ایجاد یا تشدید دلیریوم حاد."
+      },
+      {
+        "condition": "Dementia",
+        "recommendation": "Avoid",
+        "rationale": "تشدید اختلال شناختی."
+      },
+      {
+        "condition": "BPH / LUTS in men",
+        "recommendation": "Avoid",
+        "rationale": "خطر احتباس حاد ادرار."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "هیوسین (اسکوپولامین)"
+  },
+  {
+    "id": "dicyclomine",
+    "genericName": "Dicyclomine",
+    "brandNamesIran": ["Dicyclomine Iran Hormone", "Bentyl"],
+    "therapeuticCategory": "Gastrointestinal",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از آنتی‌کولینرژیک‌های قوی مانند دی‌سیکلومین در سالمندان پرهیز کنید.",
+    "rationale": "اثر آنتی‌کولینرژیک قوی با خطر گیجی، احتباس ادرار و یبوست شدید.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "پپریدین با احتیاط",
+      "مداخلات غیردارویی سندرم روده تحریک‌پذیر"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "خطر ایجاد یا تشدید دلیریوم."
+      },
+      {
+        "condition": "BPH / LUTS in men",
+        "recommendation": "Avoid",
+        "rationale": "خطر احتباس حاد ادرار."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "دی‌سیکلومین"
+  },
+  {
+    "id": "clidinium-c",
+    "genericName": "Clidinium-C (Clidinium + Chlordiazepoxide)",
+    "brandNamesIran": ["Librax", "Clidinium-C Sobhan"],
+    "therapeuticCategory": "Gastrointestinal",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از ترکیب کلیدینیوم و کندیازپوکساید (لیبراکس) در سالمندان پرهیز کنید.",
+    "rationale": "ترکیب آنتی‌کولینرژیک قوی با بنزودیازپین؛ خطر تجمعی گیجی، دلیریوم، احتباس ادرار و سقوط.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مداخلات غیردارویی برای علائم گوارشی عملکردی",
+      "در صورت ضرورت، اجزای جداگانه با ارزیابی خطر"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "clidinium-c-ddi-0",
+        "targetDrugOrClass": "Anticholinergic agents (Table 7)",
+        "severity": "Avoid",
+        "rationale": "افزایش بار آنتی‌کولینرژیک تجمعی.",
+        "clinicalAction": "مصرف هم‌زمان را به حداقل برسانید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "خطر ایجاد یا تشدید دلیریوم."
+      },
+      {
+        "condition": "BPH / LUTS in men",
+        "recommendation": "Avoid",
+        "rationale": "خطر احتباس حاد ادرار."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "کلیدینیوم-سی (لیبراکس)"
+  },
+  {
+    "id": "ibuprofen",
+    "genericName": "Ibuprofen",
+    "brandNamesIran": ["Ibuprofen Abidi", "Brufen", "Ibuprofen Sobhan"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "RENAL_ADJUSTMENT"],
+    "recommendation": "از مصرف مزمن NSAIDهای غیرانتخابی خوراکی در سالمندان پرهیز کنید، مگر با گاستروپروتکتانت و در صورت نبود گزینه جایگزین؛ کوتاه‌مدت‌ترین دوره ممکن.",
+    "rationale": "خطر خونریزی گوارشی، آسیب حاد کلیه، احتباس مایع و تشدید فشار خون و نارسایی قلبی.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "استامینوفن با سقف دوز مناسب",
+      "NSAID موضعی (ژل دیکلوفناک)",
+      "مداخلات غیردارویی درد"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "ibuprofen-ddi-0",
+        "targetDrugOrClass": "Anticoagulants (Warfarin, DOACs, Heparin)",
+        "severity": "Avoid",
+        "rationale": "افزایش خطر خونریزی گوارشی و سیستمیک.",
+        "clinicalAction": "از ترکیب پرهیز کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Heart Failure",
+        "recommendation": "Avoid",
+        "rationale": "احتباس سدیم و مایع و تشدید نارسایی قلبی."
+      },
+      {
+        "condition": "Peptic Ulcer Disease",
+        "recommendation": "Avoid",
+        "rationale": "تشدید زخم و خطر خونریزی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۳۰ از مصرف پرهیز شود.",
+      "rationale": "خطر آسیب حاد کلیه و تجمع مایعات در نارسایی کلیه."
+    },
+    "genericNameFa": "ایبوپروفن"
+  },
+  {
+    "id": "naproxen",
+    "genericName": "Naproxen",
+    "brandNamesIran": ["Naproxen Abidi", "Naproxen Sobhan", "Proxen"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "RENAL_ADJUSTMENT"],
+    "recommendation": "از مصرف مزمن NSAIDهای غیرانتخابی خوراکی در سالمندان پرهیز کنید، مگر با گاستروپروتکتانت و در صورت نبود گزینه جایگزین.",
+    "rationale": "خطر خونریزی گوارشی، آسیب حاد کلیه، احتباس مایع و تشدید فشار خون و نارسایی قلبی.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "استامینوفن با سقف دوز مناسب",
+      "NSAID موضعی",
+      "مداخلات غیردارویی درد"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Heart Failure",
+        "recommendation": "Avoid",
+        "rationale": "احتباس سدیم و مایع."
+      },
+      {
+        "condition": "Peptic Ulcer Disease",
+        "recommendation": "Avoid",
+        "rationale": "تشدید زخم و خطر خونریزی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۳۰ از مصرف پرهیز شود.",
+      "rationale": "خطر آسیب حاد کلیه در نارسایی کلیه."
+    },
+    "genericNameFa": "ناپروکسن"
+  },
+  {
+    "id": "diclofenac",
+    "genericName": "Diclofenac",
+    "brandNamesIran": ["Diclofenac Sobhan", "Voltaren", "Diclofenac Arya"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "RENAL_ADJUSTMENT"],
+    "recommendation": "از مصرف مزمن خوراکی پرهیز کنید؛ شکل موضعی ژل برای درد موضعی گزینه کم‌خطرتری است.",
+    "rationale": "خطر خونریزی گوارشی، حوادث قلبی‌عروقی، آسیب کلیه و احتباس مایع.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "ژل موضعی دیکلوفناک برای درد موضعی",
+      "استامینوفن با سقف دوز مناسب"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Heart Failure",
+        "recommendation": "Avoid",
+        "rationale": "احتباس سدیم و مایع و تشدید نارسایی قلبی."
+      },
+      {
+        "condition": "Peptic Ulcer Disease",
+        "recommendation": "Avoid",
+        "rationale": "تشدید زخم و خطر خونریزی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۳۰ از مصرف خوراکی پرهیز شود.",
+      "rationale": "خطر آسیب حاد کلیه."
+    },
+    "genericNameFa": "دیکلوفناک"
+  },
+  {
+    "id": "meloxicam",
+    "genericName": "Meloxicam",
+    "brandNamesIran": ["Mobic", "Meloxicam Sobhan", "Meloxicam Abidi"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "RENAL_ADJUSTMENT"],
+    "recommendation": "از مصرف مزمن NSAIDهای خوراکی در سالمندان پرهیز کنید، مگر با گاستروپروتکتانت و در صورت نبود گزینه جایگزین.",
+    "rationale": "خطر خونریزی گوارشی، آسیب کلیه و احتباس مایع؛ انتخاب‌پذیری COX-2 نسبی است و خطر قلبی‌عروقی را حذف نمی‌کند.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "استامینوفن با سقف دوز مناسب",
+      "NSAID موضعی",
+      "مداخلات غیردارویی درد"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Heart Failure",
+        "recommendation": "Avoid",
+        "rationale": "احتباس سدیم و مایع."
+      },
+      {
+        "condition": "Peptic Ulcer Disease",
+        "recommendation": "Avoid",
+        "rationale": "تشدید زخم و خطر خونریزی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۳۰ از مصرف پرهیز شود.",
+      "rationale": "خطر آسیب حاد کلیه."
+    },
+    "genericNameFa": "ملوکسیکام"
+  },
+  {
+    "id": "piroxicam",
+    "genericName": "Piroxicam",
+    "brandNamesIran": ["Feldene", "Piroxicam Iran Hormone", "Piroxicam Sobhan"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "RENAL_ADJUSTMENT"],
+    "recommendation": "از مصرف پیروکسیکام در سالمندان پرهیز کنید؛ نیمه‌عمر طولانی و نمایه عوارض گوارشی بدتر از سایر NSAIDها است.",
+    "rationale": "نیمه‌عمر طولانی، خطر خونریزی گوارشی و آسیب کلیه بالا؛ برای سالمندان نامناسب است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "استامینوفن با سقف دوز مناسب",
+      "NSAID موضعی",
+      "مداخلات غیردارویی درد"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Peptic Ulcer Disease",
+        "recommendation": "Avoid",
+        "rationale": "تشدید زخم و خطر خونریزی شدید."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۳۰ از مصرف پرهیز شود.",
+      "rationale": "خطر آسیب حاد کلیه."
+    },
+    "genericNameFa": "پیروکسیکام"
+  },
+  {
+    "id": "celecoxib",
+    "genericName": "Celecoxib",
+    "brandNamesIran": ["Celebrex", "Celecoxib Arya", "Celecoxib Sobhan"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["DRUG_DISEASE", "RENAL_ADJUSTMENT"],
+    "recommendation": "با احتیاط مصرف شود؛ در بیماران با خطر قلبی‌عروقی یا نارسایی قلبی از مصرف پرهیز کنید. در صورت مصرف طولانی، گاستروپروتکتانت را بررسی کنید.",
+    "rationale": "انتخاب‌پذیری COX-2 خطر گوارشی را کم می‌کند اما خطر حوادث قلبی‌عروقی و آسیب کلیه باقی می‌ماند.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "استامینوفن با سقف دوز مناسب",
+      "NSAID موضعی",
+      "مداخلات غیردارویی درد"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Heart Failure",
+        "recommendation": "Avoid",
+        "rationale": "احتباس سدیم و مایع و تشدید نارسایی قلبی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۳۰ از مصرف پرهیز شود.",
+      "rationale": "خطر آسیب حاد کلیه."
+    },
+    "genericNameFa": "سلکوکسیب"
+  },
+  {
+    "id": "ketorolac",
+    "genericName": "Ketorolac",
+    "brandNamesIran": ["Ketorolac Sobhan", "Toradol"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "RENAL_ADJUSTMENT"],
+    "recommendation": "از مصرف کتورولاک در سالمندان پرهیز کنید.",
+    "rationale": "در میان NSAIDها بیشترین خطر خونریزی گوارشی و آسیب حاد کلیه را دارد؛ حتی مصرف کوتاه‌مدت پرخطر است.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "استامینوفن وریدی یا خوراکی",
+      "مدیریت درد مبتنی بر پروتکل بدون NSAID"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Peptic Ulcer Disease",
+        "recommendation": "Avoid",
+        "rationale": "خطر شدید خونریزی گوارشی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۳۰ از مصرف پرهیز شود.",
+      "rationale": "خطر آسیب حاد کلیه."
+    },
+    "genericNameFa": "کتورولاک"
+  },
+  {
+    "id": "methocarbamol",
+    "genericName": "Methocarbamol",
+    "brandNamesIran": ["Methocarbamol Sobhan", "Robaxin"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از شل‌کننده‌های عضلانی در سالمندان پرهیز کنید.",
+    "rationale": "اثر ضدکولینرژیک، خواب‌آوری و خطر شکستگی ناشی از سقوط؛ اثربخشی در دوزهای قابل تحمل نامشخص است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": false,
+    "saferAlternatives": [
+      "فیزیوتراپی و توان‌بخشی",
+      "استامینوفن یا NSAID موضعی برای درد عضلانی"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "خطر سقوط و شکستگی با خواب‌آلودگی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "متوکاربامول"
+  },
+  {
+    "id": "morphine",
+    "genericName": "Morphine",
+    "brandNamesIran": ["Morphine Darou Pakhsh", "Morphine Sobhan"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["USE_WITH_CAUTION", "DRUG_INTERACTION", "DRUG_DISEASE"],
+    "recommendation": "با احتیاط مصرف شود؛ از متابولیت فعال مورفین در نارسایی کلیه اجتناب کنید و ترکیب با بنزودیازپین یا گاباپنتینوئید را بررسی کنید.",
+    "rationale": "متابولیت مورفین-۶-گلوکورونید در نارسایی کلیه تجمع یافته و خطر سرکوب تنفسی و دلیریوم را افزایش می‌دهد.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "بوپرنورفین یا فنتانیل با تنظیم دوز در نارسایی کلیه",
+      "مدیریت غیردارویی درد و استامینوفن"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "morphine-ddi-0",
+        "targetDrugOrClass": "Benzodiazepines",
+        "severity": "Avoid",
+        "rationale": "خطر سرکوب تنفسی شدید و مرگ.",
+        "clinicalAction": "از ترکیب پرهیز کنید."
+      },
+      {
+        "id": "morphine-ddi-1",
+        "targetDrugOrClass": "Gabapentinoids",
+        "severity": "Use with caution",
+        "rationale": "افزایش خطر آرام‌بخشی و سرکوب تنفسی.",
+        "clinicalAction": "دوز را کاهش و علائم را پایش کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "خطر سقوط و شکستگی با اپیوئیدها."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۳ و ۵). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "مورفین"
+  },
+  {
+    "id": "methadone",
+    "genericName": "Methadone",
+    "brandNamesIran": ["Methadone Darou Pakhsh", "Methadone Sobhan"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["USE_WITH_CAUTION", "DRUG_INTERACTION"],
+    "recommendation": "با احتیاط شدید مصرف شود؛ نیمه‌عمر متغیر، خطر تجمع و طولانی شدن QTc را در سالمندان پایش کنید.",
+    "rationale": "فارماکوکینتیک پیچیده، خطر مرگ ناشی از سرکوب تنفسی و آریتمی (طول QTc) در سالمندان بیشتر است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "اپیوئیدهای با پروفایل ایمن‌تر مانند بوپرنورفین پوستی",
+      "پایش ECG و علائم مسمومیت در صورت ضرورت"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "methadone-ddi-0",
+        "targetDrugOrClass": "Benzodiazepines",
+        "severity": "Avoid",
+        "rationale": "خطر سرکوب تنفسی شدید و مرگ.",
+        "clinicalAction": "از ترکیب پرهیز کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴ و ۵). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "متادون"
+  },
+  {
+    "id": "gabapentin",
+    "genericName": "Gabapentin",
+    "brandNamesIran": ["Gabapentin Sobhan", "Neurontin", "Gabapentin Bakhtar Bioshimi"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["USE_WITH_CAUTION", "RENAL_ADJUSTMENT", "DRUG_INTERACTION"],
+    "recommendation": "با احتیاط مصرف شود؛ دوز را بر اساس عملکرد کلیه تنظیم کنید و ترکیب با اپیوئیدها یا سایر داروهای تضعیف‌کننده CNS را ارزیابی کنید.",
+    "rationale": "دفع کلیوی کامل؛ در نارسایی کلیه تجمع و خطر آرام‌بخشی، گیجی و سقوط افزایش می‌یابد.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "تنظیم دوز بر اساس CrCl",
+      "پایش خواب‌آلودگی و تعادل در شروع درمان"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "gabapentin-ddi-0",
+        "targetDrugOrClass": "Opioids (Tramadol, Methadone, Morphine, Codeine)",
+        "severity": "Use with caution",
+        "rationale": "افزایش خطر سرکوب تنفسی و آرام‌بخشی شدید.",
+        "clinicalAction": "دوز را کاهش و علائم را پایش کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "خطر سقوط و شکستگی با گاباپنتینوئیدها."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴ و ۶). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 60 mL/min",
+      "action": "Dose Reduction",
+      "guidance": "دوز روزانه را بر اساس CrCl کاهش دهید (طبق جدول تنظیم دوز اطلاعات تجویز).",
+      "rationale": "دفع کامل کلیوی؛ تجمع دارو خطر سمیت عصبی و سقوط را افزایش می‌دهد."
+    },
+    "genericNameFa": "گاباپنتین"
+  },
+  {
+    "id": "pregabalin",
+    "genericName": "Pregabalin",
+    "brandNamesIran": ["Lyrica", "Pregabalin Sobhan", "Pregabalin Bakhtar Bioshimi"],
+    "therapeuticCategory": "Pain Medications",
+    "beersCategories": ["USE_WITH_CAUTION", "RENAL_ADJUSTMENT", "DRUG_INTERACTION"],
+    "recommendation": "با احتیاط مصرف شود؛ دوز را بر اساس عملکرد کلیه تنظیم کنید و ترکیب با اپیوئیدها یا سایر داروهای تضعیف‌کننده CNS را ارزیابی کنید.",
+    "rationale": "دفع کلیوی؛ در نارسایی کلیه تجمع و خطر گیجی، خواب‌آلودگی و سقوط افزایش می‌یابد.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "تنظیم دوز بر اساس CrCl",
+      "پایش خواب‌آلودگی و تعادل در شروع درمان"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "pregabalin-ddi-0",
+        "targetDrugOrClass": "Opioids (Tramadol, Methadone, Morphine, Codeine)",
+        "severity": "Use with caution",
+        "rationale": "افزایش خطر سرکوب تنفسی و آرام‌بخشی شدید.",
+        "clinicalAction": "دوز را کاهش و علائم را پایش کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "خطر سقوط و شکستگی با گاباپنتینوئیدها."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴ و ۶). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 60 mL/min",
+      "action": "Dose Reduction",
+      "guidance": "دوز روزانه را بر اساس CrCl کاهش دهید (طبق جدول تنظیم دوز اطلاعات تجویز).",
+      "rationale": "دفع کامل کلیوی؛ تجمع دارو خطر سمیت عصبی و سقوط را افزایش می‌دهد."
+    },
+    "genericNameFa": "پرگابالین"
+  },
+  {
+    "id": "ciprofloxacin",
+    "genericName": "Ciprofloxacin",
+    "brandNamesIran": ["Ciprofloxacin Sobhan", "Ciprofloxacin Abidi", "Cifran"],
+    "therapeuticCategory": "Anti-infective",
+    "beersCategories": ["USE_WITH_CAUTION", "RENAL_ADJUSTMENT", "DRUG_INTERACTION"],
+    "recommendation": "با احتیاط مصرف شود؛ در نارسایی کلیه دوز را تنظیم کنید و در صورت وجود گزینه، آنتی‌بیوتیک کم‌خطرتر را جایگزین کنید.",
+    "rationale": "خطر عوارض تاندون و نوروپاتی، طول QTc و تداخل با وارفارین؛ در نارسایی کلیه تجمع دارو.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "سفالوسپورین یا آنتی‌بیوتیک متناسب با کشت",
+      "در صورت ضرورت، تنظیم دوز کلیوی و پایش"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "ciprofloxacin-ddi-0",
+        "targetDrugOrClass": "Warfarin",
+        "severity": "Avoid",
+        "rationale": "افزایش INR و خطر خونریزی عمده.",
+        "clinicalAction": "پایش INR یا آنتی‌بیوتیک جایگزین."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴ و ۶). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Dose Reduction",
+      "guidance": "دوز را بر اساس CrCl کاهش دهید (طبق اطلاعات تجویز).",
+      "rationale": "دفع کلیوی دارو در نارسایی کلیه تجمع و عوارض را افزایش می‌دهد."
+    },
+    "genericNameFa": "سیپروفلوکساسین"
+  },
+  {
+    "id": "cotrimoxazole",
+    "genericName": "Co-Trimoxazole (TMP-SMX)",
+    "brandNamesIran": ["Co-Trimoxazole Iran Hormone", "Septrin", "Cotrimoxazole Sobhan"],
+    "therapeuticCategory": "Anti-infective",
+    "beersCategories": ["USE_WITH_CAUTION", "RENAL_ADJUSTMENT", "DRUG_INTERACTION"],
+    "recommendation": "در بیماران مصرف‌کننده مهارکننده ACE/ARB/ARNI با کاهش عملکرد کلیه، از ترکیب کو-تریموکسازول پرهیز یا پتاسیم را به‌دقت پایش کنید؛ در CrCl کمتر از ۱۵ از مصرف پرهیز شود.",
+    "rationale": "تریمتوپریم مانند آمیلورید عمل می‌کند و خطر هایپرکالمی شدید و مرگ را افزایش می‌دهد.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "سفالوسپورین یا آنتی‌بیوتیک جایگزین متناسب با کشت",
+      "در صورت ضرورت، پایش فشرده پتاسیم و کراتینین"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "cotrimoxazole-ddi-0",
+        "targetDrugOrClass": "RAS inhibitors",
+        "severity": "Avoid",
+        "rationale": "خطر هایپرکالمی شدید و ناگهانی، به‌ویژه با کاهش CrCl.",
+        "clinicalAction": "آنتی‌بیوتیک جایگزین یا پایش فشرده پتاسیم در روزهای نخست."
+      },
+      {
+        "id": "cotrimoxazole-ddi-1",
+        "targetDrugOrClass": "Warfarin",
+        "severity": "Avoid",
+        "rationale": "افزایش INR و خطر خونریزی عمده.",
+        "clinicalAction": "پایش INR یا آنتی‌بیوتیک جایگزین."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴ و ۶). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 15 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۱۵ از مصرف پرهیز شود؛ در CrCl کمتر از ۳۰ دوز کاهش یابد.",
+      "rationale": "تجمع دارو و خطر هایپرکالمی و هماتولوژیک در نارسایی شدید کلیه."
+    },
+    "genericNameFa": "کو-تریموکسازول"
+  }
+]

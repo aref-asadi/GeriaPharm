@@ -3,12 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0F2942" />
+    <meta name="theme-color" content="#f8fafc" />
     <meta
       name="description"
-      content="جریافارم؛ مرجع فارسی دارودرمانی سالمندان، بررسی نسخه و تداخل‌های دارویی."
+      content="گریافارم؛ سامانه پشتیبان تصمیم بالینی دارودرمانی سالمندان بر پایه معیارهای بیرز ۲۰۲۳، بررسی نسخه و تداخل‌های دارویی."
     />
-    <title>جریافارم | مرجع دارودرمانی سالمندان</title>
+    <title>گریافارم | سامانه دارودرمانی سالمندان</title>
+    <script>
+      // Apply stored theme before first paint to avoid a flash of the wrong scheme.
+      (function () {
+        try {
+          var t = localStorage.getItem("gp-theme");
+          if (t !== "light" && t !== "dark" && t !== "system") t = "system";
+          var dark =
+            t === "dark" ||
+            (t === "system" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.content = dark ? "#090d16" : "#f8fafc";
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

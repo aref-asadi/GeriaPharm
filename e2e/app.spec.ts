@@ -1,6 +1,10 @@
 import { test, expect } from "@playwright/test";
 const email = "qa@example.test",
   password = "QA-only-password-59842!";
+const TOTAL = 73,
+  CNS_COUNT = 27,
+  GI_COUNT = 8,
+  CAUTION_COUNT = 14;
 async function login(page: import("@playwright/test").Page) {
   await page.goto("/#admin");
   await page.getByLabel("ایمیل مدیر").fill(email);
@@ -21,6 +25,7 @@ test("Persian home, local font, desktop layout and no JavaScript errors", async 
     page.getByRole("heading", { name: "نسخه‌ای آگاهانه‌تر، مراقبتی ایمن‌تر." }),
   ).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  await expect(page.locator(".brand strong")).toHaveText("گریافارم");
   await page.evaluate(() => document.fonts.ready);
   expect(
     await page.evaluate(() => getComputedStyle(document.body).fontFamily),
@@ -34,7 +39,46 @@ test("Persian home, local font, desktop layout and no JavaScript errors", async 
   await page.screenshot({ path: "artifacts/home-desktop.png", fullPage: true });
   expect(errors).toEqual([]);
 });
-test("Persian and English search, details, bookmark persistence and keyboard dismissal", async ({
+test("theme toggle applies and persists dark mode across reload", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const group = page.getByRole("group", {
+    name: "انتخاب حالت نمایش روشن یا تیره",
+  });
+  await group.getByRole("button", { name: "تیره" }).click();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+  expect(
+    await page.evaluate(() =>
+      getComputedStyle(document.body).getPropertyValue("--bg").trim(),
+    ),
+  ).toBe("#090d16");
+  await page.reload();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+  await group.getByRole("button", { name: "روشن" }).click();
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+  await page.reload();
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+});
+test("offline pill appears when disconnected", async ({ page, context }) => {
+  await page.goto("/");
+  // Some Chrome builds do not flip navigator.onLine under CDP emulation,
+  // so drive the same window events the app listens to.
+  await page.evaluate(() => window.dispatchEvent(new Event("offline")));
+  await expect(
+    page.getByText("حالت آفلاین · بانک داده در دسترس است"),
+  ).toBeVisible();
+  await context.setOffline(true);
+  await expect(
+    page.getByText("حالت آفلاین · بانک داده در دسترس است"),
+  ).toBeVisible();
+  await context.setOffline(false);
+  await page.evaluate(() => window.dispatchEvent(new Event("online")));
+  await expect(
+    page.getByText("حالت آفلاین · بانک داده در دسترس است"),
+  ).toBeHidden();
+});
+test("Persian and English search, details, private note and bookmark persistence", async ({
   page,
 }) => {
   await page.goto("/#library");
@@ -44,6 +88,8 @@ test("Persian and English search, details, bookmark persistence and keyboard dis
   await page.getByRole("button", { name: "وارفارین", exact: true }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await expect(page.getByText("شروع وارفارین", { exact: false })).toBeVisible();
+  const note = page.getByLabel(/یادداشت خصوصی بالینی/);
+  await note.fill("یادداشت آزمایشی بالینی");
   await page
     .getByRole("dialog")
     .getByRole("button", { name: "نشانک‌گذاری", exact: true })
@@ -54,9 +100,19 @@ test("Persian and English search, details, bookmark persistence and keyboard dis
   await expect(page.locator(".med-card")).toHaveCount(1);
   await page.reload();
   await expect(page.locator(".med-card")).toHaveCount(1);
+  await page.getByRole("button", { name: "وارفارین", exact: true }).click();
+  await expect(page.getByLabel(/یادداشت خصوصی بالینی/)).toHaveValue(
+    "یادداشت آزمایشی بالینی",
+  );
+  await page
+    .getByLabel(/یادداشت خصوصی بالینی/)
+    .fill("");
+  await page.keyboard.press("Escape");
   await page.goto("/#library");
   await search.fill("Xanax");
   await expect(page.locator(".med-title")).toHaveText("آلپرازولام");
+  await search.fill("هیدروکسی‌زین");
+  await expect(page.locator(".med-card")).toHaveCount(1);
 });
 test("regimen detects interactions, condition warnings and renal metric mismatch", async ({
   page,
@@ -68,7 +124,7 @@ test("regimen detects interactions, condition warnings and renal metric mismatch
     await page.locator(".picker-results button").first().click();
   }
   await expect(
-    page.getByText("بار تجمعی سیستم عصبی مرکزی · ۳ دارو"),
+    page.getByRole("heading", { name: "بار تجمعی سیستم عصبی مرکزی · ۳ دارو" }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "آلپرازولام + ترامادول" }),
@@ -85,6 +141,10 @@ test("regimen detects interactions, condition warnings and renal metric mismatch
   await expect(
     page.getByRole("heading", { name: "ترامادول · CrCl < 30 mL/min" }),
   ).toBeVisible();
+  await expect(page.locator(".stat-tile")).toHaveCount(4);
+  await expect(
+    page.getByRole("button", { name: /چاپ خلاصه/ }),
+  ).toBeVisible();
   await page.screenshot({
     path: "artifacts/regimen-desktop.png",
     fullPage: true,
@@ -95,7 +155,7 @@ test("admin is gated, login works, edit persists, backup downloads, audit and lo
 }) => {
   await page.goto("/#admin");
   await expect(
-    page.getByRole("heading", { name: "ورود به مدیریت جریافارم" }),
+    page.getByRole("heading", { name: "ورود به مدیریت گریافارم" }),
   ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "افزودن دارو", exact: true }),
@@ -129,7 +189,7 @@ test("admin is gated, login works, edit persists, backup downloads, audit and lo
   });
   await page.getByRole("button", { name: "خروج", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "ورود به مدیریت جریافارم" }),
+    page.getByRole("heading", { name: "ورود به مدیریت گریافارم" }),
   ).toBeVisible();
 });
 test("admin creation, dirty form protection, invalid import and deletion confirmation", async ({
@@ -182,7 +242,7 @@ test("mobile RTL, no overflow and accessible login", async ({ page }) => {
     .getByRole("button", { name: "مدیریت" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "ورود به مدیریت جریافارم" }),
+    page.getByRole("heading", { name: "ورود به مدیریت گریافارم" }),
   ).toBeVisible();
   expect(
     await page.evaluate(
@@ -287,7 +347,7 @@ test("password change returns to login with a success message", async ({
   await page.getByLabel("تکرار رمز جدید").fill(next);
   await page.getByRole("button", { name: "ذخیره رمز جدید" }).click();
   await expect(
-    page.getByRole("heading", { name: "ورود به مدیریت جریافارم" }),
+    page.getByRole("heading", { name: "ورود به مدیریت گریافارم" }),
   ).toBeVisible();
   await expect(page.getByRole("status")).toContainText("رمز عبور تغییر کرد");
   await page.getByLabel("ایمیل مدیر").fill(email);
@@ -324,18 +384,18 @@ test("custom filter dropdown supports keyboard, selection and outside dismissal"
     .getByRole("option", { name: "سیستم عصبی مرکزی", exact: true })
     .click();
   await expect(specialty).toContainText("سیستم عصبی مرکزی");
-  await expect(page.locator(".med-card")).toHaveCount(4);
+  await expect(page.locator(".med-card")).toHaveCount(CNS_COUNT);
   await specialty.press("ArrowDown");
   await specialty.press("Home");
   await specialty.press("Enter");
   await expect(specialty).toContainText("همه گروه‌های درمانی");
-  await expect(page.locator(".med-card")).toHaveCount(15);
+  await expect(page.locator(".med-card")).toHaveCount(TOTAL);
   const beers = page.getByRole("combobox", { name: "دسته معیار بیرز" });
   await beers.click();
   await page
     .getByRole("option", { name: "مصرف با احتیاط", exact: true })
     .click();
-  await expect(page.locator(".med-card")).toHaveCount(2);
+  await expect(page.locator(".med-card")).toHaveCount(CAUTION_COUNT);
   await beers.click();
   await page.screenshot({
     path: "artifacts/dropdown-desktop.png",
@@ -382,7 +442,7 @@ test("custom admin choices work above the modal and preserve free text", async (
   const target = page
     .getByRole("combobox", { name: "نام دارو یا کلاس هدف", exact: true })
     .first();
-  await target.fill("سرتر");
+  await target.fill("واژه‌ای که هیچ گزینه‌ای ندارد");
   await expect(
     page.getByText("گزینه‌ای پیدا نشد.", { exact: false }),
   ).toBeVisible();
@@ -441,5 +501,5 @@ test("custom dropdown stays in mobile viewport and passes accessibility", async 
     fullPage: true,
   });
   await page.getByRole("option", { name: "گوارش", exact: true }).click();
-  await expect(page.locator(".med-card")).toHaveCount(2);
+  await expect(page.locator(".med-card")).toHaveCount(GI_COUNT);
 });

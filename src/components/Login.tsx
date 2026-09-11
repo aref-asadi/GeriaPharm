@@ -21,7 +21,7 @@ export function Login({
           <LockKeyhole size={29} />
         </span>
         <div className="eyebrow">دسترسی ویژه مدیر</div>
-        <h2>ورود به مدیریت جریافارم</h2>
+        <h2>ورود به مدیریت گریافارم</h2>
         <p>برای مدیریت داروها و اطلاعات بالینی، وارد حساب خود شوید.</p>
         <form
           onSubmit={async (e) => {

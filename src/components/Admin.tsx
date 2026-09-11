@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { drugSchema, categories, type DrugRecord } from "../types/types";
 import { parseImport } from "../services/db";
+import { seedData } from "../data/seedData";
 import {
   saveMedication,
   deleteMedication,
@@ -53,8 +54,9 @@ const blank = (): DrugRecord => ({
   rationale: "",
   qualityOfEvidence: "Moderate",
   strengthOfRecommendation: "Strong",
-  isStrongAnticholinergic: false,
+   isStrongAnticholinergic: false,
   isCnsActive: false,
+  isAvailableInIran: true,
   saferAlternatives: [],
   drugClasses: [],
   drugDrugInteractions: [],
@@ -276,9 +278,11 @@ export function Admin({
             onClick={() => {
               setError("");
               setConfirm({
-                title: "بازگشت به فهرست اولیه؟",
-                description:
-                  "همه تغییرات فهرست مشترک با ۱۵ داروی اولیه فارسی جایگزین می‌شود. این کار بدون پشتیبان قابل بازگشت نیست.",
+              title: "بازگشت به فهرست اولیه؟",
+              description:
+                  "همه تغییرات فهرست مشترک با " +
+                  number(seedData.length) +
+                  " داروی اولیه فارسی جایگزین می‌شود. این کار بدون پشتیبان قابل بازگشت نیست.",
                 action: resetServerRegistry,
               });
             }}
@@ -622,6 +626,15 @@ function MedicationForm({
                 onChange={(e) => update("isCnsActive", e.target.checked)}
               />
               فعال بر سیستم عصبی مرکزی (جدول ۵)
+            </label>
+            <label>
+              <Checkbox
+                checked={d.isAvailableInIran !== false}
+                onChange={(e) =>
+                  update("isAvailableInIran", e.target.checked)
+                }
+              />
+              موجود در فهرست دارویی ایران
             </label>
           </div>
           <TagInput

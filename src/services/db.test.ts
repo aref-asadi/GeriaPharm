@@ -16,7 +16,7 @@ beforeEach(async () => {
 });
 describe("IndexedDB persistence", () => {
   it("retrieves the complete registry and individual drugs", async () => {
-    expect(await getAllMedications()).toHaveLength(15);
+    expect(await getAllMedications()).toHaveLength(73);
     expect((await getMedicationById("warfarin"))?.genericName).toBe("Warfarin");
   });
   it("persists edits and new records", async () => {
@@ -28,7 +28,7 @@ describe("IndexedDB persistence", () => {
       id: "new-record",
       genericName: "Custom medication",
     });
-    expect(await getAllMedications()).toHaveLength(16);
+    expect(await getAllMedications()).toHaveLength(74);
   });
   it("keeps an intentionally empty registry empty", async () => {
     await replaceRegistry([]);
@@ -39,7 +39,7 @@ describe("IndexedDB persistence", () => {
     await deleteMedication("warfarin");
     expect(await getMedicationById("warfarin")).toBeUndefined();
     await resetToFactorySeed();
-    expect(await getAllMedications()).toHaveLength(15);
+    expect(await getAllMedications()).toHaveLength(73);
   });
   it("exports and restores local edits", async () => {
     await saveMedication({ ...seedData[0], notes: "Backup round trip" });

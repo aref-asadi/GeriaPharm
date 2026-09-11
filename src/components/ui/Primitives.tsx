@@ -11,6 +11,7 @@ import {
   Bookmark,
   ShieldAlert,
   Info,
+  CheckCircle2,
 } from "lucide-react";
 import { drugName, fa } from "../../lib/fa";
 import type { DrugRecord } from "../../types/types";
@@ -174,6 +175,12 @@ export function MedicationCard({
       <p className="med-brands" dir="auto">
         {drug.brandNamesIran.slice(0, 3).join(" · ")}
       </p>
+      {drug.isAvailableInIran !== false && (
+        <span className="chip-iran" title="این دارو در فهرست دارویی ایران موجود است">
+          <CheckCircle2 size={13} />
+          موجود در ایران
+        </span>
+      )}
       <div className="med-bottom">
         <span>{fa(drug.therapeuticCategory)}</span>
         <Button variant="ghost" onClick={onAdd} disabled={inRegimen}>

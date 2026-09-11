@@ -568,5 +568,507 @@
     "lastUpdated": "2026-09-08",
     "notes": "ترجمه و تنظیم بر اساس داده اولیه پروژه. موجود بودن برندها در ایران، گزینه‌های جایگزین، دوزها و سطح شواهد باید پیش از استفاده بالینی توسط متخصص بازبینی شوند. آنتی‌هیستامین‌ها در شمارش سه گروه فعال بر سیستم عصبی مرکزی در جدول ۵ منظور نمی‌شوند؛ خطر خواب‌آلودگی و اثر آنتی‌کولینرژیک همچنان برقرار است.",
     "genericNameFa": "دیفن‌هیدرامین خوراکی"
+  },
+  {
+    "id": "hydroxyzine",
+    "genericName": "Hydroxyzine",
+    "brandNamesIran": ["Atarax", "Hydroxyzine Abidi", "Hydroxyzine Hakim"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از مصرف خوراکی هیدروکسی‌زین برای اضطراب، خواب یا خارش در سالمندان پرهیز کنید؛ در صورت لزوم، کوتاه‌مدت و با ارزیابی خطر آنتی‌کولینرژیک.",
+    "rationale": "آنتی‌هیستامین نسل اول با اثر آنتی‌کولینرژیک قوی؛ خطر گیجی، خشکی دهان، احتباس ادرار، افت شناختی و سقوط در سالمندان بالا است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "آنتی‌هیستامین نسل دوم مانند ستیریزین یا لوراتادین برای آلرژی",
+      "بوسپیرون برای اضطراب مزمن، در صورت اندیکاسیون",
+      "مداخلات غیردارویی خواب"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "hydroxyzine-ddi-0",
+        "targetDrugOrClass": "Anticholinergic agents (Table 7)",
+        "severity": "Avoid",
+        "rationale": "افزایش بار آنتی‌کولینرژیک تجمعی و خطر دلیریوم و احتباس ادرار.",
+        "clinicalAction": "مصرف هم‌زمان داروهای آنتی‌کولینرژیک را به حداقل برسانید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "اثر آنتی‌کولینرژیک مرکزی می‌تواند دلیریوم را ایجاد یا تشدید کند."
+      },
+      {
+        "condition": "Benign Prostatic Hyperplasia (BPH) / LUTS",
+        "recommendation": "Avoid",
+        "rationale": "خطر احتباس حاد ادرار در مردان مبتلا به بزرگی پروستات."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "هیدروکسی‌زین"
+  },
+  {
+    "id": "chlorpheniramine",
+    "genericName": "Chlorpheniramine",
+    "brandNamesIran": ["Chlorpheniramine Iran Hormone", "Chlorpheniramine Sobhan"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از مصرف آنتی‌هیستامین‌های نسل اول مانند کلرفنیرامین در سالمندان پرهیز کنید؛ آنتی‌هیستامین نسل دوم را جایگزین کنید.",
+    "rationale": "اثر آنتی‌کولینرژیک قوی و خواب‌آلودگی؛ پاک‌سازی کاهش‌یافته با سن خطر گیجی، هیپوتانسیون ارتواستاتیک و سقوط را افزایش می‌دهد.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "لوراتادین، ستیریزین یا فکسوفنادین برای علائم آلرژیک"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Dementia / Cognitive Impairment",
+        "recommendation": "Avoid",
+        "rationale": "تشدید اختلال شناختی به دلیل مهار موسکارینی مرکزی."
+      },
+      {
+        "condition": "BPH / LUTS in men",
+        "recommendation": "Avoid",
+        "rationale": "خطر احتباس ادرار."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "کلرفنیرامین"
+  },
+  {
+    "id": "cyproheptadine",
+    "genericName": "Cyproheptadine",
+    "brandNamesIran": ["Periactin", "Cyproheptadine Iran Hormone"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از مصرف سیپروهپتادین برای اشتها‌افزایی یا آلرژی در سالمندان پرهیز کنید.",
+    "rationale": "آنتی‌هیستامین نسل اول با بار آنتی‌کولینرژیک بالا و خواب‌آلودگی؛ خطر گیجی و سقوط در سالمندان زیاد است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "ارزیابی علل کاهش اشتها و مداخلات تغذیه‌ای",
+      "آنتی‌هیستامین نسل دوم در صورت نیاز آلرژیک"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "خطر ایجاد یا تشدید دلیریوم حاد."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "سیپروهپتادین"
+  },
+  {
+    "id": "promethazine",
+    "genericName": "Promethazine",
+    "brandNamesIran": ["Promethazine Iran Hormone", "Promethazine Darou Pakhsh"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از مصرف پرومتازین برای تهوع، خواب یا آلرژی در سالمندان پرهیز کنید.",
+    "rationale": "آنتی‌هیستامین فنوتیازینی با اثر آنتی‌کولینرژیک قوی و مهار دوپامین؛ خطر گیجی، علائم خارج‌هرمی و سقوط.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "اندانسترون یا دومپریدون (با پایش QTc) برای تهوع",
+      "آنتی‌هیستامین نسل دوم برای آلرژی"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "promethazine-ddi-0",
+        "targetDrugOrClass": "Opioids (Tramadol, Methadone, Morphine, Codeine)",
+        "severity": "Avoid",
+        "rationale": "افزایش خطر آرام‌بخشی شدید و سرکوب تنفسی.",
+        "clinicalAction": "از ترکیب پرهیز یا با پایش دقیق استفاده کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Parkinson Disease",
+        "recommendation": "Avoid",
+        "rationale": "مهار دوپامین می‌تواند علائم حرکتی پارکینسون را تشدید کند."
+      },
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "اثر آنتی‌کولینرژیک مرکزی خطر دلیریوم را افزایش می‌دهد."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "پرومتازین"
+  },
+  {
+    "id": "digoxin",
+    "genericName": "Digoxin",
+    "brandNamesIran": ["Lanoxin", "Digoxin Chemi Darou", "Digoxin Tehran Chemie"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "RENAL_ADJUSTMENT"],
+    "recommendation": "از دیگوکسین به‌عنوان داروی خط اول فیبریلاسیون دهلیزی یا نارسایی قلبی استفاده نکنید. اگر برای نارسایی قلبی یا فیبریلاسیون دهلیزی اندیکاسیون دارد، از دوز بیش از ۰٫۱۲۵ میلی‌گرم در روز پرهیز کنید.",
+    "rationale": "در سالمندان پاک‌سازی کلیوی کاهش می‌یابد و خطر سمیت (تهوع، اختلال ریتم، اختلالات شناختی) با دوز بالاتر افزایش می‌یابد؛ اثربخشی برتر نسبت به درمان‌های جدید اثبات نشده است.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مهارکننده‌های ACE یا مسدودکننده گیرنده آنژیوتانسین و بتانوسطگر برای نارسایی قلبی",
+      "بتابلاکر برای کنترل پاسخ دهلیزی",
+      "ضدانعقاد خوراکی مستقیم برای فیبریلاسیون دهلیزی در صورت اندیکاسیون"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "digoxin-ddi-0",
+        "targetDrugOrClass": "Loop Diuretics (Furosemide)",
+        "severity": "Use with caution",
+        "rationale": "هیپوکالمی ناشی از دیورتیک خطر توکسیسیتی دیگوکسین را افزایش می‌دهد.",
+        "clinicalAction": "پتاسیم، منیزیم و سطح دارو را پایش کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Dose Reduction",
+      "guidance": "در اختلال شدید کلیه، سطح دارو و علائم سمیت پایش شود؛ دوز نگهدارنده متناسب با CrCl و وزن (اغلب ۰٫۱۲۵ میلی‌گرم یا کمتر) انتخاب شود.",
+      "rationale": "دفع دارو عمدتاً کلیوی است و تجمع آن خطر سمیت قلبی و عصبی را افزایش می‌دهد."
+    },
+    "genericNameFa": "دیگوکسین"
+  },
+  {
+    "id": "clonidine",
+    "genericName": "Clonidine",
+    "brandNamesIran": ["Clonidine Chemi Darou", "Clonidine Iran Hormone"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "آگونیست مرکزی آلفاـ۲ مانند کلونیدین را به‌عنوان خط اول درمان فشار خون در سالمندان به کار نبرید؛ در صورت استفاده برای اندیکاسیون‌های خاص، قطع ناگهانی را پرهیز کنید.",
+    "rationale": "خطر افت فشار خون وضعیتی، سنکوپ، برادیکاردی و گیجی در سالمندان بالا است؛ قطع ناگهانی می‌تواند فشار خون برگشتی ایجاد کند.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مهارکننده ACE، مسدودکننده گیرنده آنژیوتانسین، آملودیپین یا دیورتیک تیازیدی",
+      "در صورت مصرف مزمن، تیتر تدریجی و پایش فشار خون بازگشتی"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "افت فشار خون وضعیتی و خواب‌آلودگی خطر سقوط را افزایش می‌دهد."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "کلونیدین"
+  },
+  {
+    "id": "prazosin",
+    "genericName": "Prazosin",
+    "brandNamesIran": ["Prazosin Iran Hormone", "Prazosin Pars Darou"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از مصرف بلوکننده آلفاـ۱ محیطی مانند پرازوسین به‌عنوان ضدفشار خون پرهیز کنید؛ برای بزرگی پروستات، عوامل انتخابی‌تر دستگاه ادراری را بررسی کنید.",
+    "rationale": "افت فشار خون ارتواستاتیک شدید و سنکوپ با خطر شکستگی ناشی از سقوط.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مهارکننده ACE، مسدودکننده گیرنده آنژیوتانسین یا آملودیپین برای فشار خون",
+      "تامسولوسین برای علائم پروستات، در صورت مناسب بودن"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Syncope",
+        "recommendation": "Avoid",
+        "rationale": "افت فشار خون وضعیتی و خطر غش."
+      },
+      {
+        "condition": "Urinary Incontinence in Women",
+        "recommendation": "Avoid",
+        "rationale": "تشدید بی‌اختیاری ادرار در زنان سالمند."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "پرازوسین"
+  },
+  {
+    "id": "terazosin",
+    "genericName": "Terazosin",
+    "brandNamesIran": ["Terazosin Pars Darou", "Terazosin Arya"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "برای کنترل فشار خون در سالمندان از ترازوسین استفاده نکنید؛ در بزرگی پروستات نیز گزینه‌های انتخابی‌تر ادراری ارجح‌اند.",
+    "rationale": "افت فشار خون وضعیتی، سنکوپ و خطر شکستگی ناشی از سقوط با مهار آلفاـ۱ محیطی بیشتر است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "ضدفشار خون‌های خط اول؛ تامسولوسین برای BPH در صورت مناسب بودن"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Syncope",
+        "recommendation": "Avoid",
+        "rationale": "افت فشار خون وضعیتی و سنکوپ."
+      },
+      {
+        "condition": "Urinary Incontinence in Women",
+        "recommendation": "Avoid",
+        "rationale": "تشدید بی‌اختیاری ادرار."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "ترازوسین"
+  },
+  {
+    "id": "amiodarone",
+    "genericName": "Amiodarone",
+    "brandNamesIran": ["Cordarone", "Amiodarone Arya", "Amiodarone Darou Pakhsh"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از آمیودارون به‌عنوان خط اول درمان فیبریلاسیون دهلیزی در سالمندان پرهیز کنید، مگر در نارسایی قلبی یا هیپرتروفی بطنی با شرایط خاص.",
+    "rationale": "خطر توکسیسیته تیروئیدی، ریوی، کبدی و نوروپاتی محیطی، تداخل‌های متعدد دارویی و تأثیر بر QTc در مقایسه با گزینه‌های جایگزین بیشتر است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "ابلیشن کاتتری فیبریلاسیون دهلیزی، در صورت کاندید بودن",
+      "ضدآریتمی جایگزین با پروفایل عارضه کمتر، بر اساس قلب متخصص"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "amiodarone-ddi-0",
+        "targetDrugOrClass": "Warfarin",
+        "severity": "Avoid",
+        "rationale": "مهار متابولیسم وارفارین و جهش INR با خطر خونریزی عمده.",
+        "clinicalAction": "دوز وارفارین را کاهش و INR را با فاصله نزدیک پایش کنید."
+      },
+      {
+        "id": "amiodarone-ddi-1",
+        "targetDrugOrClass": "Digoxin",
+        "severity": "Use with caution",
+        "rationale": "افزایش سطح خونی دیگوکسین و خطر توکسیسیته.",
+        "clinicalAction": "دوز دیگوکسین را کاهش و سطح دارو را پایش کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "آمیودارون"
+  },
+  {
+    "id": "dronedarone",
+    "genericName": "Dronedarone",
+    "brandNamesIran": ["Multaq"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از مصرف دروندارون در سالمندان مبتلا به نارسایی قلبی یا کاهش عملکرد بطن چپ پرهیز کنید.",
+    "rationale": "در بیماران نارسایی قلبی خطر مرگ و بستری شدن را افزایش می‌دهد؛ اثربخشی محدود و احتمال آسیب کبدی نیز وجود دارد.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": false,
+    "saferAlternatives": [
+      "بتابلاکر برای کنترل پاسخ دهلیزی در نارسایی قلبی",
+      "آمیودارون در صورت ضرورت، تحت نظر قلب متخصص"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Heart Failure",
+        "recommendation": "Avoid",
+        "rationale": "در نارسایی قلبی با کاهش EF، خطر مرگ افزایش می‌یابد."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "دروندارون"
+  },
+  {
+    "id": "nifedipine-ir",
+    "genericName": "Nifedipine (Immediate-Release)",
+    "brandNamesIran": ["Adalat", "Nifedipine Arya", "Nifedipine Sobhan"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از شکل فوری‌رهش نیفیدیپین در سالمندان پرهیز کنید؛ در صورت نیاز به مسدودکننده کانال کلسیم، شکل آهسته‌رهش را بررسی کنید.",
+    "rationale": "افت فشار خون ناگهانی، رفلکس تاکی‌کاردی و خطر ایسکمی میوکارد و سنکوپ با شکل فوری‌رهش گزارش شده است.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "نیفیدیپین آهسته‌رهش یا آملودیپین برای فشار خون",
+      "بتابلاکر در صورت اندیکاسیون"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "نیفیدیپین فوری‌رهش"
+  },
+  {
+    "id": "dabigatran",
+    "genericName": "Dabigatran",
+    "brandNamesIran": ["Pradaxa", "Dabigatran Abidi"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["USE_WITH_CAUTION", "RENAL_ADJUSTMENT"],
+    "recommendation": "در سالمندان ۷۵ سال و بیشتر، در صورت وجود گزینه، آپیکسابان به دابیگاتران ترجیح دارد. در CrCl کمتر از ۳۰ از مصرف پرهیز یا طبق پروتکل تنظیم دوز کنید.",
+    "rationale": "در سالمندان بسیار مسن و در اختلال کلیوی، خطر خونریزی عمده و گوارشی نسبت به سایر ضدانعقادهای خوراکی مستقیم بیشتر است و آنتی‌دوت اختصاصی همیشه در دسترس نیست.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Weak",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": false,
+    "saferAlternatives": [
+      "آپیکسابان؛ تعیین دوز بر اساس سن، وزن و عملکرد کلیه"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴ و ۶). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۳۰ برای فیبریلاسیون دهلیزی از مصرف پرهیز شود؛ در سایر اندیکاسیون‌ها دوز بر اساس پروتکل تنظیم و پایش شود.",
+      "rationale": "دفع کلیوی گسترده دارو در نارسایی کلیه خطر خونریزی را به‌طور قابل توجهی افزایش می‌دهد."
+    },
+    "genericNameFa": "دابیگاتران"
+  },
+  {
+    "id": "apixaban",
+    "genericName": "Apixaban",
+    "brandNamesIran": ["Eliquis", "Apixaban Abidi", "Apixaban Exir"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["RENAL_ADJUSTMENT"],
+    "recommendation": "آپیکسابان از گزینه‌های ترجیحی ضدانعقاد خوراکی مستقیم در سالمندان است؛ دوز را بر اساس سن، وزن، کراتینین سرم و اندیکاسیون تعیین کنید.",
+    "rationale": "در مقایسه با وارفارین و ریواروکسابان، خطر خونریزی عمده و گوارشی کمتری دارد و در بیماران سالمند پروفایل ایمنی بهتری نشان داده است.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "دوز کاهش‌یافته (۲.۵ میلی‌گرم دو بار در روز) در صورت برآوردن معیارهای کاهش دوز"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "apixaban-ddi-0",
+        "targetDrugOrClass": "Oral NSAIDs",
+        "severity": "Avoid",
+        "rationale": "افزایش تجمعی خطر خونریزی گوارشی.",
+        "clinicalAction": "از ترکیب پرهیز کنید؛ در صورت ضرورت پایش دقیق انجام شود."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۶). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 15 mL/min",
+      "action": "Dose Reduction",
+      "guidance": "در اختلال شدید کلیه، معیارهای کاهش دوز (سن ≥۸۰، وزن ≤۶۰ کیلوگرم، کراتینین ≥۱٫۵) ارزیابی و دوز بر اساس پروتکل تعیین شود.",
+      "rationale": "تجمع دارو در نارسایی کلیه خطر خونریزی را افزایش می‌دهد؛ با این حال آپیکسابان در مقایسه با سایر DOACها پروفایل ایمنی بهتری در CrCl پایین دارد."
+    },
+    "genericNameFa": "آپیکسابان"
+  },
+  {
+    "id": "spironolactone",
+    "genericName": "Spironolactone",
+    "brandNamesIran": ["Spironolactone Iran Hormone", "Aldactone", "Spironolactone Arya"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["DRUG_INTERACTION", "RENAL_ADJUSTMENT"],
+    "recommendation": "در ترکیب با مهارکننده‌های RAS یا مکمل پتاسیم، پتاسیم و عملکرد کلیه را پایش کنید. در CrCl کمتر از ۳۰ از مصرف پرهیز یا دوز را بر اساس شرایط بیمار تنظیم کنید.",
+    "rationale": "خطر هایپرکالمی شدید، به‌ویژه در کاهش عملکرد کلیه و با ترکیب RAS مهارکننده یا تریامترن، افزایش می‌یابد.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "پایش دقیق پتاسیم و کراتینین در ۱ هفته و ۴ هفته پس از شروع یا افزایش دوز"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "spironolactone-ddi-0",
+        "targetDrugOrClass": "RAS inhibitors",
+        "severity": "Use with caution",
+        "rationale": "خطر هایپرکالمی شدید، به‌ویژه در کاهش عملکرد کلیه.",
+        "clinicalAction": "پتاسیم و کراتینین را منظم پایش کنید؛ در صورت افزایش پتاسیم دوز را اصلاح کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۵). بازبینی بالینی پیش از استفاده لازم است.",
+    "renalConsiderations": {
+      "threshold": "CrCl < 30 mL/min",
+      "action": "Avoid",
+      "guidance": "در CrCl کمتر از ۳۰ از مصرف پرهیز یا با احتیاط شدید و پایش پتاسیم استفاده شود.",
+      "rationale": "خطر هایپرکالمی تهدیدکننده حیات در اختلال شدید کلیه افزایش می‌یابد."
+    },
+    "genericNameFa": "اسپیرونولاکتون"
+  },
+  {
+    "id": "triamterene",
+    "genericName": "Triamterene",
+    "brandNamesIran": ["Triamterene Pars Darou", "Dyazide (ترکیبی)"],
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از دیورتیک نگهدارنده پتاسیم مانند تریامترن در سالمندان پرهیز کنید، مگر برای هیپوآلدوسترونیسم یا موارد خاص.",
+    "rationale": "خطر هایپرکالمی، به‌ویژه با مهارکننده ACE یا ARB، و خطر سنگ ادراری در بیماران با کاهش عملکرد کلیه.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "تیازید یا دیورتیک لوپ بر اساس شرایط بیمار",
+      "در صورت لزوم، اسپیرونولاکتون با پایش پتاسیم"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "triamterene-ddi-0",
+        "targetDrugOrClass": "RAS inhibitors",
+        "severity": "Use with caution",
+        "rationale": "افزایش خطر هایپرکالمی با همراهی RAS مهارکننده.",
+        "clinicalAction": "پتاسیم و عملکرد کلیه را پایش کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۵). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "تریامترن"
   }
 ]

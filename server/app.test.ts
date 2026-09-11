@@ -33,7 +33,7 @@ describe("backend authentication and registry", () => {
     const { agent } = await setup();
     const r = await agent.get("/api/registry");
     expect(r.status).toBe(200);
-    expect(r.body.medications).toHaveLength(15);
+    expect(r.body.medications).toHaveLength(73);
     expect(r.body.medications[0].genericNameFa).toBe("وارفارین");
     expect((await agent.get("/api/admin/audit")).status).toBe(401);
     expect(
@@ -183,14 +183,14 @@ describe("backend authentication and registry", () => {
           .set(headers)
           .set("If-Match", "1")
       ).body.medications,
-    ).toHaveLength(14);
+    ).toHaveLength(72);
     const backup = await agent.get("/api/admin/export");
     expect(backup.status).toBe(200);
     expect(backup.body.schemaVersion).toBe(1);
     expect(
       (await agent.post("/api/admin/reset").set(headers).set("If-Match", "2"))
         .body.medications,
-    ).toHaveLength(15);
+    ).toHaveLength(73);
   });
   it("logs out and invalidates the server session", async () => {
     const { agent } = await setup();

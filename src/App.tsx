@@ -23,6 +23,7 @@ import {
   WifiOff,
   Menu,
   X,
+  StickyNote,
 } from "lucide-react";
 import { getAllMedications } from "./services/db";
 import {
@@ -48,6 +49,13 @@ import {
   risk,
 } from "./components/ui/Primitives";
 import { tables, fa, number, date, drugName, matchesSearch } from "./lib/fa";
+import {
+  applyTheme,
+  storedTheme,
+  watchSystemTheme,
+  type ThemePreference,
+} from "./lib/theme";
+import { ThemeToggle } from "./components/ThemeToggle";
 import { useRegisterSW } from "virtual:pwa-register/react";
 const Admin = lazy(() =>
   import("./components/Admin").then((m) => ({ default: m.Admin })),
@@ -81,6 +89,23 @@ function currentPage() {
   const page = location.hash.slice(1);
   return nav.some((n) => n.id === page) ? page : "home";
 }
+function loadNotes(): Record<string, string> {
+  try {
+    const value: unknown = JSON.parse(localStorage.getItem("gp-notes") || "{}");
+    return value && typeof value === "object"
+      ? (value as Record<string, string>)
+      : {};
+  } catch {
+    return {};
+  }
+}
+function saveNotes(notes: Record<string, string>) {
+  try {
+    localStorage.setItem("gp-notes", JSON.stringify(notes));
+  } catch {
+    /* storage unavailable */
+  }
+}
 export default function App() {
   const [drugs, setDrugs] = useState<DrugRecord[]>([]),
     [page, setPage] = useState(currentPage),
@@ -99,7 +124,9 @@ export default function App() {
     [session, setSession] = useState<Session>({ user: null }),
     [authLoading, setAuthLoading] = useState(true),
     [lastSync, setLastSync] = useState(""),
-    [mobileOpen, setMobileOpen] = useState(false);
+    [mobileOpen, setMobileOpen] = useState(false),
+    [theme, setTheme] = useState<ThemePreference>(storedTheme),
+    [notes, setNotes] = useState<Record<string, string>>(loadNotes);
   const heading = useRef<HTMLHeadingElement>(null);
   const {
     offlineReady: [offlineReady],
@@ -153,15 +180,16 @@ export default function App() {
       .finally(() => {
         if (mounted) setAuthLoading(false);
       });
+    // Trust the browser's online/offline events; navigator.onLine can be
+    // unreliable in some embedded/emulated environments.
     const onOnline = () => {
-      setOnline(navigator.onLine);
-      if (navigator.onLine) {
-        void refresh();
-        void getSession()
-          .then(setSession)
-          .catch(() => setSession({ user: null }));
-      }
+      setOnline(true);
+      void refresh();
+      void getSession()
+        .then(setSession)
+        .catch(() => setSession({ user: null }));
     };
+    const onOffline = () => setOnline(false);
     const expired = () => {
       setSession({ user: null });
       setToast("نشست مدیریت پایان یافت. دوباره وارد شوید.");
@@ -176,13 +204,13 @@ export default function App() {
     };
     window.addEventListener("hashchange", route);
     window.addEventListener("online", onOnline);
-    window.addEventListener("offline", onOnline);
+    window.addEventListener("offline", onOffline);
     window.addEventListener("gp-session-expired", expired);
     return () => {
       mounted = false;
       window.removeEventListener("hashchange", route);
       window.removeEventListener("online", onOnline);
-      window.removeEventListener("offline", onOnline);
+      window.removeEventListener("offline", onOffline);
       window.removeEventListener("gp-session-expired", expired);
     };
   }, []);
@@ -200,6 +228,18 @@ export default function App() {
       return () => clearTimeout(t);
     }
   }, [toast]);
+  useEffect(() => {
+    applyTheme(theme);
+    if (theme !== "system") return;
+    return watchSystemTheme(() => applyTheme("system"));
+  }, [theme]);
+  function setNote(id: string, text: string) {
+    const next = { ...notes };
+    if (text.trim()) next[id] = text;
+    else delete next[id];
+    setNotes(next);
+    saveNotes(next);
+  }
   function navigate(id: string) {
     if (page === id) {
       setQuery("");
@@ -301,7 +341,7 @@ export default function App() {
             <Pill size={26} />
           </span>
           <div>
-            <strong>جریافارم</strong>
+            <strong>گریافارم</strong>
             <small>GERIAPHARM</small>
           </div>
         </a>
@@ -356,6 +396,7 @@ export default function App() {
             <strong>{nav.find((n) => n.id === page)?.label}</strong>
           </div>
           <div className="top-right">
+            <ThemeToggle value={theme} onChange={setTheme} />
             <button
               className="sync-status"
               onClick={() => void refresh()}
@@ -385,7 +426,7 @@ export default function App() {
               className="avatar"
               title={session.user ? "مدیر وارد شده" : "کاربر مرجع"}
             >
-              {session.user ? "مد" : "ج‌ف"}
+              {session.user ? "مد" : "گ‌ف"}
             </span>
           </div>
         </header>
@@ -698,6 +739,12 @@ export default function App() {
           </button>
         ))}
       </nav>
+      {!online && (
+        <div className="offline-pill" role="status">
+          <WifiOff size={16} />
+          حالت آفلاین · بانک داده در دسترس است
+        </div>
+      )}
       {toast && (
         <div className="toast" role="status">
           <Check size={19} />
@@ -842,6 +889,18 @@ export default function App() {
                 )}
               </Notice>
             )}
+            <div className="clinical-note">
+              <label htmlFor="gp-clinical-note">
+                <StickyNote size={15} /> یادداشت خصوصی بالینی (فقط روی این
+                دستگاه ذخیره می‌شود)
+              </label>
+              <textarea
+                id="gp-clinical-note"
+                value={notes[detail.id] ?? ""}
+                placeholder="یادداشت خود را برای مراجعه بعدی بنویسید…"
+                onChange={(e) => setNote(detail.id, e.target.value)}
+              />
+            </div>
             <p className="source-note">{detail.notes}</p>
             <small className="muted">
               آخرین ویرایش: {date(detail.lastUpdated)}

@@ -25,6 +25,7 @@ export const drugSchema = z.object({
   strengthOfRecommendation: z.enum(["Strong", "Weak"]),
   isStrongAnticholinergic: z.boolean(),
   isCnsActive: z.boolean(),
+  isAvailableInIran: z.boolean().optional(),
   saferAlternatives: z.array(text),
   drugClasses: z.array(text).optional(),
   drugDrugInteractions: z.array(

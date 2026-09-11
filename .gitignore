@@ -9,3 +9,7 @@ artifacts/
 test-results/
 playwright-report/
 !.env.example
+*.sqlite-wal
+*.sqlite-shm
+*.zip
+openai/

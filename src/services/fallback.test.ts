@@ -23,7 +23,7 @@ const db = await import("./db");
 beforeEach(() => memory.clear());
 describe("LocalStorage fallback", () => {
   it("seeds when IndexedDB is unavailable", async () => {
-    expect(await db.getAllMedications()).toHaveLength(15);
+    expect(await db.getAllMedications()).toHaveLength(73);
     expect(db.storageMode).toBe("LocalStorage");
   });
   it("persists an empty registry without reseeding", async () => {

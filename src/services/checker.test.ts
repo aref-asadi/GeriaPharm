@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { auditRegimen, matchesTarget, parseThreshold } from "./checker";
+import {
+  auditRegimen,
+  matchesTarget,
+  parseThreshold,
+  cockcroftGault,
+  acbScoreFor,
+  evaluateRegimen,
+} from "./checker";
 import { seedData } from "../data/seedData";
 import { parseImport } from "./db";
 import type { DrugRecord } from "../types/types";
@@ -21,9 +28,87 @@ const custom = (name: string, classes: string[] = []): DrugRecord => ({
   drugDiseaseInteractions: [],
 });
 describe("clinical screening", () => {
-  it("seeds all 15 complete records", () => {
-    expect(seedData).toHaveLength(15);
+  it("seeds all 73 complete records with unique IDs", () => {
+    expect(seedData).toHaveLength(73);
+    expect(new Set(seedData.map((d) => d.id)).size).toBe(73);
     expect(seedData.every((d) => d.recommendation && d.rationale)).toBe(true);
+  });
+  it("computes Cockcroft-Gault only from complete, valid inputs", () => {
+    expect(
+      cockcroftGault({ age: 72, sex: "male", weight: 70, serumCreatinine: 1.2 }),
+    ).toBeCloseTo(((140 - 72) * 70) / (72 * 1.2), 5);
+    expect(
+      cockcroftGault({
+        age: 72,
+        sex: "female",
+        weight: 70,
+        serumCreatinine: 1.2,
+      }),
+    ).toBeCloseTo((0.85 * (140 - 72) * 70) / (72 * 1.2), 5);
+    for (const partial of [
+      { age: 72 },
+      { sex: "male" as const },
+      { age: 0, sex: "male" as const, weight: 70, serumCreatinine: 1.2 },
+      { age: -5, sex: "male" as const, weight: 70, serumCreatinine: 1.2 },
+    ])
+      expect(cockcroftGault(partial)).toBeUndefined();
+  });
+  it("scores the anticholinergic burden per published ACB weights", () => {
+    expect(acbScoreFor(drug("amitriptyline"))).toBe(3);
+    expect(acbScoreFor(drug("diphenhydramine"))).toBe(3);
+    expect(acbScoreFor(drug("alprazolam"))).toBe(1);
+    expect(acbScoreFor(drug("tramadol"))).toBe(0);
+  });
+  it("summarizes regimen stats including PIM and CNS counts", () => {
+    const { stats } = evaluateRegimen(
+      [drug("warfarin"), drug("alprazolam"), drug("amitriptyline")],
+      [],
+      {},
+    );
+    expect(stats.totalDrugs).toBe(3);
+    expect(stats.pimCount).toBe(3);
+    expect(stats.acbScore).toBe(5);
+    expect(stats.cnsCount).toBe(2);
+  });
+  it("adds an age-domain notice below 65 and a Table-4 caution at 75+", () => {
+    const alprazolam = drug("alprazolam"),
+      dabigatran = drug("dabigatran");
+    expect(
+      auditRegimen([alprazolam], [], { age: 64 }).some((a) =>
+        a.title.includes("سن کمتر از ۶۵"),
+      ),
+    ).toBe(true);
+    expect(
+      auditRegimen([dabigatran], [], { age: 80 }).some(
+        (a) => a.id === "age75" && a.severity === "caution",
+      ),
+    ).toBe(true);
+    expect(
+      auditRegimen([dabigatran], [], { age: 70 }).some((a) => a.id === "age75"),
+    ).toBe(false);
+  });
+  it("skips male-only BPH rules for female patients", () => {
+    const d = drug("amitriptyline");
+    expect(
+      auditRegimen([d], ["BPH / LUTS in men"], { sex: "female" }).some(
+        (a) => a.type === "Disease",
+      ),
+    ).toBe(false);
+    expect(
+      auditRegimen([d], ["BPH / LUTS in men"], { sex: "male" }).some(
+        (a) => a.type === "Disease",
+      ),
+    ).toBe(true);
+  });
+  it("uses Cockcroft-Gault when age, weight, sex and creatinine are complete", () => {
+    const a = auditRegimen([drug("nitrofurantoin")], [], {
+      age: 80,
+      sex: "male",
+      weight: 60,
+      serumCreatinine: 2.2,
+    });
+    expect(a.some((x) => x.type === "Renal")).toBe(true);
+    expect(a.some((x) => x.id === "cg-note")).toBe(true);
   });
   it("matches opioid / benzodiazepine interaction in either order once", () => {
     for (const meds of [

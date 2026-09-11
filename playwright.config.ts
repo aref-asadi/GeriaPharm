@@ -1,11 +1,19 @@
 import { defineConfig } from "@playwright/test";
 import { existsSync } from "node:fs";
-const chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+// Prefer a system browser when the managed Playwright build is unavailable
+// (e.g., the CDN is unreachable from some regions).
+const candidates = [
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
+];
+const chrome = candidates.find((p) => existsSync(p)) ?? "";
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: false,
   workers: 1,
-  timeout: 30000,
+  timeout: 60000,
   retries: 0,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {

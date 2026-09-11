@@ -1,0 +1,670 @@
+[
+  {
+    "id": "clonazepam",
+    "genericName": "Clonazepam",
+    "brandNamesIran": ["Rivotril", "Clonazepam Sobhan", "Clonazepam Bakhtar Bioshimi"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "DRUG_INTERACTION"],
+    "recommendation": "از مصرف بنزودیازپین‌ها برای بی‌خوابی، دلیریوم یا بی‌قراری پرهیز کنید؛ اندیکاسیون‌های خاص مانند اختلالات تشنجی یا ترک الکل باید جداگانه ارزیابی شوند.",
+    "rationale": "حساسیت بیشتر سالمندان و کاهش پاک‌سازی؛ خطر اختلال شناختی، دلیریوم، سقوط، شکستگی لگن و تصادف.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "درمان شناختی‌رفتاری بی‌خوابی",
+      "ملاتونین پس از ارزیابی بالینی",
+      "بوسپیرون برای اضطراب مزمن، در صورت اندیکاسیون"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "clonazepam-ddi-0",
+        "targetDrugOrClass": "Opioids (Tramadol, Methadone, Morphine, Codeine)",
+        "severity": "Avoid",
+        "rationale": "خطر سرکوب تنفسی و مرگ با ترکیب اپیوئید و بنزودیازپین.",
+        "clinicalAction": "از ترکیب پرهیز کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "می‌تواند دلیریوم حاد را ایجاد یا تشدید کند."
+      },
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "آتاکسی و اختلال هماهنگی خطر سقوط را افزایش می‌دهد."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "کلونازپام"
+  },
+  {
+    "id": "diazepam",
+    "genericName": "Diazepam",
+    "brandNamesIran": ["Diazepam Chemi Darou", "Valium", "Diazepam Bakhtar Bioshimi"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "DRUG_INTERACTION"],
+    "recommendation": "از بنزودیازپین‌ها مانند دیازپام برای بی‌خوابی، دلیریوم یا اضطراب در سالمندان پرهیز کنید.",
+    "rationale": "نیمه‌عمر طولانی، پاک‌سازی کاهش‌یافته با سن و خطر تجمع؛ خطر اختلال شناختی، دلیریوم، سقوط و شکستگی لگن.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "درمان شناختی‌رفتاری بی‌خوابی",
+      "بوسپیرون برای اضطراب مزمن"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "diazepam-ddi-0",
+        "targetDrugOrClass": "Opioids (Tramadol, Methadone, Morphine, Codeine)",
+        "severity": "Avoid",
+        "rationale": "خطر سرکوب تنفسی شدید و مرگ.",
+        "clinicalAction": "از ترکیب پرهیز کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "ایجاد یا تشدید دلیریوم حاد."
+      },
+      {
+        "condition": "Dementia",
+        "recommendation": "Avoid",
+        "rationale": "تشدید افت شناختی."
+      },
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "آتاکسی و خطر سقوط و شکستگی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "دیازپام"
+  },
+  {
+    "id": "lorazepam",
+    "genericName": "Lorazepam",
+    "brandNamesIran": ["Lorazepam Sobhan", "Lorazepam Arya", "Lorazepam Hakim"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE", "DRUG_INTERACTION"],
+    "recommendation": "از بنزودیازپین‌ها مانند لورازپام برای بی‌خوابی یا بی‌قراری در سالمندان پرهیز کنید؛ در صورت ضرورت بالینی کوتاه‌مدت و کمترین دوز مؤثر.",
+    "rationale": "حساسیت بیشتر سالمندان به بنزودیازپین‌ها با خطر اختلال شناختی، دلیریوم، سقوط و شکستگی همراه است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "درمان شناختی‌رفتاری بی‌خوابی",
+      "ملاتونین؛ پس از ارزیابی بالینی"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "lorazepam-ddi-0",
+        "targetDrugOrClass": "Opioids (Tramadol, Methadone, Morphine, Codeine)",
+        "severity": "Avoid",
+        "rationale": "سرکوب تنفسی و آرام‌بخشی شدید.",
+        "clinicalAction": "از ترکیب پرهیز یا پایش فشرده انجام شود."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "می‌تواند دلیریوم را ایجاد یا تشدید کند."
+      },
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "آتاکسی و اختلال تعادل."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "لورازپام"
+  },
+  {
+    "id": "oxazepam",
+    "genericName": "Oxazepam",
+    "brandNamesIran": ["Oxazepam Sobhan", "Oxazepam Iran Hormone"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از همه بنزودیازپین‌ها و ز-داروها برای بی‌خوابی، بی‌قراری یا دلیریوم در سالمندان پرهیز کنید.",
+    "rationale": "حتی با نیمه‌عمر کوتاه‌تر، حساسیت سالمندان به بنزودیازپین‌ها خطر اختلال شناختی، سقوط و شکستگی را افزایش می‌دهد.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "درمان شناختی‌رفتاری بی‌خوابی و بهداشت خواب",
+      "ملاتونین پس از ارزیابی بالینی"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "خطر تشدید دلیریوم."
+      },
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "آتاکسی و اختلال تعادل."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "اکسازپام"
+  },
+  {
+    "id": "chlordiazepoxide",
+    "genericName": "Chlordiazepoxide",
+    "brandNamesIran": ["Chlordiazepoxide Iran Hormone", "Librium"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از مصرف کندیازپوکساید در سالمندان پرهیز کنید؛ نیمه‌عمر طولانی آن برای بیماران ۶۵+ نامناسب است.",
+    "rationale": "نیمه‌عمر طولانی و پاک‌سازی کند، تجمع دارو و خطر گیجی، افت شناختی، سقوط و شکستگی را افزایش می‌دهد.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مدیریت غیردارویی اضطراب و بی‌خوابی",
+      "در صورت ترک الکل، پروتکل تخصصی با پایش"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "chlordiazepoxide-ddi-0",
+        "targetDrugOrClass": "Opioids (Tramadol, Methadone, Morphine, Codeine)",
+        "severity": "Avoid",
+        "rationale": "سرکوب تنفسی و آرام‌بخشی شدید.",
+        "clinicalAction": "از ترکیب پرهیز کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "خطر ایجاد یا تشدید دلیریوم."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "کلردیازپوکساید"
+  },
+  {
+    "id": "zolpidem",
+    "genericName": "Zolpidem",
+    "brandNamesIran": ["Ambien", "Zolpidem Sobhan", "Zolpidem Abidi"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از ز-داروها مانند زولپیدم برای بی‌خوابی در سالمندان پرهیز کنید؛ درمان شناختی‌رفتاری بی‌خوابی را جایگزین کنید.",
+    "rationale": "عارضه‌های درمانی بی‌خوابی مشابه بنزودیازپین‌ها؛ خطر حوادث شبانه، دمانس، سقوط و شکستگی لگن بیشتر از منفعت بالینی است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "درمان شناختی‌رفتاری بی‌خوابی (CBT-I)",
+      "بهداشت خواب و مداخلات غیردارویی",
+      "ملاتونین پس از ارزیابی بالینی"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "zolpidem-ddi-0",
+        "targetDrugOrClass": "Opioids (Tramadol, Methadone, Morphine, Codeine)",
+        "severity": "Avoid",
+        "rationale": "خطر آرام‌بخشی شدید و سرکوب تنفسی.",
+        "clinicalAction": "از ترکیب پرهیز کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "می‌تواند دلیریوم را ایجاد یا تشدید کند."
+      },
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "خطر سقوط و شکستگی افزایش می‌یابد."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "زولپیدم"
+  },
+  {
+    "id": "haloperidol",
+    "genericName": "Haloperidol",
+    "brandNamesIran": ["Haldol", "Haloperidol Darou Pakhsh", "Haloperidol Sobhan"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از آنتی‌سایکوتیک‌ها برای علائم رفتاری دمانس یا دلیریوم پرهیز کنید، مگر آنکه علائم بیمار را تهدید کند یا آسیب جدی به دیگران بزند و اقدامات غیردارویی شکست خورده باشد.",
+    "rationale": "افزایش خطر سکته مغزی و مرگ در دمانس؛ خطر علائم خارج‌هرمی و مرگ‌ومیر در سالمندان.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مداخلات غیردارویی رفتاری و محیطی",
+      "در صورت ضرورت قطعی، کوتیاپین با دوز کم؛ با مستندسازی در خود بیمار/سازمان"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Parkinson Disease",
+        "recommendation": "Avoid",
+        "rationale": "مهار دوپامین علائم حرکتی را تشدید می‌کند؛ کوتیاپین و کلوزاپین استثنا هستند."
+      },
+      {
+        "condition": "Dementia",
+        "recommendation": "Avoid",
+        "rationale": "افزایش خطر مرگ و سکته مغزی در دمانس."
+      },
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "خطر تشدید دلیریوم و عوارض خارج‌هرمی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "هالوپریدول"
+  },
+  {
+    "id": "olanzapine",
+    "genericName": "Olanzapine",
+    "brandNamesIran": ["Zyprexa", "Olanzapine Sobhan", "Olanzapine Abidi"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از آنتی‌سایکوتیک‌ها برای علائم رفتاری دمانس یا دلیریوم پرهیز کنید، مگر در خطر جدی برای خود یا دیگران؛ بار آنتی‌کولینرژیک و متابولیک را ارزیابی کنید.",
+    "rationale": "افزایش خطر سکته مغزی و مرگ در دمانس؛ اثر آنتی‌کولینرژیک، افزایش وزن، دیابت و آرام‌بخشی شدید.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مداخلات غیردارویی رفتاری",
+      "کوتیاپین با دوز کم در صورت ضرورت بالینی"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "می‌تواند دوره دلیریوم را طولانی و علائم را تشدید کند."
+      },
+      {
+        "condition": "Dementia",
+        "recommendation": "Avoid",
+        "rationale": "خطر سکته مغزی و مرگ؛ اثر آنتی‌کولینرژیک اختلال شناختی را تشدید می‌کند."
+      },
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "آرام‌بخشی و افت فشار خون وضعیتی خطر سقوط را بالا می‌برد."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "الانزاپین"
+  },
+  {
+    "id": "quetiapine",
+    "genericName": "Quetiapine",
+    "brandNamesIran": ["Seroquel", "Quetiapine Arya", "Quetiapine Sobhan"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از آنتی‌سایکوتیک‌ها برای علائم رفتاری دمانس یا دلیریوم پرهیز کنید مگر در خطر جدی برای بیمار یا دیگران؛ از کوتیاپین برای بی‌خوابی استفاده نکنید.",
+    "rationale": "افزایش خطر سکته مغزی و مرگ در دمانس؛ خواب‌آلودگی، افت فشار خون ارتواستاتیک و سقوط؛ سناریوی مصرف خارج از اندیکاسیون بی‌فایده است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مداخلات غیردارویی برای بی‌خوابی و علائم رفتاری",
+      "بررسی درد، احتباس ادرار و یبوست به‌عنوان محرک بی‌قراری"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Delirium",
+        "recommendation": "Avoid",
+        "rationale": "آرام‌بخشی و خطر تشدید دلیریوم."
+      },
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "خطر خواب‌آلودگی، افت فشار خون و سقوط."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "کوتیاپین"
+  },
+  {
+    "id": "risperidone",
+    "genericName": "Risperidone",
+    "brandNamesIran": ["Risperdal", "Risperidone Sobhan", "Risperidone Bakhtar Bioshimi"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از آنتی‌سایکوتیک‌ها برای علائم رفتاری دمانس/دلیریوم پرهیز کنید مگر در خطر جدی برای بیمار یا دیگران؛ در صورت استفاده، کوتاه‌مدت با مستندسازی علائم هدف.",
+    "rationale": "افزایش خطر سکته مغزی و مرگ در دمانس؛ علائم خارج‌هرمی و سقوط در سالمندان رایج‌تر است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "مداخلات غیردارویی رفتاری و محیطی",
+      "در صورت ضرورت، کمترین دوز مؤثر با پایش و برنامه قطع"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Dementia",
+        "recommendation": "Avoid",
+        "rationale": "افزایش خطر سکته مغزی و مرگ در دمانس؛ فقط در خطر جدی استفاده شود."
+      },
+      {
+        "condition": "Parkinson Disease",
+        "recommendation": "Avoid",
+        "rationale": "مهار دوپامین علائم حرکتی را تشدید می‌کند؛ فقط کوتیاپین و کلوزاپین استثنا هستند."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "ریسپریدون"
+  },
+  {
+    "id": "phenobarbital",
+    "genericName": "Phenobarbital",
+    "brandNamesIran": ["Phenobarbital Sobhan", "Phenobarbital Tehran Chemie"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از باربیتورات‌ها در سالمندان پرهیز کنید.",
+    "rationale": "اعتیادآور، تحمل‌زا، به‌طور چشمگیری خواب‌آور و عامل تشدید دلیریوم، افت شناختی و سقوط؛ پاک‌سازی کند در سالمندان.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "بازبینی تشخیصی صرع و انتقال به ضدتشنج‌های جدیدتر، تحت نظر متخصص"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "phenobarbital-ddi-0",
+        "targetDrugOrClass": "Warfarin",
+        "severity": "Use with caution",
+        "rationale": "القای آنزیم‌های کبدی، اثر وارفارین را کم می‌کند یا قطع آن INR را افزایش می‌دهد.",
+        "clinicalAction": "INR را پایش و وارفارین را با تغییرات تنظیم کنید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "خطر سقوط و شکستگی با آتاکسی و آرام‌بخشی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "فنوباربیتال"
+  },
+  {
+    "id": "primidone",
+    "genericName": "Primidone",
+    "brandNamesIran": ["Primidone Hakim", "Mysoline"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از پریمیدون در سالمندان پرهیز کنید.",
+    "rationale": "متابولیت فنوباربیتال و خواص خواب‌آور و اعتیادآور؛ خطر افت شناختی، دلیریوم و سقوط.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "گزینه‌های جایگزین برای ترمور یا تشنج، بر اساس متخصص اعصاب"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "خطر سقوط و شکستگی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "پریمیدون"
+  },
+  {
+    "id": "imipramine",
+    "genericName": "Imipramine",
+    "brandNamesIran": ["Imipramine Iran Hormone", "Tofranil"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "از TCAهای با اثر آنتی‌کولینرژیک قوی مانند ایمیدزامین (ایمی‌پرامین) پرهیز کنید.",
+    "rationale": "اثر آنتی‌کولینرژیک قوی، خواب‌آوری، افت فشار وضعیتی و آریتمی؛ خطر اختلال شناختی و احتباس ادرار.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "سرترالین یا اس‌سیتالوپرام برای افسردگی",
+      "دولوکستین یا گاباپنتین برای درد نوروپاتیک"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "imipramine-ddi-0",
+        "targetDrugOrClass": "Anticholinergic agents (Table 7)",
+        "severity": "Avoid",
+        "rationale": "افزایش بار آنتی‌کولینرژیک تجمعی.",
+        "clinicalAction": "مصرف هم‌زمان را به حداقل برسانید."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Syncope",
+        "recommendation": "Avoid",
+        "rationale": "افت فشار خون وضعیتی و اختلال هدایت."
+      },
+      {
+        "condition": "Benign Prostatic Hyperplasia (BPH) / LUTS",
+        "recommendation": "Avoid",
+        "rationale": "خطر احتباس حاد ادرار."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "ایمی‌پرامین"
+  },
+  {
+    "id": "nortriptyline",
+    "genericName": "Nortriptyline",
+    "brandNamesIran": ["Nortriptyline Arya", "Nortrilen"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["DRUG_DISEASE"],
+    "recommendation": "با احتیاط مصرف شود؛ در صورت ضرورت، کمترین دوز مؤثر و پایش اثر آنتی‌کولینرژیک و فشار خون وضعیتی.",
+    "rationale": "خطر افت فشار خون وضعیتی، سنکوپ و توکسیسیته آنتی‌کولینرژیک در سالمندان.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": true,
+    "isAvailableInIran": false,
+    "saferAlternatives": [
+      "سرترالین یا اس‌سیتالوپرام",
+      "دولوکستین یا گاباپنتین برای درد نوروپاتیک"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Syncope",
+        "recommendation": "Avoid",
+        "rationale": "افت فشار خون وضعیتی و اختلال هدایت قلبی."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲ و ۳). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "نورتریپتیلین"
+  },
+  {
+    "id": "doxepin",
+    "genericName": "Doxepin",
+    "brandNamesIran": ["Sinequan", "Doxepin Chemi Darou"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["PIM_GENERAL"],
+    "recommendation": "از دوزهای بیش از ۶ میلی‌گرم در روز پرهیز کنید؛ حتی در دوزهای پایین احتمال اثر آنتی‌کولینرژیک وجود دارد.",
+    "rationale": "اثر آنتی‌کولینرژیک و خواب‌آوری حتی در دوزهای کم که در بی‌خوابی مصرف می‌شود، خطر گیجی و سقوط را افزایش می‌دهد.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": true,
+    "isCnsActive": true,
+    "isAvailableInIran": false,
+    "saferAlternatives": [
+      "درمان شناختی‌رفتاری بی‌خوابی",
+      "ملاتونین؛ پس از ارزیابی بالینی"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۲). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "داکسپین"
+  },
+  {
+    "id": "fluoxetine",
+    "genericName": "Fluoxetine",
+    "brandNamesIran": ["Prozac", "Fluoxetine Bakhtar Bioshimi", "Fluoxetine Sobhan"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["USE_WITH_CAUTION", "DRUG_INTERACTION"],
+    "recommendation": "با احتیاط مصرف شود؛ در صورت استفاده، سدیم خون را پایش کنید و در صورتی که اندیکاسیون درمان فعال وجود ندارد، از تیتر آهسته استفاده کنید.",
+    "rationale": "خطر هیپوناترمی/SIADH در سالمندان؛ طول نیمه‌عمر بالا و تداخل با وارفارین و داروهای سروتونرژیک.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Weak",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "سرترالین یا اس‌سیتالوپرام به‌عنوان گزینه‌های ترجیحی SSRI در سالمندی"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "fluoxetine-ddi-0",
+        "targetDrugOrClass": "Warfarin",
+        "severity": "Avoid",
+        "rationale": "افزایش خطر خونریزی با اختلال تجمع پلاکتی.",
+        "clinicalAction": "پایش INR و نشانه‌های خونریزی."
+      }
+    ],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "فلوکستین"
+  },
+  {
+    "id": "sertraline",
+    "genericName": "Sertraline",
+    "brandNamesIran": ["Zoloft", "Sertraline Abidi", "Sertraline Sobhan"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["USE_WITH_CAUTION", "DRUG_INTERACTION"],
+    "recommendation": "با احتیاط مصرف شود؛ سدیم خون را در شروع یا افزایش دوز پایش کنید، به‌ویژه در بیماران پرخطر هیپوناترمی. مصرف هم‌زمان با وارفارین نیازمند پایش دقیق است.",
+    "rationale": "SSRIها با خطر هیپوناترمی/SIADH و خونریزی (به‌ویژه با ضدانعقادها) در سالمندان همراه‌اند.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "پایش سدیم در ۲ تا ۴ هفته اول و پس از تغییر دوز"
+    ],
+    "drugDrugInteractions": [
+      {
+        "id": "sertraline-ddi-0",
+        "targetDrugOrClass": "Warfarin",
+        "severity": "Avoid",
+        "rationale": "افزایش خطر خونریزی و جهش INR.",
+        "clinicalAction": "پایش دقیق INR و آموزش علائم خونریزی به بیمار."
+      },
+      {
+        "id": "sertraline-ddi-1",
+        "targetDrugOrClass": "Tramadol",
+        "severity": "Use with caution",
+        "rationale": "خطر سندرم سروتونین و هیپوناترمی.",
+        "clinicalAction": "پایش الکترولیت‌ها و علائم سروتونین."
+      }
+    ],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "History of Falls or Fractures",
+        "recommendation": "Avoid",
+        "rationale": "داروهای ضدافسردگی خواب‌آور با افزایش خطر سقوط و شکستگی همراه‌اند."
+      }
+    ],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴ و ۵). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "سرترالین"
+  },
+  {
+    "id": "citalopram",
+    "genericName": "Citalopram",
+    "brandNamesIran": ["Cipram", "Citalopram Sobhan", "Citalopram Abidi"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["USE_WITH_CAUTION"],
+    "recommendation": "با احتیاط مصرف شود؛ طول QTc را در صورت بیماری قلبی یا ترکیب با داروهای مؤثر بر QT پایش کنید. حداکثر دوز بر اساس سن محدود شود.",
+    "rationale": "طولانی شدن QTc وابسته به دوز، به‌ویژه در سالمندان و بیماران قلبی؛ خطر هیپوناترمی نیز وجود دارد.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Weak",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "سرترالین یا اس‌سیتالوپرام در صورت مناسب بودن؛ پایش ECG و سدیم"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "سیتالوپرام"
+  },
+  {
+    "id": "duloxetine",
+    "genericName": "Duloxetine",
+    "brandNamesIran": ["Cymbalta", "Duloxetine Sobhan", "Duloxetine Arya"],
+    "therapeuticCategory": "Central Nervous System",
+    "beersCategories": ["USE_WITH_CAUTION"],
+    "recommendation": "با احتیاط مصرف شود؛ هیپوناترمی و خطر سقوط را در شروع درمان پایش کنید.",
+    "rationale": "مهار بازجذب سروتونین و نورآدرنالین با خطر هیپوناترمی/SIADH و افت فشار خون همراه است.",
+    "qualityOfEvidence": "Moderate",
+    "strengthOfRecommendation": "Weak",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": true,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "پایش منظم سدیم خون در هفته‌های نخست",
+      "در صورت افت سدیم، قطع یا جایگزینی درمان"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [],
+    "lastUpdated": "2026-09-09",
+    "notes": "بر اساس معیارهای بیرز ۲۰۲۳ (جدول ۴). بازبینی بالینی پیش از استفاده لازم است.",
+    "genericNameFa": "دولوکستین"
+  }
+]

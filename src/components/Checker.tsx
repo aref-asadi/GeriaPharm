@@ -9,9 +9,18 @@ import {
   Info,
   Pill,
   Printer,
+  Copy,
+  Check,
+  ListChecks,
 } from "lucide-react";
 import type { DrugRecord } from "../types/types";
-import { auditRegimen, conditions } from "../services/checker";
+import {
+  auditRegimen,
+  conditions,
+  evaluateRegimen,
+  cockcroftGault,
+  type PatientProfile,
+} from "../services/checker";
 import { fa, number, drugName, matchesSearch } from "../lib/fa";
 import {
   Button,
@@ -20,6 +29,23 @@ import {
   Notice,
   EmptyState,
 } from "./ui/Primitives";
+const profileKey = "gp-profile";
+function loadProfile(): PatientProfile {
+  try {
+    const raw = JSON.parse(localStorage.getItem(profileKey) || "{}");
+    const p: PatientProfile = {};
+    if (typeof raw.age === "number" && raw.age >= 0) p.age = raw.age;
+    if (raw.sex === "male" || raw.sex === "female") p.sex = raw.sex;
+    if (typeof raw.weight === "number" && raw.weight >= 0) p.weight = raw.weight;
+    if (typeof raw.serumCreatinine === "number" && raw.serumCreatinine >= 0)
+      p.serumCreatinine = raw.serumCreatinine;
+    if (typeof raw.CrCl === "number" && raw.CrCl >= 0) p.CrCl = raw.CrCl;
+    if (typeof raw.eGFR === "number" && raw.eGFR >= 0) p.eGFR = raw.eGFR;
+    return p;
+  } catch {
+    return {};
+  }
+}
 export function Checker({
   drugs,
   ids,
@@ -33,23 +59,67 @@ export function Checker({
 }) {
   const [query, setQuery] = useState(""),
     [selected, setSelected] = useState<string[]>([]),
-    [crcl, setCrcl] = useState(""),
-    [egfr, setEgfr] = useState(""),
+    [profile, setProfile] = useState<PatientProfile>(loadProfile),
     [clear, setClear] = useState(false),
-    [filter, setFilter] = useState("All");
+    [filter, setFilter] = useState("All"),
+    [copied, setCopied] = useState(false);
   const meds = ids
       .map((id) => drugs.find((d) => d.id === id))
       .filter((d): d is DrugRecord => !!d),
     missing = ids.length - meds.length;
-  const alerts = auditRegimen(meds, selected, {
-    CrCl: crcl === "" ? undefined : Number(crcl),
-    eGFR: egfr === "" ? undefined : Number(egfr),
-  });
+  const { alerts, stats } = evaluateRegimen(meds, selected, profile);
   const groups = [...new Set(alerts.map((a) => a.type))];
   const matches = drugs.filter(
     (d) => !ids.includes(d.id) && matchesSearch(d, query),
   );
   const searchRef = useRef<HTMLDivElement>(null);
+  function update(patch: Partial<PatientProfile>) {
+    const next = { ...profile, ...patch };
+    for (const k of Object.keys(next) as (keyof PatientProfile)[])
+      if (next[k] === undefined) delete next[k];
+    setProfile(next);
+    try {
+      localStorage.setItem(profileKey, JSON.stringify(next));
+    } catch {
+      /* keep session-only */
+    }
+  }
+  const num = (k: keyof PatientProfile) =>
+    profile[k] === undefined ? "" : String(profile[k]);
+  const onNum = (k: keyof PatientProfile) => (v: string) =>
+    update({ [k]: v === "" ? undefined : Number(v) } as Partial<PatientProfile>);
+  const cg = cockcroftGault(profile);
+  const alertText = () => {
+    const lines = [
+      "خلاصه پرونده دارویی سالمند — گریافارم",
+      "معیارهای بیرز ۲۰۲۳",
+      "",
+      `تعداد داروها: ${number(stats.totalDrugs)}`,
+      `داروهای نامناسب (PIM): ${number(stats.pimCount)}`,
+      `بار آنتی‌کولینرژیک (ACB): ${number(stats.acbScore)}`,
+      `داروهای فعال بر CNS: ${number(stats.cnsCount)}`,
+      "",
+    ];
+    for (const a of alerts) {
+      lines.push(
+        `[${a.severity === "avoid" ? "پرهیز" : a.severity === "caution" ? "احتیاط" : "بررسی"}] ${a.title}`,
+      );
+      lines.push(a.detail);
+      if (a.action) lines.push("اقدام: " + a.action);
+      lines.push("");
+    }
+    if (!alerts.length) lines.push("هشدار فعالی در قواعد ثبت‌شده یافت نشد.");
+    return lines.join("\n");
+  };
+  async function copySummary() {
+    try {
+      await navigator.clipboard.writeText(alertText());
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      /* clipboard unavailable */
+    }
+  }
   return (
     <div className="checker-grid">
       <div className="checker-inputs">
@@ -183,10 +253,89 @@ export function Checker({
             ))}
           </div>
           <div className="renal-heading">
-            <h3>عملکرد کلیه</h3>
+            <h3>سن، جنسیت و عملکرد کلیه</h3>
             <span className="muted">اختیاری</span>
           </div>
           <div className="form-grid">
+            <label className="field">
+              سن (سال)
+              <div className="unit-input">
+                <input
+                  aria-label="سن بیمار"
+                  type="number"
+                  min="0"
+                  max="130"
+                  step="1"
+                  dir="ltr"
+                  placeholder="72"
+                  value={num("age")}
+                  onChange={(e) => onNum("age")(e.target.value)}
+                />
+                <span dir="ltr">yr</span>
+              </div>
+            </label>
+            <div className="field">
+              جنسیت
+              <div
+                className="theme-toggle"
+                role="group"
+                aria-label="جنسیت بیمار"
+                style={{ marginTop: 8 }}
+              >
+                <button
+                  type="button"
+                  aria-pressed={profile.sex !== "female"}
+                  onClick={() => update({ sex: "male" })}
+                >
+                  <span className="sr-only">مرد</span>
+                  <span aria-hidden style={{ fontSize: 13, padding: "0 6px" }}>
+                    مرد
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={profile.sex === "female"}
+                  onClick={() => update({ sex: "female" })}
+                >
+                  <span className="sr-only">زن</span>
+                  <span aria-hidden style={{ fontSize: 13, padding: "0 6px" }}>
+                    زن
+                  </span>
+                </button>
+              </div>
+            </div>
+            <label className="field">
+              وزن (کیلوگرم)
+              <div className="unit-input">
+                <input
+                  aria-label="وزن بیمار"
+                  type="number"
+                  min="0"
+                  step="any"
+                  dir="ltr"
+                  placeholder="70"
+                  value={num("weight")}
+                  onChange={(e) => onNum("weight")(e.target.value)}
+                />
+                <span dir="ltr">kg</span>
+              </div>
+            </label>
+            <label className="field">
+              کراتینین سرم
+              <div className="unit-input">
+                <input
+                  aria-label="کراتینین سرم"
+                  type="number"
+                  min="0"
+                  step="any"
+                  dir="ltr"
+                  placeholder="1.2"
+                  value={num("serumCreatinine")}
+                  onChange={(e) => onNum("serumCreatinine")(e.target.value)}
+                />
+                <span dir="ltr">mg/dL</span>
+              </div>
+            </label>
             <label className="field">
               کلیرانس کراتینین · CrCl
               <div className="unit-input">
@@ -197,8 +346,8 @@ export function Checker({
                   step="any"
                   dir="ltr"
                   placeholder="45"
-                  value={crcl}
-                  onChange={(e) => setCrcl(e.target.value)}
+                  value={num("CrCl")}
+                  onChange={(e) => onNum("CrCl")(e.target.value)}
                 />
                 <span dir="ltr">mL/min</span>
               </div>
@@ -213,20 +362,35 @@ export function Checker({
                   step="any"
                   dir="ltr"
                   placeholder="60"
-                  value={egfr}
-                  onChange={(e) => setEgfr(e.target.value)}
+                  value={num("eGFR")}
+                  onChange={(e) => onNum("eGFR")(e.target.value)}
                 />
                 <span dir="ltr">mL/min/1.73m²</span>
               </div>
             </label>
           </div>
-          {((crcl !== "" && Number(crcl) < 0) ||
-            (egfr !== "" && Number(egfr) < 0)) && (
-            <Notice tone="error">عملکرد کلیه نمی‌تواند منفی باشد.</Notice>
+          {cg !== undefined && (
+            <Notice tone="info">
+              CrCl برآوردی کوکرافت–گالت: <bdi dir="ltr">{cg.toFixed(1)}</bdi>{" "}
+              mL/min
+              {profile.CrCl !== undefined
+                ? " (مقدار دستی شما اولویت دارد)"
+                : " — محاسبه‌شده از سن، وزن، جنسیت و کراتینین"}
+            </Notice>
+          )}
+          {((profile.CrCl ?? -1) < 0 ||
+            (profile.eGFR ?? -1) < 0 ||
+            (profile.age ?? -1) < 0 ||
+            (profile.weight ?? -1) < 0 ||
+            (profile.serumCreatinine ?? -1) < 0) && (
+            <Notice tone="error">
+              مقادیر سن، وزن، کراتینین و عملکرد کلیه نمی‌توانند منفی باشند.
+            </Notice>
           )}
           <p className="help">
-            CrCl و eGFR جایگزین یکدیگر نیستند. شرایط بیمار و مقادیر کلیوی فقط در
-            همین مرور نگه داشته می‌شوند.
+            اگر سن، وزن، جنسیت و کراتینین را وارد کنید، CrCl به‌طور خودکار محاسبه
+            می‌شود. CrCl و eGFR جایگزین یکدیگر نیستند. اطلاعات بیمار فقط روی همین
+            دستگاه ذخیره می‌شود.
           </p>
         </section>
       </div>
@@ -241,6 +405,43 @@ export function Checker({
             بررسی زنده
           </span>
         </div>
+        <div className="print-header">
+          <h1>خلاصه پرونده دارویی سالمند</h1>
+          <p>
+            گریافارم · معیارهای بیرز ۲۰۲۳ · تهیه‌شده در{" "}
+            {new Intl.DateTimeFormat("fa-IR", { dateStyle: "long" }).format(
+              new Date(),
+            )}
+          </p>
+        </div>
+        {meds.length > 0 && (
+          <div className="stats-grid">
+            <div className="stat-tile">
+              <b>{number(stats.totalDrugs)}</b>
+              <span>کل داروها</span>
+            </div>
+            <div
+              className={
+                "stat-tile " + (stats.pimCount > 0 ? "tone-danger" : "")
+              }
+            >
+              <b>{number(stats.pimCount)}</b>
+              <span>داروی نامناسب (PIM)</span>
+            </div>
+            <div
+              className={"stat-tile " + (stats.acbScore >= 3 ? "tone-warn" : "")}
+            >
+              <b>{number(stats.acbScore)}</b>
+              <span>بار آنتی‌کولینرژیک</span>
+            </div>
+            <div
+              className={"stat-tile " + (stats.cnsCount >= 3 ? "tone-info" : "")}
+            >
+              <b>{number(stats.cnsCount)}</b>
+              <span>داروی فعال بر CNS</span>
+            </div>
+          </div>
+        )}
         <div className="audit-stats">
           <button
             className={filter === "avoid" ? "selected" : ""}
@@ -266,6 +467,18 @@ export function Checker({
             <span>بررسی ناکامل</span>
           </button>
         </div>
+        {meds.length > 0 && (
+          <div className="actions print-hide">
+            <Button variant="secondary" onClick={() => window.print()}>
+              <Printer size={17} />
+              چاپ خلاصه
+            </Button>
+            <Button variant="secondary" onClick={() => void copySummary()}>
+              {copied ? <Check size={17} /> : <Copy size={17} />}
+              {copied ? "کپی شد" : "کپی خلاصه مشاوره"}
+            </Button>
+          </div>
+        )}
         <p className="help">
           ارزیابی {number(meds.length)} داروی ثبت‌شده بر اساس قواعد موجود؛ این
           فهرست، پایگاه جامع تداخل‌ها نیست.
@@ -331,6 +544,29 @@ export function Checker({
                   ))}
               </div>
             ))
+        )}
+        {meds.length > 0 && alerts.some((a) => a.severity === "avoid") && (
+          <div className="deprescribe">
+            <h3>
+              <ListChecks size={20} />
+              راهنمای اقدام و کاهش تدریجی (Deprescribing)
+            </h3>
+            <ol>
+              {alerts
+                .filter((a) => a.severity === "avoid")
+                .slice(0, 6)
+                .map((a) => (
+                  <li key={"dep" + a.id}>
+                    <strong>{a.title}:</strong>{" "}
+                    {a.action ?? a.detail}
+                  </li>
+                ))}
+              <li>
+                قطع داروهای پرخطر به‌صورت یک‌به‌یک و تدریجی انجام شود؛ پس از هر
+                تغییر، پاسخ بیمار و نیاز مجدد به درمان بازبینی شود.
+              </li>
+            </ol>
+          </div>
         )}
         {meds.length > 0 &&
           alerts.length > 0 &&
