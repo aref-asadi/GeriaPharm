@@ -190,3 +190,79 @@ export function MedicationCard({
     </article>
   );
 }
+
+export function MedicationListItem({
+  drug,
+  saved,
+  inRegimen,
+  onOpen,
+  onBookmark,
+  onAdd,
+}: {
+  drug: DrugRecord;
+  saved: boolean;
+  inRegimen: boolean;
+  onOpen: () => void;
+  onBookmark: () => void;
+  onAdd: () => void;
+}) {
+  return (
+    <article className="med-card med-list-row flex flex-col md:flex-row md:items-center justify-between p-4 md:p-5 gap-3 hover:shadow-md transition">
+      <div className="flex-1 min-w-0 flex items-start gap-3.5">
+        <div className="pt-0.5">
+          <RiskBadge drug={drug} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              className="med-title text-base sm:text-lg font-bold text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 text-right cursor-pointer"
+              onClick={onOpen}
+            >
+              {drugName(drug)}
+            </button>
+            <span className="text-xs sm:text-sm font-medium text-slate-400 dark:text-slate-400 font-mono" dir="ltr">
+              ({drug.genericName})
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 mt-1 flex-wrap text-xs text-slate-500 dark:text-slate-400">
+            <span className="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              {fa(drug.therapeuticCategory)}
+            </span>
+            {drug.brandNamesIran.length > 0 && (
+              <span className="truncate max-w-[280px]" dir="auto" title={drug.brandNamesIran.join(" · ")}>
+                برندها: {drug.brandNamesIran.slice(0, 3).join(" · ")}
+              </span>
+            )}
+            {drug.isAvailableInIran !== false && (
+              <span className="chip-iran inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                <CheckCircle2 size={12} />
+                موجود در ایران
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-end gap-2 border-t md:border-t-0 pt-2 md:pt-0 border-slate-100 dark:border-slate-800">
+        <Button
+          variant={inRegimen ? "secondary" : "primary"}
+          onClick={onAdd}
+          disabled={inRegimen}
+          className="text-xs px-4 py-1.5"
+        >
+          {inRegimen ? "افزوده شد ✓" : "افزودن به نسخه +"}
+        </Button>
+        <IconButton
+          label={(saved ? "حذف نشانک " : "نشانک‌گذاری ") + drugName(drug)}
+          aria-pressed={saved}
+          onClick={onBookmark}
+          className={saved ? "saved text-amber-500" : "text-slate-400"}
+        >
+          <Bookmark size={18} fill={saved ? "currentColor" : "none"} />
+        </IconButton>
+      </div>
+    </article>
+  );
+}
+

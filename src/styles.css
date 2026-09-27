@@ -1,38 +1,53 @@
 @import "@fontsource-variable/vazirmatn";
 @import "tailwindcss";
+/* Healthy Together Specification Design Tokens */
 :root {
-  font-family: "Vazirmatn Variable", Tahoma, sans-serif;
+  --color-midnight-ink: #101722;       /* Primary canvas, dark backgrounds, deep text */
+  --color-linen-lavender: #f9f0ff;     /* Light section canvas, breathing-room surface */
+  --color-pure-white: #ffffff;         /* Pure card surfaces, modal interiors */
+  --color-muted-graphite: #6c6c7a;     /* Secondary labels, subtle borders */
+  --color-deep-charcoal: #3f424e;      /* Body text on light surfaces */
+  --color-electric-iris: #4541fe;      /* Vivid primary actions, active indicators */
+  --gradient-electric-iris: linear-gradient(270deg, #4541fe 40%, #fe0f83); /* Signature ribbon */
+  --color-lilac-whisper: #d9c6ff;      /* Chips, tag backgrounds, soft accent washes */
+  --color-hot-magenta: #fe0f83;        /* Warm accent endpoint */
+
+  --radius-cards: 42px;                /* Signature 42px radius for cards */
+  --radius-buttons: 9999px;            /* Full pill radius */
+  --radius-tags: 9999px;               /* Full pill radius */
+  --radius-inputs: 12px;
+  --radius-small: 20px;
+
+  --shadow-xl: rgba(23, 73, 77, 0.15) 0px 20px 30px 0px;
+  --shadow-glow: rgba(69, 65, 254, 0.25) 0px 10px 40px 0px;
+}
+
+:root {
+  font-family: "Vazirmatn Variable", Inter, system-ui, Tahoma, sans-serif;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
   font-size: 16px;
-  line-height: 1.8;
-  --radius: 14px;
-  /* Surfaces & text */
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-2: #edf3f5;
-  --surface-3: #f8fafb;
-  --text: #0f172a;
-  --text-2: #46626c;
-  --text-3: #5a7078;
-  --line: #dde8ec;
-  --line-soft: #e9eff2;
+  line-height: 1.4;
+  --radius: var(--radius-cards);
+  /* Surfaces & text - Healthy Together Palette */
+  --bg: var(--color-linen-lavender);
+  --surface: var(--color-pure-white);
+  --surface-2: #f2e4fc;
+  --surface-3: #ffffff;
+  --text: var(--color-midnight-ink);
+  --text-2: var(--color-deep-charcoal);
+  --text-3: var(--color-muted-graphite);
+  --line: #e3d2f0;
+  --line-soft: #ede0f5;
   /* Brand & accent */
-  --brand: #0f3a46;
-  --brand-contrast: #d7ede5;
-  --banner-grad: linear-gradient(110deg, #1b4d56, #123d47);
-  --aside-grad: linear-gradient(145deg, #123d46, #23616a);
-  --accent: #0369a1;
-  --accent-strong: #075985;
-  --focus: #0284c7;
-  /* Teal-green clinical tint (rgb triplet) */
-  --tint: 32 90 74;
-  --tint-text: #21584d;
-  --tint-accent: #3f8a72;
-  --saved: #2f6d54;
-  --ok: #2f7d5f;
-  --ok-dot: #469775;
+  --brand: var(--color-midnight-ink);
+  --brand-contrast: var(--color-lilac-whisper);
+  --banner-grad: var(--gradient-electric-iris);
+  --aside-grad: linear-gradient(180deg, #101722 0%, #161f2e 100%);
+  --accent: var(--color-electric-iris);
+  --accent-strong: #3733db;
+  --focus: var(--color-electric-iris);
   /* Status badges */
   --avoid-bg: #fdefe9;
   --avoid-text: #8f3f22;
@@ -394,14 +409,19 @@ button {
   min-width: 0;
 }
 .topbar {
-  height: 76px;
-  background: var(--glass);
-  border-bottom: 1px solid var(--line);
+  height: 64px;
+  background: var(--color-midnight-ink);
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 40px;
   gap: 10px;
+}
+.topbar .breadcrumb span,
+.topbar .breadcrumb strong {
+  color: #ffffff;
 }
 .breadcrumb {
   display: flex;
@@ -483,28 +503,32 @@ main {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-weight: 550;
+  font-weight: 600;
   font-size: 14px;
-  line-height: 1.6;
-  padding: 11px 16px;
+  line-height: 1.4;
+  padding: 10px 22px;
   border: 1px solid transparent;
-  border-radius: 9px;
+  border-radius: var(--radius-buttons);
   background: var(--accent);
-  color: white;
+  color: #ffffff;
   min-height: 44px;
   white-space: normal;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .button:hover:not(:disabled) {
   background: var(--accent-strong);
-  box-shadow: 0 3px 9px rgb(var(--shadow) / 0.07);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
 }
 .button.secondary {
-  background: var(--surface);
+  background: #ffffff;
   border-color: var(--line);
-  color: var(--text-2);
+  color: var(--color-midnight-ink);
+  border-radius: var(--radius-buttons);
 }
 .button.secondary:hover:not(:disabled) {
-  background: rgb(var(--tint) / 0.07);
+  background: #f9f0ff;
+  border-color: var(--accent);
 }
 .button.ghost {
   background: transparent;
@@ -690,14 +714,16 @@ main {
   color: var(--text-3);
 }
 .regimen-banner {
-  background: var(--banner-grad);
+  background: var(--color-midnight-ink);
+  background-image: var(--gradient-electric-iris);
   color: white;
   display: flex;
   align-items: center;
   gap: 19px;
-  padding: 25px;
-  border-radius: var(--radius);
+  padding: 30px 36px;
+  border-radius: var(--radius-cards);
   margin: 27px 0 32px;
+  box-shadow: var(--shadow-xl);
 }
 .banner-icon {
   display: grid;
@@ -730,10 +756,19 @@ main {
 }
 .med-card {
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: var(--radius-cards);
   background: var(--surface);
-  padding: 17px 21px 9px;
+  padding: 24px 28px;
   min-width: 0;
+  box-shadow: var(--shadow-xl);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.med-card:hover {
+  box-shadow: var(--shadow-glow);
+}
+.med-list-row {
+  border-radius: 28px;
+  padding: 16px 24px;
 }
 .med-top {
   display: flex;

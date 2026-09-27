@@ -15,9 +15,11 @@ export interface PatientProfile {
   age?: number;
   sex?: "male" | "female";
   weight?: number;
+  height?: number;
   serumCreatinine?: number;
   CrCl?: number;
   eGFR?: number;
+  preferActualWeightOverIbw?: boolean;
 }
 export interface RegimenStats {
   totalDrugs: number;

@@ -21,6 +21,21 @@ import {
   cockcroftGault,
   type PatientProfile,
 } from "../services/checker";
+import { calculateRenalMetrics } from "../services/calculators/cockcroftGault";
+import { evaluateAdverseDrugReactionRisk } from "../services/ml/riskModel";
+import { generateDeprescribingProtocols } from "../services/ml/deprescribingModel";
+import { recommendDrugSubstitutions } from "../services/ml/recommender";
+import { prioritizeAlerts } from "../services/ml/alertRanking";
+import {
+  ChevronDown,
+  ChevronUp,
+  BrainCircuit,
+  Flame,
+  ArrowRightLeft,
+  CalendarCheck,
+  ShieldAlert,
+} from "lucide-react";
+
 import { fa, number, drugName, matchesSearch } from "../lib/fa";
 import {
   Button,
@@ -37,10 +52,13 @@ function loadProfile(): PatientProfile {
     if (typeof raw.age === "number" && raw.age >= 0) p.age = raw.age;
     if (raw.sex === "male" || raw.sex === "female") p.sex = raw.sex;
     if (typeof raw.weight === "number" && raw.weight >= 0) p.weight = raw.weight;
+    if (typeof raw.height === "number" && raw.height >= 0) p.height = raw.height;
     if (typeof raw.serumCreatinine === "number" && raw.serumCreatinine >= 0)
       p.serumCreatinine = raw.serumCreatinine;
     if (typeof raw.CrCl === "number" && raw.CrCl >= 0) p.CrCl = raw.CrCl;
     if (typeof raw.eGFR === "number" && raw.eGFR >= 0) p.eGFR = raw.eGFR;
+    if (typeof raw.preferActualWeightOverIbw === "boolean")
+      p.preferActualWeightOverIbw = raw.preferActualWeightOverIbw;
     return p;
   } catch {
     return {};
@@ -62,7 +80,9 @@ export function Checker({
     [profile, setProfile] = useState<PatientProfile>(loadProfile),
     [clear, setClear] = useState(false),
     [filter, setFilter] = useState("All"),
-    [copied, setCopied] = useState(false);
+    [copied, setCopied] = useState(false),
+    [showFormulaDetails, setShowFormulaDetails] = useState(false);
+
   const meds = ids
       .map((id) => drugs.find((d) => d.id === id))
       .filter((d): d is DrugRecord => !!d),
@@ -89,6 +109,21 @@ export function Checker({
   const onNum = (k: keyof PatientProfile) => (v: string) =>
     update({ [k]: v === "" ? undefined : Number(v) } as Partial<PatientProfile>);
   const cg = cockcroftGault(profile);
+  // Module 1 & 2 ML + Pharmacokinetic engines
+  const renalCalculations = calculateRenalMetrics({
+    sex: profile.sex,
+    age: profile.age,
+    weight: profile.weight,
+    height: profile.height,
+    serumCreatinine: profile.serumCreatinine,
+    preferActualWeightOverIbw: profile.preferActualWeightOverIbw,
+  });
+
+  const adrRisk = evaluateAdverseDrugReactionRisk(meds, selected, profile);
+  const deprescribingProtocols = generateDeprescribingProtocols(meds, selected);
+  const drugSubstitutions = recommendDrugSubstitutions(meds);
+  const prioritizedAlertList = prioritizeAlerts(alerts);
+
   const alertText = () => {
     const lines = [
       "خلاصه پرونده دارویی سالمند — گریافارم",
@@ -305,6 +340,24 @@ export function Checker({
               </div>
             </div>
             <label className="field">
+              قد (سانتی‌متر)
+              <div className="unit-input">
+                <input
+                  aria-label="قد بیمار"
+                  type="number"
+                  min="0"
+                  max="250"
+                  step="any"
+                  dir="ltr"
+                  placeholder="170"
+                  value={num("height")}
+                  onChange={(e) => onNum("height")(e.target.value)}
+                />
+                <span dir="ltr">cm</span>
+              </div>
+            </label>
+
+            <label className="field">
               وزن (کیلوگرم)
               <div className="unit-input">
                 <input
@@ -378,6 +431,68 @@ export function Checker({
                 : " — محاسبه‌شده از سن، وزن، جنسیت و کراتینین"}
             </Notice>
           )}
+          {/* Module 2.2: Dedicated Compact Clinical Calculator Summary Box */}
+          {(renalCalculations.bmi !== undefined ||
+            renalCalculations.ibw !== undefined ||
+            renalCalculations.crcl !== undefined) && (
+            <div className="mt-4 p-4 rounded-3xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 text-xs sm:text-sm">
+              <div className="flex items-center justify-between font-bold text-indigo-950 dark:text-indigo-200 mb-2">
+                <span>محاسبات فارماکوکینتیک بالینی</span>
+                {renalCalculations.crcl !== undefined && (
+                  <span className="font-mono text-base px-2.5 py-0.5 rounded-full bg-indigo-600 text-white shadow-xs">
+                    CrCl: {renalCalculations.crcl} mL/min
+                  </span>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2 mb-3">
+                {renalCalculations.bmi !== undefined && (
+                  <span className={`px-2.5 py-1 rounded-full font-medium ${renalCalculations.bmiCategoryColor}`}>
+                    BMI: {renalCalculations.bmi} ({renalCalculations.bmiCategory})
+                  </span>
+                )}
+                {renalCalculations.ibw !== undefined && (
+                  <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    وزن ایده‌آل (IBW): {renalCalculations.ibw} kg
+                  </span>
+                )}
+                {renalCalculations.adjBw !== undefined && (
+                  <span className="px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300">
+                    وزن تعدیل‌شده (AdjBW): {renalCalculations.adjBw} kg
+                  </span>
+                )}
+                {renalCalculations.weightUsedLabel && (
+                  <span className="px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300">
+                    مبنای محاسبه CrCl: {renalCalculations.weightUsedLabel}
+                  </span>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowFormulaDetails(!showFormulaDetails)}
+                className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+              >
+                {showFormulaDetails ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                مشاهده فرمول و جزئیات گام‌به‌گام محاسبه
+              </button>
+
+              {showFormulaDetails && (
+                <div className="mt-3 p-3 rounded-2xl bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/60 space-y-2 text-xs">
+                  {renalCalculations.steps.map((st, idx) => (
+                    <div key={idx} className="pb-2 border-b last:border-0 border-slate-100 dark:border-slate-800">
+                      <strong className="block text-slate-800 dark:text-slate-200">{st.title}:</strong>
+                      <code className="text-[11px] text-indigo-600 dark:text-indigo-400 block font-mono" dir="ltr">
+                        {st.formula}
+                      </code>
+                      <span className="text-slate-600 dark:text-slate-400 block mt-0.5">{st.calculation}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           {((profile.CrCl ?? -1) < 0 ||
             (profile.eGFR ?? -1) < 0 ||
             (profile.age ?? -1) < 0 ||
@@ -442,6 +557,175 @@ export function Checker({
             </div>
           </div>
         )}
+        {/* MODULE 1: Local Edge AI CDSS Decision Support Panel */}
+        {meds.length > 0 && (
+          <div className="edge-ai-cdss-panel mb-6 p-6 rounded-[36px] bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/50 shadow-xl space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-2xl bg-indigo-500/15 text-[#4541fe] flex items-center justify-center">
+                  <BrainCircuit size={22} />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                    تحلیل هوشمند بالینی (Edge AI CDSS)
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    موتور هوش مصنوعی تعبیه‌شده آفلاین بر اساس معیارهای بیرز ۲۰۲۳
+                  </p>
+                </div>
+              </div>
+              <span className="text-[11px] px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-200 dark:border-emerald-800">
+                پردازش لبه‌ای ۱۰۰٪ آفلاین
+              </span>
+            </div>
+
+            {/* 1.1 ADR Multi-Factor Risk Stratification Gauge */}
+            <div className="p-4 rounded-3xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800 flex flex-col md:flex-row gap-5 items-center">
+              <div className="flex flex-col items-center justify-center min-w-[130px] p-3 rounded-2xl bg-white dark:bg-[#101722] shadow-xs border border-slate-100 dark:border-slate-800">
+                <span className="text-xs font-semibold text-slate-500 mb-1">امتیاز ریسک ADR</span>
+                <span
+                  className={`text-3xl font-extrabold font-mono ${
+                    adrRisk.tier === "بحرانی"
+                      ? "text-purple-600 dark:text-purple-400"
+                      : adrRisk.tier === "پرخطر"
+                        ? "text-rose-600 dark:text-rose-400"
+                        : adrRisk.tier === "متوسط"
+                          ? "text-amber-600 dark:text-amber-400"
+                          : "text-emerald-600 dark:text-emerald-400"
+                  }`}
+                >
+                  {adrRisk.score}/۱۰۰
+                </span>
+                <span
+                  className={`mt-1 text-xs px-2.5 py-0.5 rounded-full font-bold ${
+                    adrRisk.tier === "بحرانی"
+                      ? "bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300"
+                      : adrRisk.tier === "پرخطر"
+                        ? "bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300"
+                        : adrRisk.tier === "متوسط"
+                          ? "bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300"
+                          : "bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300"
+                  }`}
+                >
+                  سطح: {adrRisk.tier}
+                </span>
+              </div>
+              <div className="flex-1 space-y-1.5 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                <strong className="text-slate-900 dark:text-white block font-bold">
+                  عوامل کلیدی تشدیدکننده ریسک ناخواسته دارویی:
+                </strong>
+                <ul className="list-disc list-inside space-y-1">
+                  {adrRisk.drivers.map((d: string, idx: number) => (
+                    <li key={idx}>{d}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            {/* 1.2 Deprescribing & Tapering Protocols */}
+            {deprescribingProtocols.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
+                  <CalendarCheck size={18} className="text-[#4541fe]" />
+                  <span>پروتکل‌های هوشمند کاهش تدریجی و قطع دارو (Deprescribing Roadmap)</span>
+                </div>
+                <div className="grid gap-3">
+                  {deprescribingProtocols.map((proto) => (
+                    <div
+                      key={proto.targetDrugId}
+                      className="p-4 rounded-3xl bg-slate-50/80 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800 text-xs space-y-3"
+                    >
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <strong className="text-sm font-bold text-indigo-700 dark:text-indigo-400">
+                          هدف قطع: {proto.targetDrugFa} ({proto.targetDrugGeneric})
+                        </strong>
+                        <span className="text-[11px] px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 font-mono">
+                          {proto.tableSource}
+                        </span>
+                      </div>
+                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        {proto.clinicalRationale}
+                      </p>
+
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-right border-collapse text-xs">
+                          <thead>
+                            <tr className="bg-slate-200/60 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">
+                              <th className="p-2 rounded-r-xl">زمان‌بندی</th>
+                              <th className="p-2">دوز هدف</th>
+                              <th className="p-2 rounded-l-xl">اقدام بالینی</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+                            {proto.taperSchedule.map((step, sIdx) => (
+                              <tr key={sIdx} className="hover:bg-white dark:hover:bg-slate-800/40">
+                                <td className="p-2 font-bold text-[#4541fe]">{step.week}</td>
+                                <td className="p-2 font-medium">{step.targetDose}</td>
+                                <td className="p-2 text-slate-600 dark:text-slate-400">{step.clinicalAction}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div className="p-2.5 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 text-amber-900 dark:text-amber-200">
+                        <strong>پارامترهای پایش بالینی:</strong> {proto.monitoringParameters.join(" · ")}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 1.3 Local Vector/Similarity Drug Substitutions */}
+            {drugSubstitutions.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
+                  <ArrowRightLeft size={18} className="text-[#fe0f83]" />
+                  <span>پیشنهادهای جایگزینی ایمن‌تر (Drug Substitutions)</span>
+                </div>
+                <div className="grid gap-3">
+                  {drugSubstitutions.map((sub) => (
+                    <div
+                      key={sub.flaggedDrugId}
+                      className="p-4 rounded-3xl bg-slate-50/80 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800 text-xs space-y-2"
+                    >
+                      <div className="font-bold text-slate-900 dark:text-white">
+                        داروی پرخطر شناسایی‌شده: <span className="text-rose-600 font-mono">{sub.flaggedDrugFa} ({sub.flaggedDrugName})</span>
+                      </div>
+                      <div className="grid sm:grid-cols-2 gap-2 mt-2">
+                        {sub.recommendedAlternatives.map((alt, aIdx) => (
+                          <div
+                            key={aIdx}
+                            className="p-3 rounded-2xl bg-white dark:bg-[#101722] border border-slate-200 dark:border-slate-800 space-y-1"
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                                ✓ {alt.genericNameFa}
+                              </span>
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600">
+                                {alt.category}
+                              </span>
+                            </div>
+                            <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
+                              {alt.evidenceRationale}
+                            </p>
+                            {alt.clinicalDosingNotes && (
+                              <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-medium pt-1 border-t border-slate-100 dark:border-slate-800">
+                                نکته دوز: {alt.clinicalDosingNotes}
+                              </p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          </div>
+        )}
+
         <div className="audit-stats">
           <button
             className={filter === "avoid" ? "selected" : ""}
@@ -522,7 +806,7 @@ export function Checker({
                     )}
                   </span>
                 </h3>
-                {alerts
+                {prioritizedAlertList
                   .filter(
                     (a) =>
                       a.type === group &&
@@ -530,13 +814,20 @@ export function Checker({
                   )
                   .map((a) => (
                     <article className={"audit-alert " + a.severity} key={a.id}>
-                      <div>
-                        {a.severity === "info" ? (
-                          <Info size={19} />
-                        ) : (
-                          <AlertTriangle size={19} />
-                        )}
-                        <h4>{a.title}</h4>
+                      <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center gap-2">
+                          {a.severity === "info" ? (
+                            <Info size={19} />
+                          ) : (
+                            <AlertTriangle size={19} />
+                          )}
+                          <h4>{a.title}</h4>
+                        </div>
+                        <span
+                          className={`text-[11px] px-2.5 py-0.5 rounded-full font-bold border ${a.priorityBadge.bgClass} ${a.priorityBadge.textClass} ${a.priorityBadge.borderClass}`}
+                        >
+                          {a.priorityBadge.labelFa}
+                        </span>
                       </div>
                       <p>{a.detail}</p>
                       {a.action && <p className="audit-action">{a.action}</p>}

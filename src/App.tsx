@@ -23,6 +23,9 @@ import {
   WifiOff,
   Menu,
   X,
+  List,
+  LayoutGrid,
+
   StickyNote,
 } from "lucide-react";
 import { getAllMedications } from "./services/db";
@@ -43,11 +46,13 @@ import {
   IconButton,
   SearchField,
   MedicationCard,
+  MedicationListItem,
   EmptyState,
   Notice,
   RiskBadge,
   risk,
 } from "./components/ui/Primitives";
+import { GlossaryModal } from "./components/GlossaryModal";
 import { tables, fa, number, date, drugName, matchesSearch } from "./lib/fa";
 import {
   applyTheme,
@@ -126,7 +131,11 @@ export default function App() {
     [lastSync, setLastSync] = useState(""),
     [mobileOpen, setMobileOpen] = useState(false),
     [theme, setTheme] = useState<ThemePreference>(storedTheme),
-    [notes, setNotes] = useState<Record<string, string>>(loadNotes);
+    [notes, setNotes] = useState<Record<string, string>>(loadNotes),
+    [viewMode, setViewMode] = useState<"list" | "grid">("list"),
+    [sortBy, setSortBy] = useState<"name" | "category" | "risk">("name"),
+
+    [glossaryOpen, setGlossaryOpen] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const {
     offlineReady: [offlineReady],
@@ -294,6 +303,22 @@ export default function App() {
       (specialty === "All" || d.therapeuticCategory === specialty) &&
       matchesSearch(d, query),
   );
+  const sortedFiltered = [...filtered].sort((a, b) => {
+    if (sortBy === "category") {
+      return (a.therapeuticCategory || "").localeCompare(b.therapeuticCategory || "", "fa");
+    }
+    if (sortBy === "risk") {
+      const riskWeight = (d: DrugRecord) =>
+        d.beersCategories.includes("PIM_GENERAL")
+          ? 3
+          : d.beersCategories.includes("USE_WITH_CAUTION")
+            ? 2
+            : 1;
+      return riskWeight(b) - riskWeight(a);
+    }
+    return (a.genericNameFa || a.genericName).localeCompare(b.genericNameFa || b.genericName, "fa");
+  });
+
   const titles: Record<string, [string, string]> = {
     home: [
       "نسخه‌ای آگاهانه‌تر، مراقبتی ایمن‌تر.",
@@ -396,6 +421,15 @@ export default function App() {
             <strong>{nav.find((n) => n.id === page)?.label}</strong>
           </div>
           <div className="top-right">
+            <button
+              type="button"
+              onClick={() => setGlossaryOpen(true)}
+              className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#4541fe] text-white hover:brightness-110 transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+              title="راهنمای اصطلاحات و اختصارات بیرز"
+            >
+              <BookOpen size={14} />
+              <span>راهنمای اصطلاحات</span>
+            </button>
             <ThemeToggle value={theme} onChange={setTheme} />
             <button
               className="sync-status"
@@ -615,6 +649,71 @@ export default function App() {
                     مشاهده همه داروها <ArrowLeft size={16} />
                   </Button>
                 )}
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-full text-xs">
+                    <span className="text-slate-500 px-2">مرتب‌سازی:</span>
+                    <button
+                      type="button"
+                      onClick={() => setSortBy("name")}
+                      className={`px-3 py-1 rounded-full font-medium transition cursor-pointer ${
+                        sortBy === "name"
+                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                      }`}
+                    >
+                      نام ژنریک
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSortBy("risk")}
+                      className={`px-3 py-1 rounded-full font-medium transition cursor-pointer ${
+                        sortBy === "risk"
+                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                      }`}
+                    >
+                      سطح خطر (PIM)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSortBy("category")}
+                      className={`px-3 py-1 rounded-full font-medium transition cursor-pointer ${
+                        sortBy === "category"
+                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                      }`}
+                    >
+                      دسته درمانی
+                    </button>
+                  </div>
+                  <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-full">
+                    <button
+                      type="button"
+                      onClick={() => setViewMode("list")}
+                      className={`p-1.5 rounded-full transition cursor-pointer ${
+                        viewMode === "list"
+                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
+                          : "text-slate-500 hover:text-slate-800"
+                      }`}
+                      title="نمای لیست متراکم (پیش‌فرض استاد)"
+                    >
+                      <List size={16} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setViewMode("grid")}
+                      className={`p-1.5 rounded-full transition cursor-pointer ${
+                        viewMode === "grid"
+                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
+                          : "text-slate-500 hover:text-slate-800"
+                      }`}
+                      title="نمای کارت‌های شبکه‌ای"
+                    >
+                      <LayoutGrid size={16} />
+                    </button>
+                  </div>
+                </div>
+
               </div>
               {!loaded && !error ? (
                 <div className="loading-state" role="status">
@@ -644,21 +743,33 @@ export default function App() {
                     : "املای نام دارو را بررسی کنید یا فیلترها را تغییر دهید."}
                 </EmptyState>
               ) : (
-                <div className="medication-grid">
+                <div className={viewMode === "list" ? "flex flex-col gap-3" : "medication-grid"}>
                   {(page === "home" && !query
-                    ? filtered.slice(0, 4)
-                    : filtered
-                  ).map((d) => (
-                    <MedicationCard
-                      key={d.id}
-                      drug={d}
-                      saved={bookmarks.includes(d.id)}
-                      inRegimen={regimen.includes(d.id)}
-                      onOpen={() => setDetail(d)}
-                      onBookmark={() => bookmark(d.id)}
-                      onAdd={() => add(d.id)}
-                    />
-                  ))}
+                    ? sortedFiltered.slice(0, 4)
+                    : sortedFiltered
+                  ).map((d) =>
+                    viewMode === "list" ? (
+                      <MedicationListItem
+                        key={d.id}
+                        drug={d}
+                        saved={bookmarks.includes(d.id)}
+                        inRegimen={regimen.includes(d.id)}
+                        onOpen={() => setDetail(d)}
+                        onBookmark={() => bookmark(d.id)}
+                        onAdd={() => add(d.id)}
+                      />
+                    ) : (
+                      <MedicationCard
+                        key={d.id}
+                        drug={d}
+                        saved={bookmarks.includes(d.id)}
+                        inRegimen={regimen.includes(d.id)}
+                        onOpen={() => setDetail(d)}
+                        onBookmark={() => bookmark(d.id)}
+                        onAdd={() => add(d.id)}
+                      />
+                    ),
+                  )}
                 </div>
               )}
             </>
@@ -908,6 +1019,11 @@ export default function App() {
           </div>
         </Modal>
       )}
+      <GlossaryModal
+        isOpen={glossaryOpen}
+        onClose={() => setGlossaryOpen(false)}
+      />
+
     </div>
   );
 }
