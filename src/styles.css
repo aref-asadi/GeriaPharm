@@ -1,5 +1,9 @@
 @import "@fontsource-variable/vazirmatn";
 @import "tailwindcss";
+/* The app toggles the `dark` class on <html> (see src/lib/theme.ts), so the
+   utility classes used in the clinical panels must follow that class instead
+   of the OS colour scheme. */
+@custom-variant dark (&:where(.dark, .dark *));
 /* Healthy Together Specification Design Tokens */
 :root {
   --color-midnight-ink: #101722;       /* Primary canvas, dark backgrounds, deep text */
@@ -256,7 +260,9 @@ select {
 }
 input::placeholder,
 textarea::placeholder {
-  color: var(--text-3);
+  color: #94a3b8 !important; /* Slate 400 */
+  opacity: 0.5 !important;
+  font-weight: 400 !important;
 }
 button {
   transition:
@@ -1429,6 +1435,7 @@ details > p {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 12px;
 }
 .panel-heading h2 {
@@ -1442,13 +1449,28 @@ details > p {
   line-height: 2;
   margin: 9px 0 17px;
 }
-.checker-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.18fr;
-  gap: 23px;
-  align-items: start;
+.checker-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
 }
-.checker-inputs {
+.checker-top-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+.checker-top-grid > .panel {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  height: 100%;
+  min-width: 0;
+}
+.checker-results {
+  width: 100%;
   min-width: 0;
 }
 .selected-meds {
@@ -1526,12 +1548,6 @@ details > p {
   height: 17px;
   flex-shrink: 0;
 }
-.renal-heading {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 17px;
-}
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1592,11 +1608,24 @@ details > p {
   padding: 0 8px;
   white-space: nowrap;
 }
+/* Long unit suffixes (mL/min/1.73m²) must stay inside the narrower intake
+   columns instead of stretching the field. */
+.checker-top-grid .unit-input > span {
+  padding: 0 6px;
+}
 .audit {
   background: var(--surface-2);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 23px;
+  min-width: 0;
+}
+.heading-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
   min-width: 0;
 }
 .live-tag {
@@ -1609,11 +1638,12 @@ details > p {
 }
 .audit-stats {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin: 23px 0 17px;
 }
 .audit-stats > button {
-  flex: 1;
+  flex: 1 1 150px;
   min-width: 0;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -1664,6 +1694,7 @@ details > p {
   font-size: 14px;
   line-height: 2;
   margin-top: 10px;
+  overflow-wrap: anywhere;
 }
 .audit-alert .audit-action {
   border-top: 1px solid rgb(var(--shadow) / 0.06);
@@ -2205,8 +2236,8 @@ td small {
   .regimen-banner .button {
     margin-right: 78px;
   }
-  .checker-grid {
-    grid-template-columns: 1fr;
+  .checker-top-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .login-layout {
     grid-template-columns: 1.2fr 1fr;
@@ -2240,6 +2271,9 @@ td small {
   }
   .main-shell {
     margin-right: 0;
+  }
+  .checker-top-grid {
+    grid-template-columns: 1fr;
   }
   .menu-button {
     display: inline-flex !important;

@@ -129,15 +129,32 @@ export function Checker({
   const drugSubstitutions = recommendDrugSubstitutions(meds);
   const prioritizedAlertList = prioritizeAlerts(alerts);
   const beersAlertGroups = groupAlerts(prioritizedAlertList, meds);
-  const [openBeersGroups, setOpenBeersGroups] = useState<Record<string, boolean>>({
-    table2: true,
-    table3: true,
-    table5: true,
-    table6: true,
-    table4: true,
-  });
+  const [openBeersGroups, setOpenBeersGroups] = useState<Record<string, boolean>>({});
+  // Groups start expanded so the clinical summary is readable without extra
+  // clicks; an explicit entry in the map always wins over the default.
+  const isBeersGroupOpen = (id: BeersGroupId) => openBeersGroups[id] ?? true;
   const toggleBeersGroup = (id: BeersGroupId) => {
-    setOpenBeersGroups((prev) => ({ ...prev, [id]: !prev[id] }));
+    setOpenBeersGroups((prev) => ({ ...prev, [id]: !(prev[id] ?? true) }));
+  };
+
+  const activeBeersGroups = BEERS_GROUPS.filter((meta) => {
+    const list = (beersAlertGroups[meta.id] || []).filter(
+      (a) => filter === "All" || a.severity === filter,
+    );
+    return list.length > 0;
+  });
+
+  const areAllOpen =
+    activeBeersGroups.length > 0 &&
+    activeBeersGroups.every((meta) => isBeersGroupOpen(meta.id));
+
+  const toggleAllGroups = () => {
+    const nextState = !areAllOpen;
+    const updated: Record<string, boolean> = {};
+    activeBeersGroups.forEach((g) => {
+      updated[g.id] = nextState;
+    });
+    setOpenBeersGroups(updated);
   };
 
   const alertText = () => {
@@ -172,8 +189,9 @@ export function Checker({
     }
   }
   return (
-    <div className="checker-grid">
-      <div className="checker-inputs">
+    <div className="checker-container">
+      {/* Intake row. In RTL the columns read: prescription → conditions → demographics. */}
+      <div className="checker-top-grid">
         <section className="panel">
           <div className="panel-heading">
             <h2>
@@ -283,8 +301,19 @@ export function Checker({
             </Notice>
           )}
         </section>
+
         <section className="panel">
-          <h2>شرایط بالینی بیمار</h2>
+          <div className="panel-heading">
+            <h2>
+              شرایط بالینی بیمار{" "}
+              <span className="count">{number(selected.length)}</span>
+            </h2>
+            {selected.length > 0 && (
+              <Button variant="ghost" onClick={() => setSelected([])}>
+                پاک کردن
+              </Button>
+            )}
+          </div>
           <p className="help">بیماری‌ها و عوامل خطر مرتبط را انتخاب کنید.</p>
           <div className="condition-list">
             {conditions.map((c) => (
@@ -303,10 +332,17 @@ export function Checker({
               </label>
             ))}
           </div>
-          <div className="renal-heading">
-            <h3>سن، جنسیت و عملکرد کلیه</h3>
+        </section>
+
+        <section className="panel">
+          <div className="panel-heading">
+            <h2>سن، جنسیت و عملکرد کلیه</h2>
             <span className="muted">اختیاری</span>
           </div>
+          <p className="help">
+            سن، قد، وزن، جنسیت و کراتینین، مبنای محاسبه CrCl و تعدیل دوز کلیوی
+            است.
+          </p>
           <div className="form-grid">
             <label className="field">
               سن (سال)
@@ -525,16 +561,29 @@ export function Checker({
           </p>
         </section>
       </div>
-      <section className="audit">
+
+      <section className="audit checker-results">
         <div className="panel-heading">
           <h2>
             <ShieldCheck size={23} />
             گزارش ایمنی نسخه
           </h2>
-          <span className="live-tag">
-            <span className="status-dot" />
-            بررسی زنده
-          </span>
+          <div className="heading-tools">
+            {activeBeersGroups.length > 0 && (
+              <Button variant="ghost" onClick={toggleAllGroups}>
+                {areAllOpen ? (
+                  <ChevronUp size={16} />
+                ) : (
+                  <ChevronDown size={16} />
+                )}
+                {areAllOpen ? "بستن همه گروه‌ها" : "باز کردن همه گروه‌ها"}
+              </Button>
+            )}
+            <span className="live-tag">
+              <span className="status-dot" />
+              بررسی زنده
+            </span>
+          </div>
         </div>
         <div className="print-header">
           <h1>خلاصه پرونده دارویی سالمند</h1>
@@ -575,29 +624,29 @@ export function Checker({
         )}
         {/* MODULE 1: Local Edge AI CDSS Decision Support Panel */}
         {meds.length > 0 && (
-          <div className="edge-ai-cdss-panel mb-6 p-6 rounded-[36px] bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/50 shadow-xl space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-indigo-500/15 text-[#4541fe] flex items-center justify-center">
+          <div className="edge-ai-cdss-panel mb-6 w-full min-w-0 p-6 rounded-[36px] bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/50 shadow-xl space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-10 h-10 shrink-0 rounded-2xl bg-indigo-500/15 text-[#4541fe] flex items-center justify-center">
                   <BrainCircuit size={22} />
                 </div>
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                <div className="min-w-0">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white break-words">
                     تحلیل هوشمند بالینی (Edge AI CDSS)
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 break-words">
                     موتور هوش مصنوعی تعبیه‌شده آفلاین بر اساس معیارهای بیرز ۲۰۲۳
                   </p>
                 </div>
               </div>
-              <span className="text-[11px] px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-200 dark:border-emerald-800">
+              <span className="text-[11px] px-3 py-1 rounded-full whitespace-nowrap bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-200 dark:border-emerald-800">
                 پردازش لبه‌ای ۱۰۰٪ آفلاین
               </span>
             </div>
 
             {/* 1.1 ADR Multi-Factor Risk Stratification Gauge */}
-            <div className="p-4 rounded-3xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800 flex flex-col md:flex-row gap-5 items-center">
-              <div className="flex flex-col items-center justify-center min-w-[130px] p-3 rounded-2xl bg-white dark:bg-[#101722] shadow-xs border border-slate-100 dark:border-slate-800">
+            <div className="w-full min-w-0 p-4 rounded-3xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800 flex flex-col md:flex-row gap-5 md:items-start items-center">
+              <div className="flex flex-col items-center justify-center shrink-0 min-w-[130px] p-3 rounded-2xl bg-white dark:bg-[#101722] shadow-xs border border-slate-100 dark:border-slate-800">
                 <span className="text-xs font-semibold text-slate-500 mb-1">امتیاز ریسک ADR</span>
                 <span
                   className={`text-3xl font-extrabold font-mono ${
@@ -610,7 +659,7 @@ export function Checker({
                           : "text-emerald-600 dark:text-emerald-400"
                   }`}
                 >
-                  {adrRisk.score}/۱۰۰
+                  {number(adrRisk.score)} / ۱۰۰
                 </span>
                 <span
                   className={`mt-1 text-xs px-2.5 py-0.5 rounded-full font-bold ${
@@ -626,11 +675,11 @@ export function Checker({
                   سطح: {adrRisk.tier}
                 </span>
               </div>
-              <div className="flex-1 space-y-1.5 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              <div className="flex-1 min-w-0 space-y-1.5 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
                 <strong className="text-slate-900 dark:text-white block font-bold">
                   عوامل کلیدی تشدیدکننده ریسک ناخواسته دارویی:
                 </strong>
-                <ul className="list-disc list-inside space-y-1">
+                <ul className="list-disc list-inside space-y-1 break-words">
                   {adrRisk.drivers.map((d: string, idx: number) => (
                     <li key={idx}>{d}</li>
                   ))}
@@ -640,29 +689,29 @@ export function Checker({
             {/* 1.2 Deprescribing & Tapering Protocols */}
             {deprescribingProtocols.length > 0 && (
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
-                  <CalendarCheck size={18} className="text-[#4541fe]" />
-                  <span>پروتکل‌های هوشمند کاهش تدریجی و قطع دارو (Deprescribing Roadmap)</span>
+                <div className="flex items-start gap-2 text-sm font-bold text-slate-900 dark:text-white min-w-0">
+                  <CalendarCheck size={18} className="text-[#4541fe] shrink-0 mt-0.5" />
+                  <span className="break-words">پروتکل‌های هوشمند کاهش تدریجی و قطع دارو (Deprescribing Roadmap)</span>
                 </div>
                 <div className="grid gap-3">
                   {deprescribingProtocols.map((proto) => (
                     <div
                       key={proto.targetDrugId}
-                      className="p-4 rounded-3xl bg-slate-50/80 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800 text-xs space-y-3"
+                      className="min-w-0 p-4 rounded-3xl bg-slate-50/80 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800 text-xs space-y-3"
                     >
                       <div className="flex items-center justify-between flex-wrap gap-2">
-                        <strong className="text-sm font-bold text-indigo-700 dark:text-indigo-400">
+                        <strong className="min-w-0 text-sm font-bold text-indigo-700 dark:text-indigo-400 break-words">
                           هدف قطع: {proto.targetDrugFa} ({proto.targetDrugGeneric})
                         </strong>
-                        <span className="text-[11px] px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 font-mono">
+                        <span className="text-[11px] px-2 py-0.5 rounded-full whitespace-nowrap bg-indigo-50 dark:bg-indigo-950 text-indigo-600 font-mono">
                           {proto.tableSource}
                         </span>
                       </div>
-                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed break-words">
                         {proto.clinicalRationale}
                       </p>
 
-                      <div className="overflow-x-auto">
+                      <div className="min-w-0 overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
                         <table className="w-full text-right border-collapse text-xs">
                           <thead>
                             <tr className="bg-slate-200/60 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300">
@@ -695,38 +744,38 @@ export function Checker({
             {/* 1.3 Local Vector/Similarity Drug Substitutions */}
             {drugSubstitutions.length > 0 && (
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
-                  <ArrowRightLeft size={18} className="text-[#fe0f83]" />
-                  <span>پیشنهادهای جایگزینی ایمن‌تر (Drug Substitutions)</span>
+                <div className="flex items-start gap-2 text-sm font-bold text-slate-900 dark:text-white min-w-0">
+                  <ArrowRightLeft size={18} className="text-[#fe0f83] shrink-0 mt-0.5" />
+                  <span className="break-words">پیشنهادهای جایگزینی ایمن‌تر (Drug Substitutions)</span>
                 </div>
                 <div className="grid gap-3">
                   {drugSubstitutions.map((sub) => (
                     <div
                       key={sub.flaggedDrugId}
-                      className="p-4 rounded-3xl bg-slate-50/80 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800 text-xs space-y-2"
+                      className="min-w-0 p-4 rounded-3xl bg-slate-50/80 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800 text-xs space-y-2"
                     >
-                      <div className="font-bold text-slate-900 dark:text-white">
+                      <div className="font-bold text-slate-900 dark:text-white break-words">
                         داروی پرخطر شناسایی‌شده: <span className="text-rose-600 font-mono">{sub.flaggedDrugFa} ({sub.flaggedDrugName})</span>
                       </div>
                       <div className="grid sm:grid-cols-2 gap-2 mt-2">
                         {sub.recommendedAlternatives.map((alt, aIdx) => (
                           <div
                             key={aIdx}
-                            className="p-3 rounded-2xl bg-white dark:bg-[#101722] border border-slate-200 dark:border-slate-800 space-y-1"
+                            className="min-w-0 p-3 rounded-2xl bg-white dark:bg-[#101722] border border-slate-200 dark:border-slate-800 space-y-1"
                           >
-                            <div className="flex items-center justify-between">
-                              <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                            <div className="flex items-center justify-between gap-2 flex-wrap">
+                              <span className="font-bold text-emerald-600 dark:text-emerald-400 break-words">
                                 ✓ {alt.genericNameFa}
                               </span>
-                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600">
+                              <span className="text-[10px] px-2 py-0.5 rounded-full whitespace-nowrap bg-emerald-50 dark:bg-emerald-950 text-emerald-600">
                                 {alt.category}
                               </span>
                             </div>
-                            <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
+                            <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed break-words">
                               {alt.evidenceRationale}
                             </p>
                             {alt.clinicalDosingNotes && (
-                              <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-medium pt-1 border-t border-slate-100 dark:border-slate-800">
+                              <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-medium pt-1 border-t border-slate-100 dark:border-slate-800 break-words">
                                 نکته دوز: {alt.clinicalDosingNotes}
                               </p>
                             )}
@@ -807,7 +856,7 @@ export function Checker({
                 (a) => filter === "All" || a.severity === filter,
               );
               if (groupAlertsList.length === 0) return null;
-              const isOpen = openBeersGroups[meta.id] ?? true;
+              const isOpen = isBeersGroupOpen(meta.id);
               return (
                 <div
                   key={meta.id}
@@ -820,7 +869,7 @@ export function Checker({
                     className="w-full flex items-center justify-between p-4 bg-slate-50/70 dark:bg-slate-900/40 hover:bg-slate-100/70 dark:hover:bg-slate-900/70 transition-colors text-right cursor-pointer"
                     aria-expanded={isOpen}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
                       <span
                         className={`text-xs px-2.5 py-1 rounded-full font-bold ${meta.accent}`}
                       >
@@ -835,7 +884,7 @@ export function Checker({
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 shrink-0">
                       <span className="count bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs px-2 py-0.5 rounded-full font-bold">
                         {number(groupAlertsList.length)}
                       </span>
@@ -854,17 +903,17 @@ export function Checker({
                           className={"audit-alert " + a.severity}
                           key={a.id}
                         >
-                          <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center gap-2">
+                          <div className="flex items-start justify-between gap-2 w-full flex-wrap">
+                            <div className="flex items-center gap-2 min-w-0">
                               {a.severity === "info" ? (
                                 <Info size={19} />
                               ) : (
                                 <AlertTriangle size={19} />
                               )}
-                              <h4>{a.title}</h4>
+                              <h4 className="min-w-0 break-words">{a.title}</h4>
                             </div>
                             <span
-                              className={`text-[11px] px-2.5 py-0.5 rounded-full font-bold border ${a.priorityBadge.bgClass} ${a.priorityBadge.textClass} ${a.priorityBadge.borderClass}`}
+                              className={`text-[11px] px-2.5 py-0.5 rounded-full font-bold border whitespace-nowrap ${a.priorityBadge.bgClass} ${a.priorityBadge.textClass} ${a.priorityBadge.borderClass}`}
                             >
                               {a.priorityBadge.labelFa}
                             </span>
