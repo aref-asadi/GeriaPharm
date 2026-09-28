@@ -27,6 +27,11 @@ import { generateDeprescribingProtocols } from "../services/ml/deprescribingMode
 import { recommendDrugSubstitutions } from "../services/ml/recommender";
 import { prioritizeAlerts } from "../services/ml/alertRanking";
 import {
+  groupAlerts,
+  BEERS_GROUPS,
+  type BeersGroupId,
+} from "../services/ml/alertGrouping";
+import {
   ChevronDown,
   ChevronUp,
   BrainCircuit,
@@ -123,6 +128,17 @@ export function Checker({
   const deprescribingProtocols = generateDeprescribingProtocols(meds, selected);
   const drugSubstitutions = recommendDrugSubstitutions(meds);
   const prioritizedAlertList = prioritizeAlerts(alerts);
+  const beersAlertGroups = groupAlerts(prioritizedAlertList, meds);
+  const [openBeersGroups, setOpenBeersGroups] = useState<Record<string, boolean>>({
+    table2: true,
+    table3: true,
+    table5: true,
+    table6: true,
+    table4: true,
+  });
+  const toggleBeersGroup = (id: BeersGroupId) => {
+    setOpenBeersGroups((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const alertText = () => {
     const lines = [
@@ -785,56 +801,86 @@ export function Checker({
             داروهای ثبت‌نشده، دوز، مدت مصرف و اندیکاسیون را بررسی کنید.
           </Notice>
         ) : (
-          groups
-            .filter((g) =>
-              alerts.some(
-                (a) =>
-                  a.type === g && (filter === "All" || a.severity === filter),
-              ),
-            )
-            .map((group) => (
-              <div className="audit-group" key={group}>
-                <h3>
-                  {fa(group)}{" "}
-                  <span className="count">
-                    {number(
-                      alerts.filter(
-                        (a) =>
-                          a.type === group &&
-                          (filter === "All" || a.severity === filter),
-                      ).length,
-                    )}
-                  </span>
-                </h3>
-                {prioritizedAlertList
-                  .filter(
-                    (a) =>
-                      a.type === group &&
-                      (filter === "All" || a.severity === filter),
-                  )
-                  .map((a) => (
-                    <article className={"audit-alert " + a.severity} key={a.id}>
-                      <div className="flex items-center justify-between w-full">
-                        <div className="flex items-center gap-2">
-                          {a.severity === "info" ? (
-                            <Info size={19} />
-                          ) : (
-                            <AlertTriangle size={19} />
-                          )}
-                          <h4>{a.title}</h4>
-                        </div>
-                        <span
-                          className={`text-[11px] px-2.5 py-0.5 rounded-full font-bold border ${a.priorityBadge.bgClass} ${a.priorityBadge.textClass} ${a.priorityBadge.borderClass}`}
-                        >
-                          {a.priorityBadge.labelFa}
-                        </span>
+          <div className="space-y-4">
+            {BEERS_GROUPS.map((meta) => {
+              const groupAlertsList = (beersAlertGroups[meta.id] || []).filter(
+                (a) => filter === "All" || a.severity === filter,
+              );
+              if (groupAlertsList.length === 0) return null;
+              const isOpen = openBeersGroups[meta.id] ?? true;
+              return (
+                <div
+                  key={meta.id}
+                  data-testid={meta.testId}
+                  className="audit-group rounded-3xl bg-white dark:bg-[#101722] border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs"
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleBeersGroup(meta.id)}
+                    className="w-full flex items-center justify-between p-4 bg-slate-50/70 dark:bg-slate-900/40 hover:bg-slate-100/70 dark:hover:bg-slate-900/70 transition-colors text-right cursor-pointer"
+                    aria-expanded={isOpen}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span
+                        className={`text-xs px-2.5 py-1 rounded-full font-bold ${meta.accent}`}
+                      >
+                        {meta.subtitle.split(" · ")[0]}
+                      </span>
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                          {meta.title}
+                        </h3>
+                        <p className="text-[11px] text-slate-500">
+                          {meta.subtitle}
+                        </p>
                       </div>
-                      <p>{a.detail}</p>
-                      {a.action && <p className="audit-action">{a.action}</p>}
-                    </article>
-                  ))}
-              </div>
-            ))
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="count bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs px-2 py-0.5 rounded-full font-bold">
+                        {number(groupAlertsList.length)}
+                      </span>
+                      {isOpen ? (
+                        <ChevronUp size={18} className="text-slate-400" />
+                      ) : (
+                        <ChevronDown size={18} className="text-slate-400" />
+                      )}
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div className="p-4 space-y-3">
+                      {groupAlertsList.map((a) => (
+                        <article
+                          className={"audit-alert " + a.severity}
+                          key={a.id}
+                        >
+                          <div className="flex items-center justify-between w-full">
+                            <div className="flex items-center gap-2">
+                              {a.severity === "info" ? (
+                                <Info size={19} />
+                              ) : (
+                                <AlertTriangle size={19} />
+                              )}
+                              <h4>{a.title}</h4>
+                            </div>
+                            <span
+                              className={`text-[11px] px-2.5 py-0.5 rounded-full font-bold border ${a.priorityBadge.bgClass} ${a.priorityBadge.textClass} ${a.priorityBadge.borderClass}`}
+                            >
+                              {a.priorityBadge.labelFa}
+                            </span>
+                          </div>
+                          <p>{a.detail}</p>
+                          {a.action && (
+                            <p className="audit-action">{a.action}</p>
+                          )}
+                        </article>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         )}
         {meds.length > 0 && alerts.some((a) => a.severity === "avoid") && (
           <div className="deprescribe">

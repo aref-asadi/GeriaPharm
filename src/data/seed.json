@@ -256,8 +256,8 @@
     "brandNamesIran": ["Daonil", "Glibenclamide Sobhan", "Glibenclamide Hakim"],
     "therapeuticCategory": "Endocrine",
     "beersCategories": ["PIM_GENERAL"],
-    "recommendation": "Avoid all sulfonylureas as first- or second-line therapy in older adults. If a sulfonylurea must be used, short-acting agents like glipizide or gliclazide are preferred over long-acting agents like glibenclamide.",
-    "rationale": "Higher risk of severe, prolonged hypoglycemia, cardiovascular events, and all-cause mortality compared with modern antidiabetic agents.",
+    "recommendation": "Avoid sulfonylureas as first- or second-line monotherapy or add-on therapy unless there are substantial barriers to the use of safer and more effective agents. If a sulfonylurea is used, choose short-acting agents (e.g., glipizide) over long-acting agents (e.g., glyburide/glibenclamide, glimepiride).",
+    "rationale": "Higher risk of cardiovascular events, all-cause mortality, and hypoglycemia than alternative agents; long-acting agents confer a higher risk of prolonged hypoglycemia.",
     "qualityOfEvidence": "High",
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
@@ -348,8 +348,8 @@
     "brandNamesIran": ["Lioresal", "Baclofen Sobhan", "Baclofen Chemi Darou"],
     "therapeuticCategory": "Central Nervous System",
     "beersCategories": ["RENAL_ADJUSTMENT"],
-    "recommendation": "Avoid in older adults with estimated glomerular filtration rate (eGFR) < 60 mL/min. If unavoidable, use lowest effective dose and monitor mental status.",
-    "rationale": "Substantially increased risk of acute encephalopathy, delirium, confusion, and hospitalization in patients with impaired renal function.",
+    "recommendation": "Avoid baclofen in older adults with impaired kidney function (eGFR < 60 mL/min). When baclofen cannot be avoided, use the lowest effective dose and monitor mental status closely.",
+    "rationale": "Increased risk of encephalopathy requiring hospitalization in older adults with eGFR < 60 mL/min or who require chronic dialysis.",
     "qualityOfEvidence": "Moderate",
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
@@ -550,5 +550,36 @@
     ],
     "lastUpdated": "2026-09-08",
     "notes": "Supplied project dataset. Iranian brand availability, alternatives, dosing and evidence require clinical review before patient care."
+  },
+  {
+    "id": "estrogens-systemic",
+    "genericName": "Estrogens (Systemic)",
+    "genericNameFa": "استروژن‌های سیستمیک (خوراکی/ترانس‌درمال)",
+    "brandNamesIran": ["Premarin", "Estrofem", "Estradiol Valerate Abidi"],
+    "therapeuticCategory": "Endocrine",
+    "beersCategories": ["PIM_GENERAL", "DRUG_DISEASE"],
+    "recommendation": "Do not initiate systemic estrogen (oral or transdermal) in women aged 60 and older. Low-dose intravaginal estrogen remains acceptable for symptomatic vaginal atrophy, dyspareunia, and prevention of recurrent lower urinary tract infections. Consider deprescribing for older women already using nonvaginal estrogen.",
+    "rationale": "Evidence of carcinogenic potential (breast and endometrium); lack of evidence for cardiovascular protection in women aged 60 and older; risks of hormone therapy outweigh benefits and are linked to higher risk of heart disease, stroke, blood clots, and dementia.",
+    "qualityOfEvidence": "High",
+    "strengthOfRecommendation": "Strong",
+    "isStrongAnticholinergic": false,
+    "isCnsActive": false,
+    "isAvailableInIran": true,
+    "saferAlternatives": [
+      "Low-dose intravaginal estrogen cream or tablets (e.g., estradiol < 25 mcg twice weekly)",
+      "Nonhormonal vaginal moisturizers and lubricants",
+      "Nonpharmacologic management of vasomotor symptoms"
+    ],
+    "drugDrugInteractions": [],
+    "drugDiseaseInteractions": [
+      {
+        "condition": "Urinary Incontinence in Women",
+        "recommendation": "Avoid in women",
+        "rationale": "Lack of efficacy of oral estrogen for incontinence; intravaginal estrogen remains acceptable for atrophy."
+      }
+    ],
+    "lastUpdated": "2026-09-28",
+    "notes": "Based on the 2023 AGS Beers Criteria (Table 2 and Table 3). Clinical review required before use.",
+    "genericNameFa": "استروژن‌های سیستمیک (خوراکی/ترانس‌درمال)"
   }
 ]
