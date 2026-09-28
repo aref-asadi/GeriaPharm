@@ -12,6 +12,8 @@ import {
   ShieldAlert,
   Info,
   CheckCircle2,
+  Check,
+  Plus,
 } from "lucide-react";
 import { drugName, fa } from "../../lib/fa";
 import type { DrugRecord } from "../../types/types";
@@ -138,6 +140,55 @@ export function RiskBadge({ drug }: { drug: DrugRecord }) {
     </span>
   );
 }
+/**
+ * Prescription add/remove toggle. Adds the drug while it is outside the
+ * regimen and removes it again (with a clear destructive hover state) once it
+ * has been added, so the same control works from any list.
+ */
+export function RegimenToggle({
+  inRegimen,
+  drugNameFa,
+  onAdd,
+  onRemove,
+}: {
+  inRegimen: boolean;
+  drugNameFa: string;
+  onAdd: () => void;
+  onRemove: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className={"regimen-toggle " + (inRegimen ? "added" : "available")}
+      aria-pressed={inRegimen}
+      aria-label={
+        inRegimen
+          ? "حذف " + drugNameFa + " از نسخه"
+          : "افزودن " + drugNameFa + " به نسخه"
+      }
+      title={inRegimen ? "حذف از نسخه" : "افزودن به نسخه"}
+      onClick={inRegimen ? onRemove : onAdd}
+    >
+      {inRegimen ? (
+        <>
+          <span className="regimen-toggle-default">
+            <Check size={15} aria-hidden />
+            افزوده شد
+          </span>
+          <span className="regimen-toggle-hover">
+            <X size={15} aria-hidden />
+            حذف از نسخه
+          </span>
+        </>
+      ) : (
+        <>
+          افزودن به نسخه
+          <Plus size={15} aria-hidden />
+        </>
+      )}
+    </button>
+  );
+}
 export function MedicationCard({
   drug,
   saved,
@@ -145,6 +196,7 @@ export function MedicationCard({
   onOpen,
   onBookmark,
   onAdd,
+  onRemove,
 }: {
   drug: DrugRecord;
   saved: boolean;
@@ -152,6 +204,7 @@ export function MedicationCard({
   onOpen: () => void;
   onBookmark: () => void;
   onAdd: () => void;
+  onRemove: () => void;
 }) {
   return (
     <article className="med-card">
@@ -183,9 +236,12 @@ export function MedicationCard({
       )}
       <div className="med-bottom">
         <span>{fa(drug.therapeuticCategory)}</span>
-        <Button variant="ghost" onClick={onAdd} disabled={inRegimen}>
-          {inRegimen ? "افزوده شد" : "افزودن به نسخه +"}
-        </Button>
+        <RegimenToggle
+          inRegimen={inRegimen}
+          drugNameFa={drugName(drug)}
+          onAdd={onAdd}
+          onRemove={onRemove}
+        />
       </div>
     </article>
   );
@@ -198,6 +254,7 @@ export function MedicationListItem({
   onOpen,
   onBookmark,
   onAdd,
+  onRemove,
 }: {
   drug: DrugRecord;
   saved: boolean;
@@ -205,6 +262,7 @@ export function MedicationListItem({
   onOpen: () => void;
   onBookmark: () => void;
   onAdd: () => void;
+  onRemove: () => void;
 }) {
   return (
     <article className="med-card med-list-row flex flex-col md:flex-row md:items-center justify-between p-4 md:p-5 gap-3 hover:shadow-md transition">
@@ -245,14 +303,12 @@ export function MedicationListItem({
       </div>
 
       <div className="flex items-center justify-end gap-2 border-t md:border-t-0 pt-2 md:pt-0 border-slate-100 dark:border-slate-800">
-        <Button
-          variant={inRegimen ? "secondary" : "primary"}
-          onClick={onAdd}
-          disabled={inRegimen}
-          className="text-xs px-4 py-1.5"
-        >
-          {inRegimen ? "افزوده شد ✓" : "افزودن به نسخه +"}
-        </Button>
+        <RegimenToggle
+          inRegimen={inRegimen}
+          drugNameFa={drugName(drug)}
+          onAdd={onAdd}
+          onRemove={onRemove}
+        />
         <IconButton
           label={(saved ? "حذف نشانک " : "نشانک‌گذاری ") + drugName(drug)}
           aria-pressed={saved}

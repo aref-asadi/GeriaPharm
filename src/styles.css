@@ -48,6 +48,18 @@
   --accent: var(--color-electric-iris);
   --accent-strong: #3733db;
   --focus: var(--color-electric-iris);
+  --accent-soft: rgba(69, 65, 254, 0.12);
+  /* Accent tint ramp (Electric Iris family) shared by nav, chips, ghost
+     actions and focus rings. Without it those rules silently drop in light
+     mode because rgb(var(--tint) / …) has no usable value. */
+  --tint: 69 65 254;
+  --tint-text: var(--color-electric-iris);
+  --tint-accent: var(--color-electric-iris);
+  --saved: #b45309;
+  --ok: #15803d;
+  --ok-dot: #16a34a;
+  /* Elevated Healthy Together card shadow */
+  --shadow-card: rgba(23, 73, 77, 0.08) 0px 16px 24px;
   /* Status badges */
   --avoid-bg: #fdefe9;
   --avoid-text: #8f3f22;
@@ -160,6 +172,7 @@
   --cat-teal-fg: #7fc0a4;
   --cat-rose-bg: #2d1a22;
   --cat-rose-fg: #d497ad;
+  --shadow-card: rgba(0, 0, 0, 0.4) 0px 16px 24px;
   color-scheme: dark;
 }
 * {
@@ -434,6 +447,62 @@ button {
   color: var(--text-2);
   font-weight: 500;
 }
+/* The top bar keeps its Midnight Ink canvas in both themes, so every control
+   inside it uses light-on-dark tokens instead of page tokens. */
+.topbar .breadcrumb {
+  color: rgba(255, 255, 255, 0.7);
+}
+.topbar .breadcrumb > svg {
+  color: rgba(255, 255, 255, 0.45);
+}
+.topbar .icon-button {
+  color: rgba(255, 255, 255, 0.8);
+}
+.topbar .icon-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+.topbar .sync-status {
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-buttons);
+  padding: 6px 12px;
+  transition: background 0.18s, color 0.18s;
+}
+.topbar .sync-status:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+.topbar .avatar {
+  border-color: rgba(217, 198, 255, 0.3);
+  background: rgba(217, 198, 255, 0.12);
+  color: #ffffff;
+}
+/* Glossary trigger: healthy-together pill on the dark canvas */
+.glossary-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-buttons);
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(217, 198, 255, 0.25);
+  color: #ffffff;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.glossary-button svg {
+  color: var(--color-lilac-whisper);
+  transition: color 0.18s;
+}
+.glossary-button:hover {
+  background: var(--color-electric-iris);
+  border-color: var(--color-electric-iris);
+  color: #ffffff;
+}
+.glossary-button:hover svg {
+  color: #ffffff;
+}
 .top-right {
   display: flex;
   gap: 20px;
@@ -617,6 +686,84 @@ main {
   font-size: 12px;
   color: var(--text-3);
 }
+/* Sort / view / filter pills — pill radius, Electric Iris selected state */
+.pill-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border-radius: var(--radius-buttons);
+  background: rgba(16, 23, 34, 0.04);
+  border: 1px solid rgba(16, 23, 34, 0.06);
+  min-width: 0;
+}
+.pill-bar-label {
+  font-size: 12px;
+  color: var(--text-3);
+  padding: 0 6px;
+  white-space: nowrap;
+}
+.filter-pill,
+.view-pill {
+  border-radius: var(--radius-buttons);
+  background: rgba(16, 23, 34, 0.05);
+  border: 1px solid rgba(108, 108, 122, 0.2);
+  color: var(--color-deep-charcoal);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  transition:
+    background 0.18s,
+    color 0.18s,
+    border-color 0.18s,
+    box-shadow 0.18s;
+}
+.filter-pill {
+  padding: 5px 12px;
+}
+.view-pill {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+.filter-pill:hover:not(.active),
+.view-pill:hover:not(.active) {
+  background: rgba(16, 23, 34, 0.1);
+  border-color: rgba(108, 108, 122, 0.35);
+  color: var(--color-midnight-ink);
+}
+.filter-pill.active,
+.view-pill.active {
+  background: var(--color-electric-iris);
+  border-color: var(--color-electric-iris);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(69, 65, 254, 0.4);
+}
+.dark .pill-bar {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .filter-pill,
+.dark .view-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--color-lilac-whisper);
+}
+.dark .filter-pill:hover:not(.active),
+.dark .view-pill:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #ffffff;
+}
+.dark .filter-pill.active,
+.dark .view-pill.active {
+  background: var(--color-electric-iris);
+  border-color: var(--color-electric-iris);
+  color: #ffffff;
+}
 .count {
   display: inline-block;
   vertical-align: middle;
@@ -635,12 +782,13 @@ main {
 }
 .category-card {
   text-align: right;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--color-pure-white);
+  border: 1px solid rgba(16, 23, 34, 0.06);
   border-radius: var(--radius);
   padding: 21px 22px 14px;
   color: inherit;
   min-width: 0;
+  box-shadow: var(--shadow-card);
   transition:
     transform 0.18s,
     box-shadow 0.18s,
@@ -648,8 +796,15 @@ main {
 }
 .category-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 9px 26px rgb(var(--shadow) / 0.04);
-  border-color: var(--tint-accent);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-electric-iris);
+}
+.dark .category-card {
+  background: #182232;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .category-card:hover {
+  border-color: var(--color-electric-iris);
 }
 .card-top {
   display: flex;
@@ -662,7 +817,16 @@ main {
   place-items: center;
   width: 46px;
   height: 46px;
-  border-radius: 12px;
+  border-radius: var(--radius-small);
+}
+/* Beers category badges use one soft lilac wash in both themes. */
+.category-card .category-icon {
+  background: #f3e8ff;
+  color: #7e22ce;
+}
+.dark .category-card .category-icon {
+  background: rgba(69, 65, 254, 0.2);
+  color: var(--color-lilac-whisper);
 }
 .orange {
   background: var(--cat-orange-bg);
@@ -695,6 +859,10 @@ main {
 .category-card h3 {
   font-size: 17px;
   font-weight: 650;
+  color: var(--color-midnight-ink);
+}
+.dark .category-card h3 {
+  color: #ffffff;
 }
 .category-card p {
   font-size: 13px;
@@ -702,6 +870,9 @@ main {
   line-height: 1.9;
   margin-top: 6px;
   min-height: 49px;
+}
+.dark .category-card p {
+  color: #a1a1aa;
 }
 .card-bottom {
   display: flex;
@@ -745,9 +916,25 @@ main {
   margin-right: auto;
   white-space: nowrap;
 }
+/* Hero banner CTA: Pure White pill with Midnight Ink label in both themes. */
 .regimen-banner .button.secondary {
-  border: none;
-  color: var(--text);
+  border: 1px solid transparent;
+  background: var(--color-pure-white);
+  color: var(--color-midnight-ink);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 24px;
+  border-radius: var(--radius-buttons);
+  box-shadow: none;
+}
+.regimen-banner .button.secondary > svg {
+  color: currentColor;
+}
+.regimen-banner .button.secondary:hover:not(:disabled) {
+  background: var(--color-pure-white);
+  color: var(--color-midnight-ink);
+  transform: scale(1.02);
+  box-shadow: rgba(0, 0, 0, 0.15) 0 4px 12px;
 }
 .medication-grid {
   display: grid;
@@ -846,6 +1033,72 @@ main {
   font-size: 12px;
   padding: 6px 8px;
   min-height: 36px;
+}
+/* Add / remove prescription toggle on medication cards */
+.regimen-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--radius-buttons);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 7px 16px;
+  min-height: 36px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition:
+    background 0.18s,
+    color 0.18s,
+    border-color 0.18s,
+    box-shadow 0.18s,
+    filter 0.18s;
+}
+.regimen-toggle.available {
+  background: var(--color-electric-iris);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(69, 65, 254, 0.35);
+}
+.regimen-toggle.available:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 4px 14px rgba(69, 65, 254, 0.45);
+}
+.regimen-toggle.added {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #dc2626;
+}
+.regimen-toggle.added:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+}
+.regimen-toggle-default,
+.regimen-toggle-hover {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.regimen-toggle-hover {
+  display: none;
+}
+.regimen-toggle.added:hover .regimen-toggle-default {
+  display: none;
+}
+.regimen-toggle.added:hover .regimen-toggle-hover {
+  display: inline-flex;
+}
+.dark .regimen-toggle.added {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(248, 113, 113, 0.4);
+  color: #fca5a5;
+}
+.dark .regimen-toggle.added:hover {
+  background: #dc2626;
+  border-color: #ef4444;
+  color: #ffffff;
 }
 .filter-row {
   display: flex;
@@ -1763,31 +2016,33 @@ td small {
 .nav-scrim {
   display: none;
 }
-/* Theme toggle (Light / Dark / System) */
+/* Theme toggle (Light / Dark / System) — unified dark canvas in both themes */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--surface);
-  padding: 3px;
+  gap: 3px;
+  padding: 4px;
+  border-radius: var(--radius-buttons);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 .theme-toggle button {
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 7px;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-buttons);
   background: transparent;
-  color: var(--text-3);
+  color: var(--color-muted-graphite);
+  transition: background 0.18s, color 0.18s;
 }
 .theme-toggle button:hover {
-  background: rgb(var(--tint) / 0.07);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
 }
 .theme-toggle button[aria-pressed="true"] {
-  background: rgb(var(--tint) / 0.14);
-  color: var(--tint-text);
+  background: var(--color-electric-iris);
+  color: #ffffff;
 }
 /* Offline floating pill */
 .offline-pill {
@@ -2046,6 +2301,12 @@ td small {
   }
   .section-heading > span {
     display: none;
+  }
+  .section-heading {
+    flex-wrap: wrap;
+  }
+  .pill-bar {
+    max-width: 100%;
   }
   .section-heading h2 {
     font-size: 18px;

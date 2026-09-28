@@ -80,6 +80,11 @@ const nav = [
   { id: "bookmarks", label: "نشانک‌ها", icon: Bookmark },
   { id: "admin", label: "مدیریت", icon: Settings2 },
 ];
+const sortOptions: { id: "name" | "category" | "risk"; label: string }[] = [
+  { id: "name", label: "نام ژنریک" },
+  { id: "risk", label: "سطح خطر (PIM)" },
+  { id: "category", label: "دسته درمانی" },
+];
 function initialList(key: string) {
   try {
     const value: unknown = JSON.parse(localStorage.getItem(key) || "[]");
@@ -284,6 +289,20 @@ export default function App() {
       setToast("دارو به نسخه افزوده شد.");
     }
   }
+  function remove(id: string) {
+    if (regimen.includes(id)) {
+      persist(
+        "gp-regimen",
+        regimen.filter((x) => x !== id),
+        setRegimen,
+      );
+      setToast("دارو از نسخه حذف شد.");
+    }
+  }
+  function toggleRegimen(id: string) {
+    if (regimen.includes(id)) remove(id);
+    else add(id);
+  }
   async function signOut() {
     try {
       await logout();
@@ -424,10 +443,10 @@ export default function App() {
             <button
               type="button"
               onClick={() => setGlossaryOpen(true)}
-              className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#4541fe] text-white hover:brightness-110 transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+              className="glossary-button"
               title="راهنمای اصطلاحات و اختصارات بیرز"
             >
-              <BookOpen size={14} />
+              <BookOpen size={14} aria-hidden />
               <span>راهنمای اصطلاحات</span>
             </button>
             <ThemeToggle value={theme} onChange={setTheme} />
@@ -649,67 +668,56 @@ export default function App() {
                     مشاهده همه داروها <ArrowLeft size={16} />
                   </Button>
                 )}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-full text-xs">
-                    <span className="text-slate-500 px-2">مرتب‌سازی:</span>
-                    <button
-                      type="button"
-                      onClick={() => setSortBy("name")}
-                      className={`px-3 py-1 rounded-full font-medium transition cursor-pointer ${
-                        sortBy === "name"
-                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
-                      }`}
-                    >
-                      نام ژنریک
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSortBy("risk")}
-                      className={`px-3 py-1 rounded-full font-medium transition cursor-pointer ${
-                        sortBy === "risk"
-                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
-                      }`}
-                    >
-                      سطح خطر (PIM)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSortBy("category")}
-                      className={`px-3 py-1 rounded-full font-medium transition cursor-pointer ${
-                        sortBy === "category"
-                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
-                      }`}
-                    >
-                      دسته درمانی
-                    </button>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div
+                    className="pill-bar"
+                    role="group"
+                    aria-label="مرتب‌سازی فهرست داروها"
+                  >
+                    <span className="pill-bar-label">مرتب‌سازی:</span>
+                    {sortOptions.map((option) => (
+                      <button
+                        key={option.id}
+                        type="button"
+                        aria-pressed={sortBy === option.id}
+                        onClick={() => setSortBy(option.id)}
+                        className={
+                          "filter-pill" +
+                          (sortBy === option.id ? " active" : "")
+                        }
+                      >
+                        {option.label}
+                      </button>
+                    ))}
                   </div>
-                  <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-full">
+                  <div
+                    className="pill-bar"
+                    role="group"
+                    aria-label="نمای فهرست داروها"
+                  >
                     <button
                       type="button"
+                      aria-pressed={viewMode === "list"}
                       onClick={() => setViewMode("list")}
-                      className={`p-1.5 rounded-full transition cursor-pointer ${
-                        viewMode === "list"
-                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
-                          : "text-slate-500 hover:text-slate-800"
-                      }`}
+                      className={
+                        "view-pill" + (viewMode === "list" ? " active" : "")
+                      }
                       title="نمای لیست متراکم (پیش‌فرض استاد)"
                     >
-                      <List size={16} />
+                      <List size={16} aria-hidden />
+                      <span className="sr-only">نمای لیست</span>
                     </button>
                     <button
                       type="button"
+                      aria-pressed={viewMode === "grid"}
                       onClick={() => setViewMode("grid")}
-                      className={`p-1.5 rounded-full transition cursor-pointer ${
-                        viewMode === "grid"
-                          ? "bg-white dark:bg-[#101722] text-[#4541fe] shadow-xs"
-                          : "text-slate-500 hover:text-slate-800"
-                      }`}
+                      className={
+                        "view-pill" + (viewMode === "grid" ? " active" : "")
+                      }
                       title="نمای کارت‌های شبکه‌ای"
                     >
-                      <LayoutGrid size={16} />
+                      <LayoutGrid size={16} aria-hidden />
+                      <span className="sr-only">نمای شبکه</span>
                     </button>
                   </div>
                 </div>
@@ -757,6 +765,7 @@ export default function App() {
                         onOpen={() => setDetail(d)}
                         onBookmark={() => bookmark(d.id)}
                         onAdd={() => add(d.id)}
+                        onRemove={() => remove(d.id)}
                       />
                     ) : (
                       <MedicationCard
@@ -767,6 +776,7 @@ export default function App() {
                         onOpen={() => setDetail(d)}
                         onBookmark={() => bookmark(d.id)}
                         onAdd={() => add(d.id)}
+                        onRemove={() => remove(d.id)}
                       />
                     ),
                   )}
@@ -888,13 +898,16 @@ export default function App() {
                 {bookmarks.includes(detail.id) ? "حذف نشانک" : "نشانک‌گذاری"}
               </Button>
               <Button
-                disabled={regimen.includes(detail.id)}
-                onClick={() => add(detail.id)}
+                variant={regimen.includes(detail.id) ? "danger" : "primary"}
+                aria-pressed={regimen.includes(detail.id)}
+                onClick={() => toggleRegimen(detail.id)}
               >
-                <Plus size={17} />
-                {regimen.includes(detail.id)
-                  ? "در نسخه موجود است"
-                  : "افزودن به نسخه"}
+                {regimen.includes(detail.id) ? (
+                  <X size={17} aria-hidden />
+                ) : (
+                  <Plus size={17} aria-hidden />
+                )}
+                {regimen.includes(detail.id) ? "حذف از نسخه" : "افزودن به نسخه"}
               </Button>
             </div>
             <section className={"clinical-box " + risk(detail)}>
