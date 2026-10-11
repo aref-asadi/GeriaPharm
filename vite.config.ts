@@ -11,7 +11,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["icon.svg", "icon-192.png", "icon-512.png"],
       manifest: {
-        name: "گریافارم | سامانه دارودرمانی سالمندان",
+        name: "GeriaPharm | سامانه دارودرمانی سالمندان",
         short_name: "GeriaPharm",
         lang: "fa",
         dir: "rtl",

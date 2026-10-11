@@ -159,7 +159,7 @@ export function Checker({
 
   const alertText = () => {
     const lines = [
-      "خلاصه پرونده دارویی سالمند — گریافارم",
+      "خلاصه پرونده دارویی سالمند — GeriaPharm",
       "معیارهای بیرز ۲۰۲۳",
       "",
       `تعداد داروها: ${number(stats.totalDrugs)}`,
@@ -364,10 +364,10 @@ export function Checker({
             <div className="field">
               جنسیت
               <div
-                className="theme-toggle"
+                className="theme-toggle gender-toggle"
                 role="group"
                 aria-label="جنسیت بیمار"
-                style={{ marginTop: 8 }}
+                style={{ marginTop: 6 }}
               >
                 <button
                   type="button"
@@ -487,28 +487,23 @@ export function Checker({
             renalCalculations.ibw !== undefined ||
             renalCalculations.crcl !== undefined) && (
             <div className="mt-4 p-4 rounded-3xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 text-xs sm:text-sm">
-              <div className="flex items-center justify-between font-bold text-indigo-950 dark:text-indigo-200 mb-2">
+              <div className="font-bold text-indigo-950 dark:text-indigo-200 mb-2">
                 <span>محاسبات فارماکوکینتیک بالینی</span>
-                {renalCalculations.crcl !== undefined && (
-                  <span className="font-mono text-base px-2.5 py-0.5 rounded-full bg-indigo-600 text-white shadow-xs">
-                    CrCl: {renalCalculations.crcl} mL/min
-                  </span>
-                )}
               </div>
 
-              <div className="flex flex-wrap gap-2 mb-3">
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-3">
                 {renalCalculations.bmi !== undefined && (
-                  <span className={`px-2.5 py-1 rounded-full font-medium ${renalCalculations.bmiCategoryColor}`}>
+                  <span className="font-medium text-slate-600 dark:text-slate-300">
                     شاخص توده بدنی (BMI): {renalCalculations.bmi} ({renalCalculations.bmiCategory})
                   </span>
                 )}
                 {renalCalculations.ibw !== undefined && (
-                  <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                  <span className="font-medium text-slate-600 dark:text-slate-300">
                     وزن ایده‌آل (IBW): {renalCalculations.ibw} kg
                   </span>
                 )}
                 {renalCalculations.adjBw !== undefined && (
-                  <span className="px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300">
+                  <span className="font-medium text-slate-600 dark:text-slate-300">
                     وزن تعدیل‌شده (AdjBW): {renalCalculations.adjBw} kg
                   </span>
                 )}
@@ -518,6 +513,14 @@ export function Checker({
                   </span>
                 )}
               </div>
+
+              {renalCalculations.crcl !== undefined && (
+                <div className="flex justify-center pt-2 border-t border-indigo-100 dark:border-indigo-900/40">
+                  <span className="font-mono text-base px-3 py-1 rounded-full bg-indigo-600 text-white shadow-xs">
+                    CrCl: {renalCalculations.crcl} mL/min
+                  </span>
+                </div>
+              )}
             </div>
           )}
 

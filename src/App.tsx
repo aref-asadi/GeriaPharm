@@ -385,8 +385,7 @@ export default function App() {
             <Pill size={26} />
           </span>
           <div>
-            <strong>گریافارم</strong>
-            <small>GERIAPHARM</small>
+            <strong>GeriaPharm</strong>
           </div>
         </a>
         <div className="sidebar-label">فضای کار بالینی</div>

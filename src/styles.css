@@ -1469,6 +1469,32 @@ details > p {
   height: 100%;
   min-width: 0;
 }
+/* Compact intake row: tighter vertical rhythm while keeping inputs
+   comfortably tappable (~39px tall). Scoped to the checker only so other
+   forms keep the roomier default spacing. */
+.checker-top-grid > .panel {
+  padding: 18px;
+}
+.checker-top-grid .panel-heading {
+  gap: 8px;
+}
+.checker-top-grid .help {
+  margin: 6px 0 12px;
+  line-height: 1.7;
+}
+.checker-top-grid .form-grid {
+  gap: 10px 12px;
+}
+.checker-top-grid .field {
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+.checker-top-grid .unit-input {
+  margin-top: 6px;
+}
+.checker-top-grid .unit-input input {
+  padding: 9px 10px;
+}
 .checker-results {
   width: 100%;
   min-width: 0;
@@ -2074,6 +2100,12 @@ td small {
 .theme-toggle button[aria-pressed="true"] {
   background: var(--color-electric-iris);
   color: #ffffff;
+}
+/* Patient-form gender pills reuse .theme-toggle; its global white hover
+   label is illegible on light panels, so keep the base label color on hover
+   in light mode. The selected pill keeps its white-on-accent label. */
+:root:not(.dark) .gender-toggle button:not([aria-pressed="true"]):hover {
+  color: var(--color-muted-graphite);
 }
 /* Offline floating pill */
 .offline-pill {

@@ -25,7 +25,7 @@ test("Persian home, local font, desktop layout and no JavaScript errors", async 
     page.getByRole("heading", { name: "نسخه‌ای آگاهانه‌تر، مراقبتی ایمن‌تر." }),
   ).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-  await expect(page.locator(".brand strong")).toHaveText("گریافارم");
+  await expect(page.locator(".brand strong")).toHaveText("GeriaPharm");
   await page.evaluate(() => document.fonts.ready);
   expect(
     await page.evaluate(() => getComputedStyle(document.body).fontFamily),
@@ -155,7 +155,7 @@ test("admin is gated, login works, edit persists, backup downloads, audit and lo
 }) => {
   await page.goto("/#admin");
   await expect(
-    page.getByRole("heading", { name: "ورود به مدیریت گریافارم" }),
+    page.getByRole("heading", { name: "ورود به مدیریت Geriapharm" }),
   ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "افزودن دارو", exact: true }),
@@ -189,7 +189,7 @@ test("admin is gated, login works, edit persists, backup downloads, audit and lo
   });
   await page.getByRole("button", { name: "خروج", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "ورود به مدیریت گریافارم" }),
+    page.getByRole("heading", { name: "ورود به مدیریت GeriaPharm" }),
   ).toBeVisible();
 });
 test("admin creation, dirty form protection, invalid import and deletion confirmation", async ({
@@ -242,7 +242,7 @@ test("mobile RTL, no overflow and accessible login", async ({ page }) => {
     .getByRole("button", { name: "مدیریت" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "ورود به مدیریت گریافارم" }),
+    page.getByRole("heading", { name: "ورود به مدیریت GeriaPharm" }),
   ).toBeVisible();
   expect(
     await page.evaluate(
@@ -347,7 +347,7 @@ test("password change returns to login with a success message", async ({
   await page.getByLabel("تکرار رمز جدید").fill(next);
   await page.getByRole("button", { name: "ذخیره رمز جدید" }).click();
   await expect(
-    page.getByRole("heading", { name: "ورود به مدیریت گریافارم" }),
+    page.getByRole("heading", { name: "ورود به مدیریت GeriaPharm" }),
   ).toBeVisible();
   await expect(page.getByRole("status")).toContainText("رمز عبور تغییر کرد");
   await page.getByLabel("ایمیل مدیر").fill(email);
