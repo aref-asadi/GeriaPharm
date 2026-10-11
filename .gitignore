@@ -13,3 +13,4 @@ playwright-report/
 *.sqlite-shm
 *.zip
 openai/
+*.log

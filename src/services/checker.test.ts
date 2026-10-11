@@ -28,9 +28,9 @@ const custom = (name: string, classes: string[] = []): DrugRecord => ({
   drugDiseaseInteractions: [],
 });
 describe("clinical screening", () => {
-  it("seeds all 74 complete records with unique IDs", () => {
-    expect(seedData).toHaveLength(74);
-    expect(new Set(seedData.map((d) => d.id)).size).toBe(74);
+  it("seeds all 182 complete records with unique IDs", () => {
+    expect(seedData).toHaveLength(182);
+    expect(new Set(seedData.map((d) => d.id)).size).toBe(182);
     expect(seedData.every((d) => d.recommendation && d.rationale)).toBe(true);
   });
   it("computes Cockcroft-Gault only from complete, valid inputs", () => {

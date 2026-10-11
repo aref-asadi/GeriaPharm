@@ -36,6 +36,8 @@ export const labels: Record<string, string> = {
   "BPH / LUTS in men": "بزرگی پروستات / علائم ادراری در مردان",
   "Benign Prostatic Hyperplasia (BPH) / LUTS": "بزرگی پروستات / علائم ادراری",
   Syncope: "سنکوپ",
+  Osteoporosis: "پوکی استخوان",
+  "Symptomatic Hypotension": "افت فشار خون علامت‌دار",
   High: "بالا",
   Moderate: "متوسط",
   Low: "پایین",
