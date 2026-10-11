@@ -830,10 +830,6 @@ export default function App() {
               <ShieldCheck size={17} />
               همراه تصمیم بالینی؛ نه جایگزین قضاوت متخصص
             </span>
-            <p>
-              این فهرست اولیه، همه داروها و تداخل‌های معیارهای بیرز را پوشش
-              نمی‌دهد. محتوای بالینی نیازمند بازبینی متخصص است.
-            </p>
             <div>
               <a
                 href="https://doi.org/10.1111/jgs.18372"
@@ -1015,7 +1011,7 @@ export default function App() {
             )}
             <div className="clinical-note">
               <label htmlFor="gp-clinical-note">
-                <StickyNote size={15} /> یادداشت خصوصی بالینی (فقط روی این
+                یادداشت خصوصی بالینی (فقط روی این
                 دستگاه ذخیره می‌شود)
               </label>
               <textarea
@@ -1025,7 +1021,6 @@ export default function App() {
                 onChange={(e) => setNote(detail.id, e.target.value)}
               />
             </div>
-            <p className="source-note">{detail.notes}</p>
             <small className="muted">
               آخرین ویرایش: {date(detail.lastUpdated)}
             </small>

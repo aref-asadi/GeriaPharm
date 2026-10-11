@@ -346,7 +346,7 @@ export function Checker({
           <div className="form-grid">
             <label className="field">
               سن (سال)
-              <div className="unit-input">
+              <div dir="ltr" className="unit-input">
                 <input
                   aria-label="سن بیمار"
                   type="number"
@@ -393,7 +393,7 @@ export function Checker({
             </div>
             <label className="field">
               قد (سانتی‌متر)
-              <div className="unit-input">
+              <div dir="ltr" className="unit-input">
                 <input
                   aria-label="قد بیمار"
                   type="number"
@@ -411,7 +411,7 @@ export function Checker({
 
             <label className="field">
               وزن (کیلوگرم)
-              <div className="unit-input">
+              <div dir="ltr" className="unit-input">
                 <input
                   aria-label="وزن بیمار"
                   type="number"
@@ -427,7 +427,7 @@ export function Checker({
             </label>
             <label className="field">
               کراتینین سرم
-              <div className="unit-input">
+              <div dir="ltr" className="unit-input">
                 <input
                   aria-label="کراتینین سرم"
                   type="number"
@@ -443,7 +443,7 @@ export function Checker({
             </label>
             <label className="field">
               کلیرانس کراتینین · CrCl
-              <div className="unit-input">
+              <div dir="ltr" className="unit-input">
                 <input
                   aria-label="کلیرانس کراتینین"
                   type="number"
@@ -459,7 +459,7 @@ export function Checker({
             </label>
             <label className="field">
               نرخ فیلتراسیون · eGFR
-              <div className="unit-input">
+              <div dir="ltr" className="unit-input">
                 <input
                   aria-label="نرخ فیلتراسیون کلیه"
                   type="number"
@@ -476,8 +476,7 @@ export function Checker({
           </div>
           {cg !== undefined && (
             <Notice tone="info">
-              CrCl برآوردی کوکرافت–گالت: <bdi dir="ltr">{cg.toFixed(1)}</bdi>{" "}
-              mL/min
+              CrCl برآوردی کوکرافت–گالت: mL/min <bdi dir="ltr">{cg.toFixed(1)}</bdi>{" "}
               {profile.CrCl !== undefined
                 ? " (مقدار دستی شما اولویت دارد)"
                 : " — محاسبه‌شده از سن، وزن، جنسیت و کراتینین"}
@@ -500,7 +499,7 @@ export function Checker({
               <div className="flex flex-wrap gap-2 mb-3">
                 {renalCalculations.bmi !== undefined && (
                   <span className={`px-2.5 py-1 rounded-full font-medium ${renalCalculations.bmiCategoryColor}`}>
-                    BMI: {renalCalculations.bmi} ({renalCalculations.bmiCategory})
+                    شاخص توده بدنی (BMI): {renalCalculations.bmi} ({renalCalculations.bmiCategory})
                   </span>
                 )}
                 {renalCalculations.ibw !== undefined && (
@@ -519,29 +518,6 @@ export function Checker({
                   </span>
                 )}
               </div>
-
-              <button
-                type="button"
-                onClick={() => setShowFormulaDetails(!showFormulaDetails)}
-                className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1 cursor-pointer"
-              >
-                {showFormulaDetails ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                مشاهده فرمول و جزئیات گام‌به‌گام محاسبه
-              </button>
-
-              {showFormulaDetails && (
-                <div className="mt-3 p-3 rounded-2xl bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/60 space-y-2 text-xs">
-                  {renalCalculations.steps.map((st, idx) => (
-                    <div key={idx} className="pb-2 border-b last:border-0 border-slate-100 dark:border-slate-800">
-                      <strong className="block text-slate-800 dark:text-slate-200">{st.title}:</strong>
-                      <code className="text-[11px] text-indigo-600 dark:text-indigo-400 block font-mono" dir="ltr">
-                        {st.formula}
-                      </code>
-                      <span className="text-slate-600 dark:text-slate-400 block mt-0.5">{st.calculation}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           )}
 
@@ -556,8 +532,9 @@ export function Checker({
           )}
           <p className="help">
             اگر سن، وزن، جنسیت و کراتینین را وارد کنید، CrCl به‌طور خودکار محاسبه
-            می‌شود. CrCl و eGFR جایگزین یکدیگر نیستند. اطلاعات بیمار فقط روی همین
-            دستگاه ذخیره می‌شود.
+            می‌شود.<br />
+            CrCl و eGFR جایگزین یکدیگر نیستند.<br />
+            اطلاعات بیمار فقط روی همین دستگاه ذخیره می‌شود.
           </p>
         </section>
       </div>
@@ -579,16 +556,12 @@ export function Checker({
                 {areAllOpen ? "بستن همه گروه‌ها" : "باز کردن همه گروه‌ها"}
               </Button>
             )}
-            <span className="live-tag">
-              <span className="status-dot" />
-              بررسی زنده
-            </span>
           </div>
         </div>
         <div className="print-header">
           <h1>خلاصه پرونده دارویی سالمند</h1>
           <p>
-            گریافارم · معیارهای بیرز ۲۰۲۳ · تهیه‌شده در{" "}
+            GeriaPharm · معیارهای بیرز ۲۰۲۳ · تهیه‌شده در{" "}
             {new Intl.DateTimeFormat("fa-IR", { dateStyle: "long" }).format(
               new Date(),
             )}
@@ -639,9 +612,6 @@ export function Checker({
                   </p>
                 </div>
               </div>
-              <span className="text-[11px] px-3 py-1 rounded-full whitespace-nowrap bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-200 dark:border-emerald-800">
-                پردازش لبه‌ای ۱۰۰٪ آفلاین
-              </span>
             </div>
 
             {/* 1.1 ADR Multi-Factor Risk Stratification Gauge */}
@@ -649,7 +619,7 @@ export function Checker({
               <div className="flex flex-col items-center justify-center shrink-0 min-w-[130px] p-3 rounded-2xl bg-white dark:bg-[#101722] shadow-xs border border-slate-100 dark:border-slate-800">
                 <span className="text-xs font-semibold text-slate-500 mb-1">امتیاز ریسک ADR</span>
                 <span
-                  className={`text-3xl font-extrabold font-mono ${
+                  dir="ltr" className={`text-3xl font-extrabold ${
                     adrRisk.tier === "بحرانی"
                       ? "text-purple-600 dark:text-purple-400"
                       : adrRisk.tier === "پرخطر"
@@ -816,22 +786,7 @@ export function Checker({
             <span>بررسی ناکامل</span>
           </button>
         </div>
-        {meds.length > 0 && (
-          <div className="actions print-hide">
-            <Button variant="secondary" onClick={() => window.print()}>
-              <Printer size={17} />
-              چاپ خلاصه
-            </Button>
-            <Button variant="secondary" onClick={() => void copySummary()}>
-              {copied ? <Check size={17} /> : <Copy size={17} />}
-              {copied ? "کپی شد" : "کپی خلاصه مشاوره"}
-            </Button>
-          </div>
-        )}
-        <p className="help">
-          ارزیابی {number(meds.length)} داروی ثبت‌شده بر اساس قواعد موجود؛ این
-          فهرست، پایگاه جامع تداخل‌ها نیست.
-        </p>
+        {meds.length > 0}
         {filter !== "All" && (
           <Button variant="ghost" onClick={() => setFilter("All")}>
             نمایش همه هشدارها
@@ -929,29 +884,6 @@ export function Checker({
                 </div>
               );
             })}
-          </div>
-        )}
-        {meds.length > 0 && alerts.some((a) => a.severity === "avoid") && (
-          <div className="deprescribe">
-            <h3>
-              <ListChecks size={20} />
-              راهنمای اقدام و کاهش تدریجی (Deprescribing)
-            </h3>
-            <ol>
-              {alerts
-                .filter((a) => a.severity === "avoid")
-                .slice(0, 6)
-                .map((a) => (
-                  <li key={"dep" + a.id}>
-                    <strong>{a.title}:</strong>{" "}
-                    {a.action ?? a.detail}
-                  </li>
-                ))}
-              <li>
-                قطع داروهای پرخطر به‌صورت یک‌به‌یک و تدریجی انجام شود؛ پس از هر
-                تغییر، پاسخ بیمار و نیاز مجدد به درمان بازبینی شود.
-              </li>
-            </ol>
           </div>
         )}
         {meds.length > 0 &&
