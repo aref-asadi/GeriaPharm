@@ -220,9 +220,11 @@ export interface Alert {
   action?: string;
 }
 /**
- * Anticholinergic Cognitive Burden (ACB) weight per drug, based on the
- * published Boustani scale and its widely used updates. Drugs absent from
- * the map fall back to the record's anticholinergic flag (weight 2).
+ * Anticholinergic Cognitive Burden (ACB) weight per drug, aligned with the
+ * Boustani scale and the official Regenstrief 2012 lists transcribed in
+ * score.md. Registry records carry their own `acbScore` and always win; this
+ * map is the fallback for ad-hoc/registry-added drugs, and drugs absent from
+ * both fall back to the record's anticholinergic flag (weight 2).
  */
 const acbMap: Record<string, 1 | 2 | 3> = {
   // Score 3 — strong
@@ -230,7 +232,6 @@ const acbMap: Record<string, 1 | 2 | 3> = {
   imipramine: 3,
   hydroxyzine: 3,
   chlorpheniramine: 3,
-  cyproheptadine: 3,
   promethazine: 3,
   diphenhydramine: 3,
   olanzapine: 3,
@@ -245,15 +246,16 @@ const acbMap: Record<string, 1 | 2 | 3> = {
   cyclobenzaprine: 3,
   tizanidine: 3,
   dicyclomine: 3,
-  clidinium: 3,
+  methocarbamol: 3,
+  nortriptyline: 3,
+  doxepin: 3,
+  paroxetine: 3,
+  quetiapine: 3,
   // Score 2 — moderate
-  nortriptyline: 2,
-  doxepin: 2,
-  paroxetine: 2,
-  quetiapine: 2,
+  cyproheptadine: 2,
   baclofen: 2,
-  methocarbamol: 1,
   // Score 1 — mild
+  clidinium: 1,
   alprazolam: 1,
   diazepam: 1,
   citalopram: 1,
@@ -279,6 +281,7 @@ const acbMap: Record<string, 1 | 2 | 3> = {
   theophylline: 1,
 };
 export function acbScoreFor(d: DrugRecord): number {
+  if (d.acbScore !== undefined) return d.acbScore;
   const name = normalize(d.genericName);
   const base = name.split(" ")[0];
   const mapped = acbMap[base] ?? acbMap[name];

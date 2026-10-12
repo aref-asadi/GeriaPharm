@@ -32,13 +32,18 @@ import {
   type BeersGroupId,
 } from "../services/ml/alertGrouping";
 import {
+  evaluatePanel,
+  buildBreakdownRows,
+  type PanelEvaluation,
+  type BreakdownRow,
+} from "../services/ml/geriatricRiskPanel";
+import {
   ChevronDown,
   ChevronUp,
   BrainCircuit,
   Flame,
   ArrowRightLeft,
   CalendarCheck,
-  ShieldAlert,
 } from "lucide-react";
 
 import { fa, number, drugName, matchesSearch } from "../lib/fa";
@@ -49,6 +54,7 @@ import {
   Notice,
   EmptyState,
 } from "./ui/Primitives";
+import { GeriatricPanel } from "./GeriatricPanel";
 const profileKey = "gp-profile";
 function loadProfile(): PatientProfile {
   try {
@@ -56,8 +62,10 @@ function loadProfile(): PatientProfile {
     const p: PatientProfile = {};
     if (typeof raw.age === "number" && raw.age >= 0) p.age = raw.age;
     if (raw.sex === "male" || raw.sex === "female") p.sex = raw.sex;
-    if (typeof raw.weight === "number" && raw.weight >= 0) p.weight = raw.weight;
-    if (typeof raw.height === "number" && raw.height >= 0) p.height = raw.height;
+    if (typeof raw.weight === "number" && raw.weight >= 0)
+      p.weight = raw.weight;
+    if (typeof raw.height === "number" && raw.height >= 0)
+      p.height = raw.height;
     if (typeof raw.serumCreatinine === "number" && raw.serumCreatinine >= 0)
       p.serumCreatinine = raw.serumCreatinine;
     if (typeof raw.CrCl === "number" && raw.CrCl >= 0) p.CrCl = raw.CrCl;
@@ -112,7 +120,9 @@ export function Checker({
   const num = (k: keyof PatientProfile) =>
     profile[k] === undefined ? "" : String(profile[k]);
   const onNum = (k: keyof PatientProfile) => (v: string) =>
-    update({ [k]: v === "" ? undefined : Number(v) } as Partial<PatientProfile>);
+    update({
+      [k]: v === "" ? undefined : Number(v),
+    } as Partial<PatientProfile>);
   const cg = cockcroftGault(profile);
   // Module 1 & 2 ML + Pharmacokinetic engines
   const renalCalculations = calculateRenalMetrics({
@@ -129,7 +139,11 @@ export function Checker({
   const drugSubstitutions = recommendDrugSubstitutions(meds);
   const prioritizedAlertList = prioritizeAlerts(alerts);
   const beersAlertGroups = groupAlerts(prioritizedAlertList, meds);
-  const [openBeersGroups, setOpenBeersGroups] = useState<Record<string, boolean>>({});
+  const panel: PanelEvaluation = evaluatePanel(meds, alerts);
+  const breakdownRows: BreakdownRow[] = buildBreakdownRows(meds);
+  const [openBeersGroups, setOpenBeersGroups] = useState<
+    Record<string, boolean>
+  >({});
   // Groups start expanded so the clinical summary is readable without extra
   // clicks; an explicit entry in the map always wins over the default.
   const isBeersGroupOpen = (id: BeersGroupId) => openBeersGroups[id] ?? true;
@@ -476,7 +490,8 @@ export function Checker({
           </div>
           {cg !== undefined && (
             <Notice tone="info">
-              CrCl برآوردی کوکرافت–گالت: mL/min <bdi dir="ltr">{cg.toFixed(1)}</bdi>{" "}
+              CrCl برآوردی کوکرافت–گالت: mL/min{" "}
+              <bdi dir="ltr">{cg.toFixed(1)}</bdi>{" "}
               {profile.CrCl !== undefined
                 ? " (مقدار دستی شما اولویت دارد)"
                 : " — محاسبه‌شده از سن، وزن، جنسیت و کراتینین"}
@@ -494,7 +509,8 @@ export function Checker({
               <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-3">
                 {renalCalculations.bmi !== undefined && (
                   <span className="font-medium text-slate-600 dark:text-slate-300">
-                    شاخص توده بدنی (BMI): {renalCalculations.bmi} ({renalCalculations.bmiCategory})
+                    شاخص توده بدنی (BMI): {renalCalculations.bmi} (
+                    {renalCalculations.bmiCategory})
                   </span>
                 )}
                 {renalCalculations.ibw !== undefined && (
@@ -534,9 +550,11 @@ export function Checker({
             </Notice>
           )}
           <p className="help">
-            اگر سن، وزن، جنسیت و کراتینین را وارد کنید، CrCl به‌طور خودکار محاسبه
-            می‌شود.<br />
-            CrCl و eGFR جایگزین یکدیگر نیستند.<br />
+            اگر سن، وزن، جنسیت و کراتینین را وارد کنید، CrCl به‌طور خودکار
+            محاسبه می‌شود.
+            <br />
+            CrCl و eGFR جایگزین یکدیگر نیستند.
+            <br />
             اطلاعات بیمار فقط روی همین دستگاه ذخیره می‌شود.
           </p>
         </section>
@@ -585,19 +603,28 @@ export function Checker({
               <span>داروی نامناسب (PIM)</span>
             </div>
             <div
-              className={"stat-tile " + (stats.acbScore >= 3 ? "tone-warn" : "")}
+              className={
+                "stat-tile " + (stats.acbScore >= 3 ? "tone-warn" : "")
+              }
             >
               <b>{number(stats.acbScore)}</b>
               <span>بار آنتی‌کولینرژیک</span>
             </div>
             <div
-              className={"stat-tile " + (stats.cnsCount >= 3 ? "tone-info" : "")}
+              className={
+                "stat-tile " + (stats.cnsCount >= 3 ? "tone-info" : "")
+              }
             >
               <b>{number(stats.cnsCount)}</b>
               <span>داروی فعال بر CNS</span>
             </div>
           </div>
         )}
+        {/* Geriatric Multi-Dimensional Risk Panel */}
+        {meds.length > 0 && (
+          <GeriatricPanel panel={panel} breakdown={breakdownRows} />
+        )}
+
         {/* MODULE 1: Local Edge AI CDSS Decision Support Panel */}
         {meds.length > 0 && (
           <div className="edge-ai-cdss-panel mb-6 w-full min-w-0 p-6 rounded-[36px] bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/50 shadow-xl space-y-6">
@@ -620,9 +647,12 @@ export function Checker({
             {/* 1.1 ADR Multi-Factor Risk Stratification Gauge */}
             <div className="w-full min-w-0 p-4 rounded-3xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800 flex flex-col md:flex-row gap-5 md:items-start items-center">
               <div className="flex flex-col items-center justify-center shrink-0 min-w-[130px] p-3 rounded-2xl bg-white dark:bg-[#101722] shadow-xs border border-slate-100 dark:border-slate-800">
-                <span className="text-xs font-semibold text-slate-500 mb-1">امتیاز ریسک ADR</span>
+                <span className="text-xs font-semibold text-slate-500 mb-1">
+                  امتیاز ریسک ADR
+                </span>
                 <span
-                  dir="ltr" className={`text-3xl font-extrabold ${
+                  dir="ltr"
+                  className={`text-3xl font-extrabold ${
                     adrRisk.tier === "بحرانی"
                       ? "text-purple-600 dark:text-purple-400"
                       : adrRisk.tier === "پرخطر"
@@ -663,8 +693,14 @@ export function Checker({
             {deprescribingProtocols.length > 0 && (
               <div className="space-y-3">
                 <div className="flex items-start gap-2 text-sm font-bold text-slate-900 dark:text-white min-w-0">
-                  <CalendarCheck size={18} className="text-[#4541fe] shrink-0 mt-0.5" />
-                  <span className="break-words">پروتکل‌های هوشمند کاهش تدریجی و قطع دارو (Deprescribing Roadmap)</span>
+                  <CalendarCheck
+                    size={18}
+                    className="text-[#4541fe] shrink-0 mt-0.5"
+                  />
+                  <span className="break-words">
+                    پروتکل‌های هوشمند کاهش تدریجی و قطع دارو (Deprescribing
+                    Roadmap)
+                  </span>
                 </div>
                 <div className="grid gap-3">
                   {deprescribingProtocols.map((proto) => (
@@ -674,7 +710,8 @@ export function Checker({
                     >
                       <div className="flex items-center justify-between flex-wrap gap-2">
                         <strong className="min-w-0 text-sm font-bold text-indigo-700 dark:text-indigo-400 break-words">
-                          هدف قطع: {proto.targetDrugFa} ({proto.targetDrugGeneric})
+                          هدف قطع: {proto.targetDrugFa} (
+                          {proto.targetDrugGeneric})
                         </strong>
                         <span className="text-[11px] px-2 py-0.5 rounded-full whitespace-nowrap bg-indigo-50 dark:bg-indigo-950 text-indigo-600 font-mono">
                           {proto.tableSource}
@@ -695,10 +732,19 @@ export function Checker({
                           </thead>
                           <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                             {proto.taperSchedule.map((step, sIdx) => (
-                              <tr key={sIdx} className="hover:bg-white dark:hover:bg-slate-800/40">
-                                <td className="p-2 font-bold text-[#4541fe]">{step.week}</td>
-                                <td className="p-2 font-medium">{step.targetDose}</td>
-                                <td className="p-2 text-slate-600 dark:text-slate-400">{step.clinicalAction}</td>
+                              <tr
+                                key={sIdx}
+                                className="hover:bg-white dark:hover:bg-slate-800/40"
+                              >
+                                <td className="p-2 font-bold text-[#4541fe]">
+                                  {step.week}
+                                </td>
+                                <td className="p-2 font-medium">
+                                  {step.targetDose}
+                                </td>
+                                <td className="p-2 text-slate-600 dark:text-slate-400">
+                                  {step.clinicalAction}
+                                </td>
                               </tr>
                             ))}
                           </tbody>
@@ -706,7 +752,8 @@ export function Checker({
                       </div>
 
                       <div className="p-2.5 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 text-amber-900 dark:text-amber-200">
-                        <strong>پارامترهای پایش بالینی:</strong> {proto.monitoringParameters.join(" · ")}
+                        <strong>پارامترهای پایش بالینی:</strong>{" "}
+                        {proto.monitoringParameters.join(" · ")}
                       </div>
                     </div>
                   ))}
@@ -718,8 +765,13 @@ export function Checker({
             {drugSubstitutions.length > 0 && (
               <div className="space-y-3">
                 <div className="flex items-start gap-2 text-sm font-bold text-slate-900 dark:text-white min-w-0">
-                  <ArrowRightLeft size={18} className="text-[#fe0f83] shrink-0 mt-0.5" />
-                  <span className="break-words">پیشنهادهای جایگزینی ایمن‌تر (Drug Substitutions)</span>
+                  <ArrowRightLeft
+                    size={18}
+                    className="text-[#fe0f83] shrink-0 mt-0.5"
+                  />
+                  <span className="break-words">
+                    پیشنهادهای جایگزینی ایمن‌تر (Drug Substitutions)
+                  </span>
                 </div>
                 <div className="grid gap-3">
                   {drugSubstitutions.map((sub) => (
@@ -728,7 +780,10 @@ export function Checker({
                       className="min-w-0 p-4 rounded-3xl bg-slate-50/80 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800 text-xs space-y-2"
                     >
                       <div className="font-bold text-slate-900 dark:text-white break-words">
-                        داروی پرخطر شناسایی‌شده: <span className="text-rose-600 font-mono">{sub.flaggedDrugFa} ({sub.flaggedDrugName})</span>
+                        داروی پرخطر شناسایی‌شده:{" "}
+                        <span className="text-rose-600 font-mono">
+                          {sub.flaggedDrugFa} ({sub.flaggedDrugName})
+                        </span>
                       </div>
                       <div className="grid sm:grid-cols-2 gap-2 mt-2">
                         {sub.recommendedAlternatives.map((alt, aIdx) => (
@@ -760,7 +815,6 @@ export function Checker({
                 </div>
               </div>
             )}
-
           </div>
         )}
 

@@ -489,8 +489,159 @@ const RENAL_OVERRIDE = {
 const BOX1_IDS = new Set(["warfarin", "rivaroxaban", "dabigatran", "apixaban", "edoxaban"]);
 const cat = (condition, rationale, recommendation) => ({ condition, rationale, recommendation });
 
+// ---- Geriatric risk panel reference data (score.md) ----
+// Legacy therapeutic-category spellings canonicalized so the "گروه درمانی"
+// dropdown never shows near-duplicate entries.
+const CAT_ALIAS = {
+  "Cardiovascular and Antithrombotics": "Cardiovascular & Antithrombotics",
+};
+// Anticholinergic Cognitive Burden weight per drug (Boustani 2008 / official
+// Regenstrief 2012 lists translated in score.md). Only score.md-listed drugs
+// carry a value; everything else falls back at read time.
+const ACB_BY_ID = {
+  // 1 — possible / mild anticholinergic effect
+  alprazolam: 1, aripiprazole: 1, cimetidine: 1, "clidinium-c": 1, clorazepate: 1,
+  codeine: 1, colchicine: 1, diazepam: 1, digoxin: 1, "dipyridamole-short-acting": 1,
+  fentanyl: 1, furosemide: 1, haloperidol: 1, morphine: 1, "nifedipine-ir": 1,
+  paliperidone: 1, prednisone: 1, risperidone: 1, theophylline: 1, triamterene: 1,
+  warfarin: 1,
+  // 2 — moderate anticholinergic effect
+  carbamazepine: 2, cyclobenzaprine: 2, cyproheptadine: 2, meperidine: 2,
+  oxcarbazepine: 2,
+  // 3 — strong, clinically relevant anticholinergic effect
+  amitriptyline: 3, amoxapine: 3, atropine: 3, benztropine: 3, brompheniramine: 3,
+  chlorpheniramine: 3, chlorpromazine: 3, clemastine: 3, clomipramine: 3, clozapine: 3,
+  darifenacin: 3, desipramine: 3, dicyclomine: 3, dimenhydrinate: 3,
+  "diphenhydramine-oral": 3, doxepin: 3, doxylamine: 3, fesoterodine: 3,
+  flavoxate: 3, hydroxyzine: 3, hyoscine: 3, imipramine: 3, meclizine: 3,
+  methocarbamol: 3, nortriptyline: 3, olanzapine: 3, orphenadrine: 3,
+  oxybutynin: 3, paroxetine: 3, perphenazine: 3, promethazine: 3, quetiapine: 3,
+  scopolamine: 3, solifenacin: 3, tolterodine: 3, trihexyphenidyl: 3, trospium: 3,
+};
+// Subclasses with higher fall/harm potential than their group peers
+// (long-acting BZD, strong opioids, loop diuretics, α-blockers, …).
+// Anticholinergics scoring ACB 3 are added automatically below.
+const HIGH_RISK_IDS = new Set([
+  "diazepam", "clonazepam", "chlordiazepoxide", "clorazepate",
+  "morphine", "fentanyl", "methadone", "meperidine",
+  "phenobarbital", "primidone",
+  "furosemide",
+  "prazosin", "doxazosin", "terazosin", "phenoxybenzamine",
+  "cyproheptadine", "triprolidine",
+]);
+// STOPPFall fall-risk-increasing drug classes (Seppala 2021, score.md table):
+// drug id → comma-separated class numbers 1–14. Drugs listed in two groups
+// keep both (doxazosin 9+10, oxybutynin 6+14) exactly as in the source table.
+const STOPPFALL_BY_ID = {
+  // 1 — Benzodiazepines
+  alprazolam: "1", chlordiazepoxide: "1", clonazepam: "1", clorazepate: "1",
+  diazepam: "1", estazolam: "1", lorazepam: "1", midazolam: "1", oxazepam: "1",
+  temazepam: "1", triazolam: "1",
+  // 2 — Benzodiazepine-related drugs (Z-drugs)
+  eszopiclone: "2", zaleplon: "2", zolpidem: "2",
+  // 3 — Antipsychotics
+  aripiprazole: "3", brexpiprazole: "3", cariprazine: "3", chlorpromazine: "3",
+  clozapine: "3", fluphenazine: "3", haloperidol: "3", olanzapine: "3",
+  paliperidone: "3", perphenazine: "3", pimavanserin: "3", quetiapine: "3",
+  risperidone: "3", ziprasidone: "3",
+  // 4 — Opioids
+  codeine: "4", fentanyl: "4", meperidine: "4", methadone: "4", morphine: "4",
+  tramadol: "4",
+  // 5 — Antidepressants
+  amitriptyline: "5", amoxapine: "5", clomipramine: "5", citalopram: "5",
+  desipramine: "5", doxepin: "5", duloxetine: "5", fluoxetine: "5",
+  imipramine: "5", mirtazapine: "5", nortriptyline: "5", paroxetine: "5",
+  sertraline: "5",
+  // 6 — Anticholinergics: strong-AC drugs outside groups 3/5/12/14
+  atropine: "6", benztropine: "6", "clidinium-c": "6", cyclobenzaprine: "6",
+  dicyclomine: "6", homatropine: "6", hyoscine: "6", orphenadrine: "6",
+  prochlorperazine: "6", scopolamine: "6", trihexyphenidyl: "6",
+  // 7 — Antiepileptics
+  carbamazepine: "7", gabapentin: "7", levetiracetam: "7", oxcarbazepine: "7",
+  phenobarbital: "7", phenytoin: "7", pregabalin: "7", primidone: "7",
+  // 8 — Diuretics
+  amiloride: "8", furosemide: "8", spironolactone: "8", triamterene: "8",
+  // 9 — α-blockers as antihypertensives · 10 — α-blockers for prostate hyperplasia
+  prazosin: "9", doxazosin: "9,10", terazosin: "10",
+  // 11 — Centrally acting antihypertensives
+  clonidine: "11", guanfacine: "11",
+  // 12 — Antihistamines
+  brompheniramine: "12", chlorpheniramine: "12", clemastine: "12",
+  cyproheptadine: "12", dimenhydrinate: "12", "diphenhydramine-oral": "12",
+  doxylamine: "12", hydroxyzine: "12", meclizine: "12", promethazine: "12",
+  triprolidine: "12",
+  // 13 — Cardiac vasodilators (no organic nitrate is present in this registry)
+  // 14 — Medications for overactive bladder / urge incontinence
+  darifenacin: "14", fesoterodine: "14", flavoxate: "14", oxybutynin: "6,14",
+  solifenacin: "14", tolterodine: "14", trospium: "14",
+};
+// Drug-level ATC codes shown in the panel breakdown table. First block comes
+// from the score.md ACB tables; the second is standard, unambiguous codes for
+// other registry drugs. Drugs without an entry fall back to their STOPPFall
+// class ATC in the UI.
+const ATC_BY_ID = {
+  // — score.md ACB tables (drug-level codes) —
+  alprazolam: "N05BA12", aripiprazole: "N05AX12", cimetidine: "A02BA01",
+  "clidinium-c": "A03CA02", clorazepate: "N05BA05", codeine: "N02AA59",
+  colchicine: "M04AC01", diazepam: "N05BA01", digoxin: "C01AA05",
+  "dipyridamole-short-acting": "B01AC07", fentanyl: "N02AB03",
+  furosemide: "C03CA01", haloperidol: "N05AD01", morphine: "N02AA01",
+  "nifedipine-ir": "C08CA05", paliperidone: "N05AX13", prednisone: "H02AB07",
+  risperidone: "N05AX08", theophylline: "R03DA04", triamterene: "C03DB02",
+  warfarin: "B01AA03",
+  carbamazepine: "N03AF01", cyclobenzaprine: "M03BX08", cyproheptadine: "R06AX02",
+  meperidine: "N02AB02", oxcarbazepine: "N03AF02",
+  amitriptyline: "N06AA09", amoxapine: "N06AA17", atropine: "A03BA01",
+  benztropine: "N04AC01", brompheniramine: "R06AB01", chlorpheniramine: "R06AB04",
+  chlorpromazine: "N05AA01", clemastine: "R06AA04", clomipramine: "N06AA04",
+  clozapine: "N05AH02", darifenacin: "G04BD10", desipramine: "N06AA01",
+  dicyclomine: "A03AA07", dimenhydrinate: "R06AA11", "diphenhydramine-oral": "R06AA02",
+  doxepin: "N06AA12", doxylamine: "R06AA09", fesoterodine: "G04BD11",
+  flavoxate: "G04BD02", hydroxyzine: "N05BB01", hyoscine: "A03BA03",
+  imipramine: "N06AA02", meclizine: "R06AE05", methocarbamol: "M03BA03",
+  nortriptyline: "N06AA10", olanzapine: "N05AH03", orphenadrine: "M03BC01",
+  oxybutynin: "G04BD04", paroxetine: "N06AB05", perphenazine: "N05AB03",
+  promethazine: "R06AD02", quetiapine: "N05AH04", scopolamine: "A04AD01",
+  solifenacin: "G04BD08", tolterodine: "G04BD07", trihexyphenidyl: "N04AA01",
+  trospium: "G04BD09",
+  // — other standard, unambiguous ATC codes —
+  "aspirin-primary-prevention": "B01AC06", rivaroxaban: "B01AF01",
+  apixaban: "B01AF02", dabigatran: "B01AE07", edoxaban: "B01AF03",
+  enoxaparin: "B01AB05", fondaparinux: "B01AB07",
+  lisinopril: "C09AA03", enalapril: "C09AA02", ramipril: "C09AA05",
+  losartan: "C09CA01", valsartan: "C09CA03", candesartan: "C09CA06",
+  spironolactone: "C03DA01", amiloride: "C03DB01",
+  prazosin: "C02CA01", doxazosin: "G04CA02", terazosin: "G04CA03",
+  clonidine: "C02AC01",
+  amiodarone: "C01BD01", verapamil: "C08DA01", diltiazem: "C08DB01",
+  omeprazole: "A02BC01", pantoprazole: "A02BC02", lansoprazole: "A02BC03",
+  esomeprazole: "A02BC05", rabeprazole: "A02BC04", metoclopramide: "A03FA01",
+  ibuprofen: "M01AE01", naproxen: "M01AE02", diclofenac: "M01AB05",
+  meloxicam: "M01AC06", piroxicam: "M01AC01", indomethacin: "M01AB01",
+  celecoxib: "M01AH01",
+  tramadol: "N02AX02", methadone: "N02AF01",
+  sertraline: "N06AB06", fluoxetine: "N06AB03", citalopram: "N06AB04",
+  duloxetine: "N06AX21", mirtazapine: "N06AX11",
+  donepezil: "N06DA02", rivastigmine: "N06DA03", galantamine: "N06DA04",
+  levetiracetam: "N03AX14", gabapentin: "N03AX12", pregabalin: "N03AX16",
+  phenytoin: "N03AA02",
+  nitrofurantoin: "J01XE01", cotrimoxazole: "J01EE01", ciprofloxacin: "J01MA02",
+  methylprednisolone: "H02AB04",
+  pioglitazone: "A10BG01", gliclazide: "A10BB09", glipizide: "A10BB07",
+  glimepiride: "A10BB12", "glibenclamide-glyburide": "A10BB01",
+  dapagliflozin: "A10BK01", empagliflozin: "A10BK02", canagliflozin: "A10BK03",
+  ertugliflozin: "A10BK04",
+  "growth-hormone": "H01AC01", desmopressin: "H01BA02",
+  famotidine: "A02BA03", nizatidine: "A02BA04", probenecid: "M04AB01",
+  clonazepam: "N05AE01", lorazepam: "N05BA06", midazolam: "N05CD08",
+  zolpidem: "N05CF02", zaleplon: "N05CF03",
+};
 const mk = (id, en, faName, opts) => {
   const o = byOld.get(id);
+  const acbScore = ACB_BY_ID[id],
+    stoppFallCategory = STOPPFALL_BY_ID[id],
+    atcCode = ATC_BY_ID[id],
+    isHighRiskSubclass = HIGH_RISK_IDS.has(id) || acbScore === 3;
   const rowKey = typeof opts.row === "string" ? opts.row : null;
   const row = typeof opts.row === "string" ? R[opts.row] : opts.row;
   if (!row) throw new Error("missing row for " + id);
@@ -557,7 +708,9 @@ const mk = (id, en, faName, opts) => {
     genericName: en ?? o?.genericName,
     genericNameFa: o?.genericNameFa ?? faName,
     brandNamesIran: o?.brandNamesIran?.length ? o.brandNamesIran : (opts.brands ?? []),
-    therapeuticCategory: o?.therapeuticCategory ?? opts.cat,
+    therapeuticCategory:
+      CAT_ALIAS[o?.therapeuticCategory ?? opts.cat] ??
+      (o?.therapeuticCategory ?? opts.cat),
     beersCategories: cats,
     recommendation: row.rec,
     rationale: [row.rat, SIADH_CAUTION.includes(id) ? SIADH_NOTE : ""].filter(Boolean).join(" "),
@@ -566,6 +719,10 @@ const mk = (id, en, faName, opts) => {
     isStrongAnticholinergic: T7AC.includes(id),
     isCnsActive: (o?.isCnsActive ?? false) || !!opts.cns,
     ...(o?.isAvailableInIran !== undefined ? { isAvailableInIran: o.isAvailableInIran } : {}),
+    ...(acbScore !== undefined ? { acbScore } : {}),
+    ...(stoppFallCategory ? { stoppFallCategory } : {}),
+    isHighRiskSubclass,
+    ...(atcCode ? { atcCode } : {}),
     saferAlternatives: row.alts?.length ? row.alts : (o?.saferAlternatives?.length ? o.saferAlternatives : []),
     drugClasses: o?.drugClasses?.length ? o.drugClasses : (opts.cls ?? []),
     drugDrugInteractions: ddis,
@@ -586,6 +743,13 @@ const missing = old.filter((r) => !covered.has(r.id)).map((r) => r.id);
 if (missing.length) throw new Error("old ids not covered by definitions: " + missing.join(", "));
 const warfarinRec = built.find((x) => x.id === "warfarin");
 const records = [warfarinRec, ...built.filter((x) => x.id !== "warfarin")];
+// The geriatric-panel tables must only reference real registry ids.
+const knownIds = new Set(records.map((r) => r.id));
+for (const src of [ACB_BY_ID, STOPPFALL_BY_ID, ATC_BY_ID])
+  for (const k of Object.keys(src))
+    if (!knownIds.has(k)) throw new Error("panel table references unknown id: " + k);
+for (const k of HIGH_RISK_IDS)
+  if (!knownIds.has(k)) throw new Error("high-risk table references unknown id: " + k);
 
 const idRe = /^[a-zA-Z0-9_-]+$/;
 const evOk = new Set(["High", "Moderate", "Low"]);
@@ -642,6 +806,16 @@ console.log("disease entries:", records.reduce((s, r) => s + r.drugDiseaseIntera
 console.log("ddi entries:", records.reduce((s, r) => s + r.drugDrugInteractions.length, 0));
 console.log("renal rows:", n((r) => !!r.renalConsiderations));
 console.log("brands missing:", noBrands.join(", ") || "none");
+console.log(
+  "panel: ACB-scored",
+  n((r) => r.acbScore !== undefined),
+  "| FRIDs",
+  n((r) => r.stoppFallCategory),
+  "| high-risk subclass",
+  n((r) => r.isHighRiskSubclass),
+  "| ATC codes",
+  n((r) => r.atcCode),
+);
 
 
 

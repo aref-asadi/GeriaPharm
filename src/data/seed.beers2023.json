@@ -19,6 +19,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "acbScore": 1,
+    "isHighRiskSubclass": false,
+    "atcCode": "B01AA03",
     "saferAlternatives": [
       "آپیکسابان",
       "دابیگاتران"
@@ -88,6 +91,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "R06AB01",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -141,6 +148,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "acbScore": 3,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "R06AB04",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -188,6 +199,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "R06AA04",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -241,6 +256,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "R06AA02",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -288,6 +307,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "R06AA09",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -343,6 +366,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "acbScore": 3,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "N05BB01",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -398,6 +425,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "R06AE05",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -452,6 +483,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "acbScore": 3,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "R06AD02",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -512,6 +547,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -565,6 +602,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "acbScore": 2,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "R06AX02",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -612,6 +653,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "12",
+    "isHighRiskSubclass": true,
+    "atcCode": "R06AA11",
     "saferAlternatives": [
       "لوراتادین یا ستریزین برای آلرژی",
       "ملاتونین و درمان شناختی-رفتاری برای بی‌خوابی"
@@ -664,6 +709,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "J01XE01",
     "saferAlternatives": [
       "فورازولیدون",
       "سفالوسپورین‌های نسل سوم بر عفونت ادراری غیرپیچیده"
@@ -702,6 +749,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "B01AC06",
     "saferAlternatives": [
       "در پیشگیری ثانویه: کلوپیدوگرل",
       "کنترل عوامل خطر قلبی-عروقی بدون آسپرین"
@@ -748,6 +797,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "B01AF01",
     "saferAlternatives": [
       "آپیکسابان؛ دوز بر اساس اندیکاسیون، سن، وزن و عملکرد کلیه"
     ],
@@ -778,7 +829,7 @@
     "brandNamesIran": [
       "Persantine"
     ],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "PIM_GENERAL"
     ],
@@ -788,6 +839,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "acbScore": 1,
+    "isHighRiskSubclass": false,
+    "atcCode": "B01AC07",
     "saferAlternatives": [
       "کلوپیدوگرل یا آسپرین کم‌دوز در ضدپلاکتی"
     ],
@@ -820,6 +874,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "stoppFallCategory": "9,10",
+    "isHighRiskSubclass": true,
+    "atcCode": "G04CA02",
     "saferAlternatives": [
       "تیازیدها یا مهارکننده‌های کانال کلسیم دی‌هیدروپیریدینی کم‌اثر"
     ],
@@ -874,6 +931,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "stoppFallCategory": "9",
+    "isHighRiskSubclass": true,
+    "atcCode": "C02CA01",
     "saferAlternatives": [
       "تیازیدها یا مهارکننده‌های کانال کلسیم دی‌هیدروپیریدینی کم‌اثر"
     ],
@@ -928,6 +988,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "stoppFallCategory": "10",
+    "isHighRiskSubclass": true,
+    "atcCode": "G04CA03",
     "saferAlternatives": [
       "تیازیدها یا مهارکننده‌های کانال کلسیم دی‌هیدروپیریدینی کم‌اثر"
     ],
@@ -966,7 +1029,7 @@
     "genericName": "Phenoxybenzamine",
     "genericNameFa": "فنوکسی‌بنزامین",
     "brandNamesIran": [],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "PIM_GENERAL",
       "DRUG_INTERACTION",
@@ -978,6 +1041,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": true,
     "saferAlternatives": [
       "تیازیدها یا مهارکننده‌های کانال کلسیم دی‌هیدروپیریدینی کم‌اثر"
     ],
@@ -1022,6 +1086,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "11",
+    "isHighRiskSubclass": false,
+    "atcCode": "C02AC01",
     "saferAlternatives": [
       "تیازیدها یا مهارکننده‌های کانال کلسیم"
     ],
@@ -1036,7 +1103,7 @@
     "genericName": "Guanfacine",
     "genericNameFa": "گوانفاسین",
     "brandNamesIran": [],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "PIM_GENERAL"
     ],
@@ -1046,6 +1113,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "11",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "تیازیدها یا مهارکننده‌های کانال کلسیم"
     ],
@@ -1077,6 +1146,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "acbScore": 1,
+    "isHighRiskSubclass": false,
+    "atcCode": "C08CA05",
     "saferAlternatives": [
       "نیفدیپین با رهش کنترل‌شده یا آملودیپین"
     ],
@@ -1107,6 +1179,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "C01BD01",
     "saferAlternatives": [
       "کنترل ضربان با دیلتیازم یا وراپامیل (در صورت فقدان نارسایی قلبی)"
     ],
@@ -1150,6 +1224,7 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "کنترل ضربان",
       "آمیودارون در صورت اندیکاسیون"
@@ -1188,6 +1263,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "acbScore": 1,
+    "isHighRiskSubclass": false,
+    "atcCode": "C01AA05",
     "saferAlternatives": [
       "کنترل ضربان با دیلتیازم (در صورت فقدان HFrEF)"
     ],
@@ -1231,6 +1309,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": true,
+    "atcCode": "N06AA09",
     "saferAlternatives": [
       "سرترالین یا سیتالوپرام (با احتیاط پایش هیپوناترمی)",
       "در بی‌خوابی: ملاتونین"
@@ -1303,6 +1385,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": true,
+    "atcCode": "N06AA17",
     "saferAlternatives": [
       "سرترالین یا سیتالوپرام (با احتیاط پایش هیپوناترمی)",
       "در بی‌خوابی: ملاتونین"
@@ -1357,6 +1443,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": true,
+    "atcCode": "N06AA04",
     "saferAlternatives": [
       "سرترالین یا سیتالوپرام (با احتیاط پایش هیپوناترمی)",
       "در بی‌خوابی: ملاتونین"
@@ -1416,6 +1506,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": true,
+    "atcCode": "N06AA01",
     "saferAlternatives": [
       "سرترالین یا سیتالوپرام (با احتیاط پایش هیپوناترمی)",
       "در بی‌خوابی: ملاتونین"
@@ -1474,6 +1568,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
     "isAvailableInIran": false,
+    "acbScore": 3,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": true,
+    "atcCode": "N06AA12",
     "saferAlternatives": [
       "سرترالین یا سیتالوپرام (با احتیاط پایش هیپوناترمی)",
       "در بی‌خوابی: ملاتونین"
@@ -1536,6 +1634,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "acbScore": 3,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": true,
+    "atcCode": "N06AA02",
     "saferAlternatives": [
       "سرترالین یا سیتالوپرام (با احتیاط پایش هیپوناترمی)",
       "در بی‌خوابی: ملاتونین"
@@ -1605,6 +1707,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
     "isAvailableInIran": false,
+    "acbScore": 3,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": true,
+    "atcCode": "N06AA10",
     "saferAlternatives": [
       "سرترالین یا سیتالوپرام (با احتیاط پایش هیپوناترمی)",
       "در بی‌خوابی: ملاتونین"
@@ -1661,6 +1767,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": true,
+    "atcCode": "N06AB05",
     "saferAlternatives": [
       "سرترالین یا سیتالوپرام (با احتیاط پایش هیپوناترمی)",
       "در بی‌خوابی: ملاتونین"
@@ -1715,6 +1825,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": true,
+    "atcCode": "N04AC01",
     "saferAlternatives": [
       "آمانتادین",
       "مهارکننده‌های MAO-B"
@@ -1764,6 +1878,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": true,
+    "atcCode": "N04AA01",
     "saferAlternatives": [
       "آمانتادین",
       "مهارکننده‌های MAO-B"
@@ -1818,6 +1936,10 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "acbScore": 1,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": false,
+    "atcCode": "N05AD01",
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -1875,6 +1997,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "acbScore": 3,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": true,
+    "atcCode": "N05AH03",
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -1942,6 +2068,10 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "acbScore": 3,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": true,
+    "atcCode": "N05AH04",
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -1994,6 +2124,10 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "acbScore": 1,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": false,
+    "atcCode": "N05AX08",
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -2050,6 +2184,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 1,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": false,
+    "atcCode": "N05AX12",
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -2104,6 +2242,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": true,
+    "atcCode": "N05AA01",
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -2171,6 +2313,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": true,
+    "atcCode": "N05AH02",
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -2225,6 +2371,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": true,
+    "atcCode": "N05AB03",
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -2283,6 +2433,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ملاتونین برای بی‌خوابی"
     ],
@@ -2315,6 +2466,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "7",
+    "isHighRiskSubclass": true,
     "saferAlternatives": [
       "ملاتونین برای بی‌خوابی"
     ],
@@ -2358,6 +2511,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "7",
+    "isHighRiskSubclass": true,
     "saferAlternatives": [
       "ملاتونین برای بی‌خوابی"
     ],
@@ -2395,6 +2550,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 1,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": false,
+    "atcCode": "N05BA12",
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2457,6 +2616,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": true,
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2513,6 +2674,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": true,
+    "atcCode": "N05AE01",
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2564,6 +2728,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 1,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": true,
+    "atcCode": "N05BA05",
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2622,6 +2790,10 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "acbScore": 1,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": true,
+    "atcCode": "N05BA01",
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2673,6 +2845,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2731,6 +2905,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": false,
+    "atcCode": "N05BA06",
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2785,6 +2962,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": false,
+    "atcCode": "N05CD08",
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2841,6 +3021,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2887,6 +3069,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -2943,6 +3127,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "2",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ملاتونین و درمان شناختی-رفتاری بی‌خوابی"
     ],
@@ -2995,6 +3181,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "2",
+    "isHighRiskSubclass": false,
+    "atcCode": "N05CF03",
     "saferAlternatives": [
       "ملاتونین و درمان شناختی-رفتاری بی‌خوابی"
     ],
@@ -3052,6 +3241,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "2",
+    "isHighRiskSubclass": false,
+    "atcCode": "N05CF02",
     "saferAlternatives": [
       "ملاتونین و درمان شناختی-رفتاری بی‌خوابی"
     ],
@@ -3100,6 +3292,7 @@
     "strengthOfRecommendation": "Weak",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ارزیابی علل قابل درمان هیپوگنادیسم"
     ],
@@ -3126,6 +3319,7 @@
     "strengthOfRecommendation": "Weak",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ارزیابی علل قابل درمان هیپوگنادیسم"
     ],
@@ -3158,6 +3352,7 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "استروژن واژینال کم‌دوز",
       "در گرگرفتگی: مهارکننده‌های انتخابی بازجذب سروتونین"
@@ -3193,6 +3388,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "رژیم‌های انسولین پایه‌دار"
     ],
@@ -3224,6 +3420,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "A10BB09",
     "saferAlternatives": [
       "داغلیفلوزین یا سیتاگلیپتین",
       "متفورمین در صورت عملکرد کلیه کافی"
@@ -3253,6 +3451,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A10BB07",
     "saferAlternatives": [
       "داغلیفلوزین یا سیتاگلیپتین",
       "متفورمین در صورت عملکرد کلیه کافی"
@@ -3283,6 +3483,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "A10BB12",
     "saferAlternatives": [
       "داغلیفلوزین یا سیتاگلیپتین",
       "متفورمین در صورت عملکرد کلیه کافی"
@@ -3312,6 +3514,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A10BB01",
     "saferAlternatives": [
       "داغلیفلوزین یا سیتاگلیپتین",
       "متفورمین در صورت عملکرد کلیه کافی"
@@ -3339,6 +3543,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "لووتیروکسین"
     ],
@@ -3365,6 +3570,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ارزیابی و درمان علل برگشت‌پذیر کاهش وزن"
     ],
@@ -3391,6 +3597,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "H01AC01",
     "saferAlternatives": [
       "تمرین مقاومتی و تغذیه مناسب",
       "درمان علل زمینه‌ای ضعف عضلانی"
@@ -3423,6 +3631,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A02BC01",
     "saferAlternatives": [
       "قطع تدریجی و «on-demand»",
       "ضداسید یا میزوپروستول در صورت نیاز"
@@ -3453,6 +3663,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "A02BC02",
     "saferAlternatives": [
       "قطع تدریجی و «on-demand»",
       "ضداسید یا میزوپروستول در صورت نیاز"
@@ -3482,6 +3694,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "A02BC03",
     "saferAlternatives": [
       "قطع تدریجی و «on-demand»",
       "ضداسید یا میزوپروستول در صورت نیاز"
@@ -3512,6 +3726,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "A02BC05",
     "saferAlternatives": [
       "قطع تدریجی و «on-demand»",
       "ضداسید یا میزوپروستول در صورت نیاز"
@@ -3542,6 +3758,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A03FA01",
     "saferAlternatives": [
       "متوکلوپرامید فقط کوتاه‌مدت",
       "در تهوع: اوندانسترون"
@@ -3574,6 +3792,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": true,
+    "atcCode": "A03BA01",
     "saferAlternatives": [
       "در اسپاسم گوارشی: اسپاسمولیتیک‌های غیرآنتی‌کولینرژیک"
     ],
@@ -3627,6 +3849,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "acbScore": 1,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": false,
+    "atcCode": "A03CA02",
     "saferAlternatives": [
       "در اسپاسم گوارشی: اسپاسمولیتیک‌های غیرآنتی‌کولینرژیک"
     ],
@@ -3685,6 +3911,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "acbScore": 3,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": true,
+    "atcCode": "A03AA07",
     "saferAlternatives": [
       "در اسپاسم گوارشی: اسپاسمولیتیک‌های غیرآنتی‌کولینرژیک"
     ],
@@ -3737,6 +3967,10 @@
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "acbScore": 3,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": true,
+    "atcCode": "A03BA03",
     "saferAlternatives": [
       "در اسپاسم گوارشی: اسپاسمولیتیک‌های غیرآنتی‌کولینرژیک"
     ],
@@ -3791,6 +4025,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": true,
+    "atcCode": "A04AD01",
     "saferAlternatives": [
       "در اسپاسم گوارشی: اسپاسمولیتیک‌های غیرآنتی‌کولینرژیک"
     ],
@@ -3836,6 +4074,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ملاتیل‌سولفات، لاکتولوز یا فیبرهای غذایی"
     ],
@@ -3862,6 +4101,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "H01BA02",
     "saferAlternatives": [
       "محدودیت مایعات شبانه",
       "اتموپتید در صورت دسترسی"
@@ -3897,6 +4138,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "M01AE01",
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -3954,6 +4197,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "M01AE02",
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4003,6 +4248,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "M01AB05",
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4052,6 +4299,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "M01AC06",
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4101,6 +4350,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "M01AC01",
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4146,6 +4397,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4222,6 +4474,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4298,6 +4551,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4374,6 +4628,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4450,6 +4705,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4526,6 +4782,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4605,6 +4862,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "M01AB01",
     "saferAlternatives": [
       "استامینوفن",
       "سایر NSAIDها با احتیاط و کمترین دوز مؤثر"
@@ -4653,6 +4912,7 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "استامینوفن",
       "سایر NSAIDها با احتیاط و کمترین دوز مؤثر"
@@ -4701,6 +4961,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "M01AH01",
     "saferAlternatives": [
       "استامینوفن",
       "دوکسی‌سایکلین یا گاباپنتین (در درد نوروپاتیک)"
@@ -4743,6 +5005,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 2,
+    "stoppFallCategory": "4",
+    "isHighRiskSubclass": true,
+    "atcCode": "N02AB02",
     "saferAlternatives": [
       "مورفین",
       "هیدرومورفون"
@@ -4811,6 +5077,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "فیزیوتراپی",
       "باکلوفن یا تیزانیدین در اسپاستیسیتی"
@@ -4846,6 +5113,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "فیزیوتراپی",
       "باکلوفن یا تیزانیدین در اسپاستیسیتی"
@@ -4877,6 +5145,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 2,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": false,
+    "atcCode": "M03BX08",
     "saferAlternatives": [
       "فیزیوتراپی",
       "باکلوفن یا تیزانیدین در اسپاستیسیتی"
@@ -4925,6 +5197,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "فیزیوتراپی",
       "باکلوفن یا تیزانیدین در اسپاستیسیتی"
@@ -4956,6 +5229,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": false,
+    "acbScore": 3,
+    "isHighRiskSubclass": true,
+    "atcCode": "M03BA03",
     "saferAlternatives": [
       "فیزیوتراپی",
       "باکلوفن یا تیزانیدین در اسپاستیسیتی"
@@ -4982,6 +5258,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "acbScore": 3,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": true,
+    "atcCode": "M03BC01",
     "saferAlternatives": [
       "فیزیوتراپی",
       "باکلوفن یا تیزانیدین در اسپاستیسیتی"
@@ -5020,7 +5300,7 @@
     "genericName": "Cilostazol",
     "genericNameFa": "سیلوستازول",
     "brandNamesIran": [],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "DRUG_DISEASE"
     ],
@@ -5030,6 +5310,7 @@
     "strengthOfRecommendation": "Weak",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "در صورت نبود نارسایی قلبی شدید با احتیاط"
     ],
@@ -5066,6 +5347,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "مداخلات رفتاری و محیطی",
       "درمان علل زمینه‌ای تغییرات رفتاری"
@@ -5100,7 +5382,7 @@
       "Cardizem",
       "Diltiazem Sobhan"
     ],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "DRUG_DISEASE"
     ],
@@ -5110,6 +5392,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "C08DB01",
     "saferAlternatives": [
       "بتابلاکرها (در صورت عدم منع)"
     ],
@@ -5135,7 +5419,7 @@
       "Isoptin",
       "Verapamil Sobhan"
     ],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "DRUG_DISEASE"
     ],
@@ -5145,6 +5429,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "C08DA01",
     "saferAlternatives": [
       "بتابلاکرها (در صورت عدم منع)"
     ],
@@ -5180,6 +5466,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A10BG01",
     "saferAlternatives": [
       "انسولین"
     ],
@@ -5215,6 +5503,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "N06DA02",
     "saferAlternatives": [
       "ارزیابی خطر-فایده و پایش ضربان قلب",
       "مداخلات غیردارویی حمایتی در دمانس"
@@ -5250,6 +5540,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "N06DA04",
     "saferAlternatives": [
       "ارزیابی خطر-فایده و پایش ضربان قلب",
       "مداخلات غیردارویی حمایتی در دمانس"
@@ -5285,6 +5577,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "N06DA03",
     "saferAlternatives": [
       "ارزیابی خطر-فایده و پایش ضربان قلب",
       "مداخلات غیردارویی حمایتی در دمانس"
@@ -5320,6 +5614,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 1,
+    "isHighRiskSubclass": false,
+    "atcCode": "A02BA01",
     "saferAlternatives": [
       "فاموتیدین"
     ],
@@ -5370,6 +5667,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A02BA03",
     "saferAlternatives": [
       "تنظیم دوز با توجه به عملکرد کلیه",
       "مهارکننده پمپ پروتون با ارزیابی خطر عفونت"
@@ -5410,6 +5709,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A02BA04",
     "saferAlternatives": [
       "فاموتیدین"
     ],
@@ -5448,6 +5749,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": true,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "اوندانسترون"
     ],
@@ -5501,6 +5804,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "stoppFallCategory": "6",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "در اسپاسم گوارشی: اسپاسمولیتیک‌های غیرآنتی‌کولینرژیک"
     ],
@@ -5551,6 +5856,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "acbScore": 1,
+    "isHighRiskSubclass": false,
+    "atcCode": "M04AC01",
     "saferAlternatives": [
       "استامینوفن یا NSAID موضعی برای درد حاد کمر",
       "تنظیم دوز بر اساس عملکرد کلیه در نقرس"
@@ -5584,6 +5892,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "M04AB01",
     "saferAlternatives": [
       "آللوپورینول با تنظیم دوز",
       "فبوسوستات با ارزیابی کلیوی"
@@ -5621,6 +5931,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "7",
+    "isHighRiskSubclass": false,
+    "atcCode": "N03AX14",
     "saferAlternatives": [
       "تنظیم دوز بر اساس CrCl",
       "لورازپام برای تشنج در صورت نیاز"
@@ -5652,7 +5965,7 @@
     "brandNamesIran": [
       "Savaysa"
     ],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "RENAL_ADJUSTMENT"
     ],
@@ -5662,6 +5975,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "B01AF03",
     "saferAlternatives": [
       "تنظیم دوز بر اساس CrCl",
       "وارفارین با پایش INR در صورت محدودیت کلیوی"
@@ -5689,7 +6004,7 @@
       "Clexane",
       "Enoxaparin Abidi"
     ],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "RENAL_ADJUSTMENT"
     ],
@@ -5699,6 +6014,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "B01AB05",
     "saferAlternatives": [
       "تنظیم دوز بر اساس CrCl",
       "هپارین کم‌وزن مولکولی با دوز تعدیل‌شده"
@@ -5722,7 +6039,7 @@
     "genericName": "Fondaparinux",
     "genericNameFa": "فونداپارینوکس",
     "brandNamesIran": [],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "RENAL_ADJUSTMENT"
     ],
@@ -5732,6 +6049,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "B01AB07",
     "saferAlternatives": [
       "هپارین کم‌وزن مولکولی با دوز تعدیل‌شده",
       "وارفارین با پایش INR"
@@ -5755,7 +6074,7 @@
     "genericName": "Dofetilide",
     "genericNameFa": "دوفتیلاید",
     "brandNamesIran": [],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "RENAL_ADJUSTMENT"
     ],
@@ -5765,6 +6084,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "پایش الکترولیت و ECG پیش از و در حین درمان",
       "تنظیم دوز بر اساس CrCl"
@@ -5802,6 +6122,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "توان‌بخشی و فیزیوتراپی",
       "مسکن‌های موضعی",
@@ -5841,6 +6162,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "7",
+    "isHighRiskSubclass": false,
+    "atcCode": "N03AX12",
     "saferAlternatives": [
       "تنظیم دوز بر اساس CrCl",
       "پایش خواب‌آلودگی و تعادل در شروع درمان"
@@ -5893,6 +6217,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "7",
+    "isHighRiskSubclass": false,
+    "atcCode": "N03AX16",
     "saferAlternatives": [
       "تنظیم دوز بر اساس CrCl",
       "پایش خواب‌آلودگی و تعادل در شروع درمان"
@@ -5944,6 +6271,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "stoppFallCategory": "8",
+    "isHighRiskSubclass": false,
+    "atcCode": "C03DA01",
     "saferAlternatives": [
       "پایش دقیق پتاسیم و کراتینین در ۱ هفته و ۴ هفته پس از شروع یا افزایش دوز"
     ],
@@ -5994,6 +6324,10 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "acbScore": 1,
+    "stoppFallCategory": "8",
+    "isHighRiskSubclass": false,
+    "atcCode": "C03DB02",
     "saferAlternatives": [
       "تیازید یا دیورتیک لوپ بر اساس شرایط بیمار",
       "در صورت لزوم، اسپیرونولاکتون با پایش پتاسیم"
@@ -6030,7 +6364,7 @@
     "genericName": "Amiloride",
     "genericNameFa": "آمیلوراید",
     "brandNamesIran": [],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "DRUG_INTERACTION",
       "RENAL_ADJUSTMENT"
@@ -6041,6 +6375,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "stoppFallCategory": "8",
+    "isHighRiskSubclass": false,
+    "atcCode": "C03DB01",
     "saferAlternatives": [
       "تیازید با پایش الکترولیت",
       "ترکیب‌های با دوز ثابت هیدروکلروتیازید/امیلوراید فقط با پایش دقیق"
@@ -6091,6 +6428,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "پایش دقیق غلظت لیتیوم و عملکرد کلیه",
       "تنظیم دوز با تغییر درمان‌های همراه"
@@ -6137,6 +6475,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "7",
+    "isHighRiskSubclass": false,
+    "atcCode": "N03AA02",
     "saferAlternatives": [
       "پایش غلظت فنی‌تئین",
       "لورازپام برای تشنج در صورت نیاز"
@@ -6178,6 +6519,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "acbScore": 1,
+    "isHighRiskSubclass": false,
+    "atcCode": "R03DA04",
     "saferAlternatives": [
       "پایش غلظت تئوفیلین",
       "درمان‌های استنشاقی برای بیماری انسدادی مزمن ریه"
@@ -6225,6 +6569,10 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "acbScore": 1,
+    "stoppFallCategory": "4",
+    "isHighRiskSubclass": true,
+    "atcCode": "N02AA01",
     "saferAlternatives": [
       "در درد مزمن: درمان‌های غیردارویی و استامینوفن"
     ],
@@ -6287,6 +6635,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "4",
+    "isHighRiskSubclass": true,
+    "atcCode": "N02AF01",
     "saferAlternatives": [
       "در درد مزمن: درمان‌های غیردارویی و استامینوفن"
     ],
@@ -6341,6 +6692,8 @@
     "strengthOfRecommendation": "Weak",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A10BK01",
     "saferAlternatives": [
       "مهارکننده‌های DPP-4",
       "آگونیست‌های گیرنده GLP-1، در صورت تحمل"
@@ -6370,6 +6723,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "A10BK02",
     "saferAlternatives": [
       "مهارکننده DPP-4",
       "آگونیست GLP-1 در صورت تحمل"
@@ -6402,6 +6757,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "4",
+    "isHighRiskSubclass": false,
+    "atcCode": "N02AX02",
     "saferAlternatives": [
       "استامینوفن",
       "پچ موضعی لیدوکائین",
@@ -6471,6 +6829,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 2,
+    "stoppFallCategory": "7",
+    "isHighRiskSubclass": false,
+    "atcCode": "N03AF01",
     "saferAlternatives": [
       "پایش منظم سدیم خون",
       "لورازپام برای تشنج در صورت نیاز"
@@ -6508,6 +6870,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 2,
+    "stoppFallCategory": "7",
+    "isHighRiskSubclass": false,
+    "atcCode": "N03AF02",
     "saferAlternatives": [
       "پایش منظم سدیم خون",
       "لورازپام برای تشنج در صورت نیاز"
@@ -6548,6 +6914,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": false,
+    "atcCode": "N06AB03",
     "saferAlternatives": [
       "سرترالین یا اس‌سیتالوپرام به‌عنوان گزینه‌های ترجیحی SSRI در سالمندی"
     ],
@@ -6593,6 +6962,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": false,
+    "atcCode": "N06AB06",
     "saferAlternatives": [
       "پایش سدیم در ۲ تا ۴ هفته اول و پس از تغییر دوز"
     ],
@@ -6644,6 +7016,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": false,
+    "atcCode": "N06AB04",
     "saferAlternatives": [
       "سرترالین یا اس‌سیتالوپرام در صورت مناسب بودن؛ پایش ECG و سدیم"
     ],
@@ -6681,6 +7056,9 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
     "isAvailableInIran": true,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": false,
+    "atcCode": "N06AX21",
     "saferAlternatives": [
       "پایش منظم سدیم خون در هفته‌های نخست",
       "در صورت افت سدیم، قطع یا جایگزینی درمان"
@@ -6725,6 +7103,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "J01EE01",
     "saferAlternatives": [
       "سفالوسپورین‌های نسل سوم",
       "نیتروفورانتوئین در CrCl بالای ۳۰"
@@ -6776,6 +7156,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "B01AE07",
     "saferAlternatives": [
       "آپیکسابان"
     ],
@@ -6796,7 +7178,7 @@
     "genericName": "Prasugrel",
     "genericNameFa": "پراسوگرل",
     "brandNamesIran": [],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "USE_WITH_CAUTION"
     ],
@@ -6806,6 +7188,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "کلوپیدوگرل"
     ],
@@ -6822,7 +7205,7 @@
     "genericName": "Ticagrelor",
     "genericNameFa": "تیکاگرلور",
     "brandNamesIran": [],
-    "therapeuticCategory": "Cardiovascular and Antithrombotics",
+    "therapeuticCategory": "Cardiovascular & Antithrombotics",
     "beersCategories": [
       "USE_WITH_CAUTION"
     ],
@@ -6832,6 +7215,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "کلوپیدوگرل"
     ],
@@ -6858,6 +7242,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "14",
+    "isHighRiskSubclass": true,
+    "atcCode": "G04BD10",
     "saferAlternatives": [
       "میرابگرون",
       "داروهای غیردارویی"
@@ -6901,6 +7289,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "14",
+    "isHighRiskSubclass": true,
+    "atcCode": "G04BD11",
     "saferAlternatives": [
       "میرابگرون",
       "داروهای غیردارویی"
@@ -6944,6 +7336,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "14",
+    "isHighRiskSubclass": true,
+    "atcCode": "G04BD02",
     "saferAlternatives": [
       "میرابگرون",
       "داروهای غیردارویی"
@@ -6990,6 +7386,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "6,14",
+    "isHighRiskSubclass": true,
+    "atcCode": "G04BD04",
     "saferAlternatives": [
       "میرابگرون",
       "داروهای غیردارویی"
@@ -7036,6 +7436,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "14",
+    "isHighRiskSubclass": true,
+    "atcCode": "G04BD08",
     "saferAlternatives": [
       "میرابگرون",
       "داروهای غیردارویی"
@@ -7082,6 +7486,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "14",
+    "isHighRiskSubclass": true,
+    "atcCode": "G04BD07",
     "saferAlternatives": [
       "میرابگرون",
       "داروهای غیردارویی"
@@ -7125,6 +7533,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": true,
     "isCnsActive": false,
+    "acbScore": 3,
+    "stoppFallCategory": "14",
+    "isHighRiskSubclass": true,
+    "atcCode": "G04BD09",
     "saferAlternatives": [
       "میرابگرون",
       "داروهای غیردارویی"
@@ -7174,6 +7586,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "B01AF02",
     "saferAlternatives": [
       "دوز کاهش‌یافته (۲.۵ میلی‌گرم دو بار در روز) در صورت برآوردن معیارهای کاهش دوز"
     ],
@@ -7219,6 +7633,8 @@
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
     "isAvailableInIran": true,
+    "isHighRiskSubclass": false,
+    "atcCode": "J01MA02",
     "saferAlternatives": [
       "سفالوسپورین یا آنتی‌بیوتیک متناسب با کشت"
     ],
@@ -7258,6 +7674,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "1",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -7301,6 +7719,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "ملاتونین",
       "در اضطراب: درمان شناختی-رفتاری"
@@ -7326,6 +7745,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [],
     "drugClasses": [],
     "drugDrugInteractions": [],
@@ -7349,6 +7769,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -7403,6 +7825,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -7457,6 +7881,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -7511,6 +7937,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 1,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": false,
+    "atcCode": "N05AX13",
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -7565,6 +7995,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -7614,6 +8046,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "3",
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "اقدامات غیردارویی رفتاری",
       "در پارکینسون: کوئتیاپین یا پیماوانسرین"
@@ -7669,6 +8103,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A02BC04",
     "saferAlternatives": [
       "قطع تدریجی و «on-demand»",
       "ضداسید یا میزوپروستول در صورت نیاز"
@@ -7698,6 +8134,7 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
     "saferAlternatives": [
       "قطع تدریجی و «on-demand»",
       "ضداسید یا میزوپروستول در صورت نیاز"
@@ -7725,6 +8162,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "acbScore": 1,
+    "isHighRiskSubclass": false,
+    "atcCode": "H02AB07",
     "saferAlternatives": [],
     "drugClasses": [
       "Corticosteroids"
@@ -7760,6 +8200,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "H02AB04",
     "saferAlternatives": [],
     "drugClasses": [
       "Corticosteroids"
@@ -7795,6 +8237,9 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "stoppFallCategory": "5",
+    "isHighRiskSubclass": false,
+    "atcCode": "N06AX11",
     "saferAlternatives": [],
     "drugClasses": [
       "Antidepressants"
@@ -7819,6 +8264,8 @@
     "strengthOfRecommendation": "Weak",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A10BK03",
     "saferAlternatives": [],
     "drugClasses": [
       "SGLT2 inhibitors"
@@ -7843,6 +8290,8 @@
     "strengthOfRecommendation": "Weak",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "A10BK04",
     "saferAlternatives": [],
     "drugClasses": [
       "SGLT2 inhibitors"
@@ -7868,6 +8317,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 1,
+    "stoppFallCategory": "4",
+    "isHighRiskSubclass": false,
+    "atcCode": "N02AA59",
     "saferAlternatives": [
       "در درد مزمن: درمان‌های غیردارویی و استامینوفن"
     ],
@@ -7921,6 +8374,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": true,
+    "acbScore": 1,
+    "stoppFallCategory": "4",
+    "isHighRiskSubclass": true,
+    "atcCode": "N02AB03",
     "saferAlternatives": [
       "در درد مزمن: درمان‌های غیردارویی و استامینوفن"
     ],
@@ -7975,6 +8432,10 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "acbScore": 1,
+    "stoppFallCategory": "8",
+    "isHighRiskSubclass": true,
+    "atcCode": "C03CA01",
     "saferAlternatives": [],
     "drugClasses": [
       "Loop Diuretics"
@@ -8002,6 +8463,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "C09AA03",
     "saferAlternatives": [],
     "drugClasses": [
       "RAS inhibitors"
@@ -8036,6 +8499,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "C09AA02",
     "saferAlternatives": [],
     "drugClasses": [
       "RAS inhibitors"
@@ -8070,6 +8535,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "C09AA05",
     "saferAlternatives": [],
     "drugClasses": [
       "RAS inhibitors"
@@ -8104,6 +8571,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "C09CA01",
     "saferAlternatives": [],
     "drugClasses": [
       "RAS inhibitors"
@@ -8138,6 +8607,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "C09CA03",
     "saferAlternatives": [],
     "drugClasses": [
       "RAS inhibitors"
@@ -8172,6 +8643,8 @@
     "strengthOfRecommendation": "Strong",
     "isStrongAnticholinergic": false,
     "isCnsActive": false,
+    "isHighRiskSubclass": false,
+    "atcCode": "C09CA06",
     "saferAlternatives": [],
     "drugClasses": [
       "RAS inhibitors"

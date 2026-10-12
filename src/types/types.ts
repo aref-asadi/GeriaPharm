@@ -26,6 +26,31 @@ export const drugSchema = z.object({
   isStrongAnticholinergic: z.boolean(),
   isCnsActive: z.boolean(),
   isAvailableInIran: z.boolean().optional(),
+  /** Anticholinergic Cognitive Burden weight (0–3) per the Regenstrief/Boustani scale. */
+  acbScore: z.union([
+    z.literal(0),
+    z.literal(1),
+    z.literal(2),
+    z.literal(3),
+  ]).optional(),
+  /** STOPPFall fall-risk class numbers (1–14), comma separated when a drug belongs to several. */
+  stoppFallCategory: z
+    .string()
+    .trim()
+    .regex(
+      /^(?:[1-9]|1[0-4])(?:,(?:[1-9]|1[0-4]))*$/,
+      "کلاس STOPPFall نامعتبر است",
+    )
+    .optional(),
+  /** Belongs to a subclass with higher fall/harm potential (long-acting BZD, TCA, loop diuretic, ACB 3, …). */
+  isHighRiskSubclass: z.boolean().optional(),
+  /** Anatomical Therapeutic Chemical code of the drug itself (falls back to its STOPPFall class ATC in the UI). */
+  atcCode: z
+    .string()
+    .trim()
+    .max(20)
+    .regex(/^[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}([A-Z0-9]{0,2})?$/, "کد ATC نامعتبر است")
+    .optional(),
   saferAlternatives: z.array(text),
   drugClasses: z.array(text).optional(),
   drugDrugInteractions: z.array(
