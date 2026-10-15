@@ -474,23 +474,17 @@ export default function App() {
                       : "نسخه ذخیره‌شده"}
               </span>
             </button>
-            <span
-              className="avatar"
-              title={session.user ? "مدیر وارد شده" : "کاربر مرجع"}
-            >
-              {session.user ? "مد" : "گ‌ف"}
-            </span>
-          </div>
-        </header>
             <button
               type="button"
               onClick={() => setSurveyOpen(true)}
-              className="survey-button flex items-center gap-2 px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-medium text-xs transition border border-indigo-500/20"
+              className="survey-button"
               title="فرم ارزیابی و نظرسنجی UMARS"
             >
-              <ClipboardList size={16} />
+              <ClipboardList size={16} aria-hidden />
               <span>ارزیابی UMARS</span>
             </button>
+          </div>
+        </header>
         <main id="main-content">
           <div className="page-heading">
             <div>
@@ -521,11 +515,6 @@ export default function App() {
           {needRefresh && (
             <Notice tone="info">
               نسخه جدید برنامه آماده است. قبل از به‌روزرسانی، ویرایش‌های باز را
-      <UmarsSurveyModal
-        isOpen={surveyOpen}
-        onClose={() => setSurveyOpen(false)}
-        isAdmin={Boolean(session.user)}
-      />
               ذخیره کنید.
               <div className="actions">
                 <Button onClick={() => void updateServiceWorker(true)}>
@@ -1043,6 +1032,11 @@ export default function App() {
       <GlossaryModal
         isOpen={glossaryOpen}
         onClose={() => setGlossaryOpen(false)}
+      />
+      <UmarsSurveyModal
+        isOpen={surveyOpen}
+        onClose={() => setSurveyOpen(false)}
+        isAdmin={Boolean(session.user)}
       />
 
     </div>

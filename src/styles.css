@@ -33,9 +33,6 @@
   font-synthesis: none;
   font-size: 16px;
   overflow-x: hidden;
-  overflow-x: hidden;
-  max-width: 100vw;
-  width: 100%;
   max-width: 100vw;
   line-height: 1.4;
   --radius: var(--radius-cards);
@@ -189,6 +186,8 @@
 }
 body {
   margin: 0;
+  overflow-x: hidden;
+  width: 100%;
   background: var(--bg);
 }
 button,
@@ -520,10 +519,38 @@ button {
 .glossary-button:hover svg {
   color: #ffffff;
 }
+/* UMARS survey trigger — matches glossary pill style on dark topbar */
+.survey-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-buttons);
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(217, 198, 255, 0.25);
+  color: #ffffff;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.survey-button svg {
+  color: var(--color-lilac-whisper);
+  transition: color 0.18s;
+}
+.survey-button:hover {
+  background: var(--color-electric-iris);
+  border-color: var(--color-electric-iris);
+  color: #ffffff;
+}
+.survey-button:hover svg {
+  color: #ffffff;
+}
 .top-right {
   display: flex;
-  gap: 20px;
+  gap: 8px;
   align-items: center;
+  flex-wrap: nowrap;
+  min-width: 0;
 }
 .sync-status {
   display: flex;
