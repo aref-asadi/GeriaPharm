@@ -406,6 +406,42 @@ export default function App() {
             </button>
           ))}
         </nav>
+        <div className="sidebar-actions">
+          <button
+            className="sync-status sidebar-sync"
+            onClick={() => void refresh()}
+            disabled={syncing}
+            title={
+              lastSync
+                ? "آخرین تغییر فهرست: " + date(lastSync)
+                : "دریافت آخرین نسخه فهرست"
+            }
+          >
+            {!online ? (
+              <WifiOff size={16} />
+            ) : (
+              <RefreshCw size={15} className={syncing ? "spin" : ""} />
+            )}
+            <span>
+              {syncing
+                ? "در حال همگام‌سازی"
+                : !online
+                  ? "حالت آفلاین"
+                  : synced
+                    ? "متصل به سرور"
+                    : "نسخه ذخیره‌شده"}
+            </span>
+          </button>
+          <button
+            type="button"
+            className="survey-button sidebar-survey"
+            onClick={() => { setSurveyOpen(true); setMobileOpen(false); }}
+            title="فرم ارزیابی و نظرسنجی UMARS"
+          >
+            <ClipboardList size={16} aria-hidden />
+            <span>ارزیابی UMARS</span>
+          </button>
+        </div>
         <div className="sidebar-bottom">
           <div className="edition">
             <BookOpen size={22} />
@@ -450,7 +486,7 @@ export default function App() {
             </button>
             <ThemeToggle value={theme} onChange={setTheme} />
             <button
-              className="sync-status"
+              className="sync-status topbar-overflow"
               onClick={() => void refresh()}
               disabled={syncing}
               title={
@@ -477,7 +513,7 @@ export default function App() {
             <button
               type="button"
               onClick={() => setSurveyOpen(true)}
-              className="survey-button"
+              className="survey-button topbar-overflow"
               title="فرم ارزیابی و نظرسنجی UMARS"
             >
               <ClipboardList size={16} aria-hidden />

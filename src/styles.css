@@ -318,11 +318,9 @@ button {
   width: 49px;
   height: 49px;
   border-radius: 15px;
-  background: var(--brand);
   color: var(--brand-contrast);
   display: grid;
   place-items: center;
-  box-shadow: 0 5px 12px rgb(var(--shadow) / 0.08);
   overflow: hidden;
 }
 .brand-logo {
@@ -394,6 +392,9 @@ button {
 .sidebar-bottom {
   margin-top: auto;
   padding: 10px 12px 0;
+}
+.sidebar-actions {
+  display: none;
 }
 .edition {
   display: flex;
@@ -2361,8 +2362,54 @@ td small {
   .top-right {
     gap: 10px;
   }
+  .topbar-overflow {
+    display: none;
+  }
   .sync-status {
     font-size: 11px;
+  }
+  .sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 0 4px;
+    border-top: 1px solid var(--line);
+    margin-top: 8px;
+  }
+  .sidebar-actions .sidebar-sync {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 9px 14px;
+    border-radius: var(--radius-buttons);
+    font-size: 13px;
+    font-weight: 500;
+    background: transparent;
+    color: var(--text-2);
+    text-align: right;
+  }
+  .sidebar-actions .sidebar-sync:hover:not(:disabled) {
+    background: var(--surface);
+    color: var(--text-1);
+  }
+  .sidebar-actions .sidebar-survey {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 9px 14px;
+    border-radius: var(--radius-buttons);
+    font-size: 13px;
+    font-weight: 600;
+    background: rgb(var(--tint) / 0.08);
+    border: 1px solid rgb(var(--tint) / 0.18);
+    color: var(--tint-text);
+    text-align: right;
+  }
+  .sidebar-actions .sidebar-survey:hover {
+    background: rgb(var(--tint) / 0.15);
+    border-color: rgb(var(--tint) / 0.3);
   }
   main {
     padding: 27px 18px 100px;
