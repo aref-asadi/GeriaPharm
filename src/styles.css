@@ -32,6 +32,11 @@
   background: var(--bg);
   font-synthesis: none;
   font-size: 16px;
+  overflow-x: hidden;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  max-width: 100vw;
   line-height: 1.4;
   --radius: var(--radius-cards);
   /* Surfaces & text - Healthy Together Palette */
@@ -319,6 +324,12 @@ button {
   display: grid;
   place-items: center;
   box-shadow: 0 5px 12px rgb(var(--shadow) / 0.08);
+  overflow: hidden;
+}
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 .brand strong {
   font-size: 28px;

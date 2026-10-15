@@ -12,7 +12,6 @@ import {
   HeartPulse,
   Home,
   Layers,
-  Pill,
   Plus,
   RefreshCw,
   Search,
@@ -25,7 +24,7 @@ import {
   X,
   List,
   LayoutGrid,
-
+  ClipboardList,
   StickyNote,
 } from "lucide-react";
 import { getAllMedications } from "./services/db";
@@ -53,6 +52,7 @@ import {
   risk,
 } from "./components/ui/Primitives";
 import { GlossaryModal } from "./components/GlossaryModal";
+import { UmarsSurveyModal } from "./components/UmarsSurveyModal";
 import { tables, fa, number, date, drugName, matchesSearch } from "./lib/fa";
 import {
   applyTheme,
@@ -139,7 +139,7 @@ export default function App() {
     [notes, setNotes] = useState<Record<string, string>>(loadNotes),
     [viewMode, setViewMode] = useState<"list" | "grid">("list"),
     [sortBy, setSortBy] = useState<"name" | "category" | "risk">("name"),
-
+    [surveyOpen, setSurveyOpen] = useState(false),
     [glossaryOpen, setGlossaryOpen] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const {
@@ -382,7 +382,7 @@ export default function App() {
       <aside className={"sidebar " + (mobileOpen ? "is-open" : "")}>
         <a className="brand" href="#home">
           <span className="brand-mark">
-            <Pill size={26} />
+            <img src="/icon.svg" alt="GeriaPharm Logo" className="brand-logo" />
           </span>
           <div>
             <strong>GeriaPharm</strong>
@@ -482,6 +482,15 @@ export default function App() {
             </span>
           </div>
         </header>
+            <button
+              type="button"
+              onClick={() => setSurveyOpen(true)}
+              className="survey-button flex items-center gap-2 px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-medium text-xs transition border border-indigo-500/20"
+              title="فرم ارزیابی و نظرسنجی UMARS"
+            >
+              <ClipboardList size={16} />
+              <span>ارزیابی UMARS</span>
+            </button>
         <main id="main-content">
           <div className="page-heading">
             <div>
@@ -512,6 +521,11 @@ export default function App() {
           {needRefresh && (
             <Notice tone="info">
               نسخه جدید برنامه آماده است. قبل از به‌روزرسانی، ویرایش‌های باز را
+      <UmarsSurveyModal
+        isOpen={surveyOpen}
+        onClose={() => setSurveyOpen(false)}
+        isAdmin={Boolean(session.user)}
+      />
               ذخیره کنید.
               <div className="actions">
                 <Button onClick={() => void updateServiceWorker(true)}>
