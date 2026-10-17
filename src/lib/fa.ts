@@ -1,5 +1,13 @@
 import type { DrugRecord } from "../types/types";
 export const number = (n: number) => new Intl.NumberFormat("fa-IR").format(n);
+const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
+const arabicDigits = "٠١٢٣٤٥٦٧٨٩";
+/** Converts Persian/Arabic digits typed or pasted by the user into ASCII digits. */
+export const toLatinDigits = (value: string) =>
+  value.replace(/[۰-۹٠-٩]/g, (digit) => {
+    const persian = persianDigits.indexOf(digit);
+    return String(persian >= 0 ? persian : arabicDigits.indexOf(digit));
+  });
 export const date = (s: string) => {
   try {
     return new Intl.DateTimeFormat("fa-IR", { dateStyle: "medium" }).format(
@@ -84,6 +92,7 @@ export const labels: Record<string, string> = {
   "logout": "خروج مدیر",
   "login_failed": "ورود ناموفق",
   "password_changed": "تغییر رمز عبور",
+  "reset_survey": "بازنشانی نظرسنجی",
 };
 export const fa = (key: string) => labels[key] ?? key;
 export const tables = [

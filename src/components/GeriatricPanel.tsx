@@ -29,35 +29,7 @@ export function GeriatricPanel({ panel, breakdown }: GeriatricPanelProps) {
       className="geriatric-panel mb-6 w-full min-w-0"
       aria-labelledby="geriatric-panel-title"
     >
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-        <h2
-          id="geriatric-panel-title"
-          className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2"
-        >
-          <ShieldAlert size={22} className="text-rose-600" />
-          پنل چندبعدی ریسک سالمندی
-        </h2>
-        <div className="flex flex-wrap items-center gap-2">
-          <Button
-            variant="secondary"
-            onClick={() => setShowBreakdown((v) => !v)}
-            className="flex items-center gap-1.5 text-sm"
-          >
-            <Table size={16} />
-            {showBreakdown ? "مخفی کردن جدول تفکیک" : "جدول تفکیک محاسبه"}
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => setShowDetails(true)}
-            className="flex items-center gap-1.5 text-sm"
-          >
-            <Info size={16} />
-            نحوه محاسبه و مستندات علمی
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
         {/* FRID — STOPPFall */}
         <div className="p-4 rounded-3xl bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/50 min-w-0">
           <div className="flex items-start justify-between gap-2 mb-2">
@@ -191,109 +163,18 @@ export function GeriatricPanel({ panel, breakdown }: GeriatricPanelProps) {
           </p>
         </div>
       </div>
-      {/* Per-drug breakdown table */}
-      {showBreakdown && breakdown.length > 0 && (
-        <div className="mt-4 overflow-x-auto rounded-3xl border border-slate-200 dark:border-slate-700">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300">
-                <th className="p-2.5 text-right font-semibold">دارو</th>
-                <th className="p-2.5 text-right font-semibold">ATC</th>
-                <th className="p-2.5 text-center font-semibold">
-                  کلاس‌های STOPPFall
-                </th>
-                <th className="p-2.5 text-center font-semibold">ACB</th>
-                <th className="p-2.5 text-center font-semibold">پرخطر</th>
-                <th className="p-2.5 text-center font-semibold">پرچم‌دار</th>
-              </tr>
-            </thead>
-            <tbody>
-              {breakdown.map((row) => (
-                <tr
-                  key={row.id}
-                  className="border-t border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30"
-                >
-                  <td className="p-2.5 text-right min-w-[180px]">
-                    <div className="font-medium text-slate-900 dark:text-white">
-                      {row.nameFa}
-                    </div>
-                    <div
-                      className="text-xs text-slate-500 dark:text-slate-400 truncate"
-                      dir="ltr"
-                    >
-                      {row.nameEn}
-                    </div>
-                  </td>
-                  <td
-                    className="p-2.5 text-center font-mono text-xs text-slate-600 dark:text-slate-300"
-                    dir="ltr"
-                  >
-                    {row.atc}
-                  </td>
-                  <td className="p-2.5 text-center">
-                    {row.classes.length === 0 ? (
-                      <span className="text-slate-400 text-xs">—</span>
-                    ) : (
-                      <div className="flex flex-wrap justify-center gap-1">
-                        {row.classes.map((c) => (
-                          <span
-                            key={c.n}
-                            className="px-1.5 py-0.5 rounded-md bg-rose-100 dark:bg-rose-900/70 text-rose-700 dark:text-rose-300 text-[10px]"
-                          >
-                            {c.fa}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </td>
-                  <td className="p-2.5 text-center">
-                    {row.acb > 0 ? (
-                      <span
-                        className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold ${
-                          row.acb === 3
-                            ? "bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-300"
-                            : row.acb === 2
-                              ? "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300"
-                              : "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"
-                        }`}
-                        title={`ACB = ${row.acb}`}
-                      >
-                        {row.acb}
-                      </span>
-                    ) : (
-                      <span className="text-slate-400 text-xs">۰</span>
-                    )}
-                  </td>
-                  <td className="p-2.5 text-center">
-                    {row.highRisk ? (
-                      <AlertTriangle
-                        size={16}
-                        className="text-rose-600 mx-auto"
-                        aria-label="زیرکلاس پرخطر"
-                      />
-                    ) : (
-                      <span className="text-slate-300 dark:text-slate-600">
-                        —
-                      </span>
-                    )}
-                  </td>
-                  <td className="p-2.5 text-center">
-                    {row.flagged ? (
-                      <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-rose-100 dark:bg-rose-900 text-rose-600 dark:text-rose-400 text-xs">
-                        ●
-                      </span>
-                    ) : (
-                      <span className="text-slate-300 dark:text-slate-600">
-                        —
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            variant="ghost"
+            onClick={() => setShowDetails(true)}
+            className="flex items-center gap-1.5 text-sm"
+          >
+            <Info size={16} />
+            نحوه محاسبه و مستندات علمی
+          </Button>
         </div>
-      )}
+      </div>
       {/* How-it-is-calculated & scientific references modal */}
       {showDetails && (
         <div

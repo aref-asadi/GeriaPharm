@@ -1,26 +1,110 @@
+import {
+  genders,
+  occupations,
+  type Gender,
+  type Occupation,
+  type SurveyAnswers,
+  type SurveySubmissionPayload,
+} from '../types/types';
+
 export interface SurveyOption {
-  value: number;
+  /** Likert score (1–5) of a UMARS item, or the coded value of a demographics option. */
+  value: number | string;
   label: string;
 }
 
-export interface SurveyQuestion {
+interface SurveyQuestionBase {
   id: string;
-  number: number;
+  /** UMARS item number (1–25). Absent for the demographics questions. */
+  number?: number;
   title: string;
   text: string;
+}
+
+export interface SurveyChoiceQuestion extends SurveyQuestionBase {
+  kind?: 'choice';
   options: SurveyOption[];
 }
 
+export interface SurveyNumberQuestion extends SurveyQuestionBase {
+  kind: 'number';
+  min: number;
+  max: number;
+  placeholder: string;
+}
+
+export type SurveyQuestion = SurveyChoiceQuestion | SurveyNumberQuestion;
+
+export const isNumberQuestion = (
+  question: SurveyQuestion,
+): question is SurveyNumberQuestion => question.kind === 'number';
+
 export interface SurveySection {
   id: string;
+  /** Short label used by the section chip strip. */
+  label: string;
   title: string;
   subtitle: string;
   questions: SurveyQuestion[];
 }
 
+export const GENDER_LABELS: Record<Gender, string> = {
+  male: 'مرد',
+  female: 'زن',
+};
+
+export const OCCUPATION_LABELS: Record<Occupation, string> = {
+  physician: 'پزشک',
+  pharmacist: 'داروساز',
+  other_health: 'سایر کادر درمان',
+  other: 'سایر مشاغل',
+};
+
+export const GENDER_OPTIONS: SurveyOption[] = genders.map((value) => ({
+  value,
+  label: GENDER_LABELS[value],
+}));
+
+export const OCCUPATION_OPTIONS: SurveyOption[] = occupations.map((value) => ({
+  value,
+  label: OCCUPATION_LABELS[value],
+}));
+
+export const DEMOGRAPHICS_SECTION: SurveySection = {
+  id: 'M',
+  label: 'مشخصات',
+  title: 'بخش نخست: مشخصات پاسخ‌دهنده',
+  subtitle:
+    'این سه پرسش برای تحلیل نتایج نظرسنجی به کار می‌روند و بدون هیچ نشانه هویتی ذخیره می‌شوند.',
+  questions: [
+    {
+      id: 'age',
+      kind: 'number',
+      title: 'سن',
+      text: 'سن خود را بر حسب سال وارد کنید (بین ۱۵ تا ۱۲۰ سال).',
+      min: 15,
+      max: 120,
+      placeholder: 'برای نمونه: ۳۲',
+    },
+    {
+      id: 'gender',
+      title: 'جنسیت',
+      text: 'جنسیت خود را انتخاب کنید.',
+      options: GENDER_OPTIONS,
+    },
+    {
+      id: 'occupation',
+      title: 'شغل',
+      text: 'شغل یا حرفه اصلی خود را انتخاب کنید.',
+      options: OCCUPATION_OPTIONS,
+    },
+  ],
+};
+
 export const UMARS_SECTIONS: SurveySection[] = [
   {
     id: 'A',
+    label: 'تعامل',
     title: 'بخش A: تعامل (Engagement)',
     subtitle: 'جالب بودن، قابلیت شخصی‌سازی، تعاملی بودن، دارا بودن اعلان‌ها، بازخورد و امکان اشتراک‌گذاری',
     questions: [
@@ -80,6 +164,7 @@ export const UMARS_SECTIONS: SurveySection[] = [
   },
   {
     id: 'B',
+    label: 'عملکرد',
     title: 'بخش B: عملکرد (Functionality)',
     subtitle: 'عملکرد برنامه، یادگیری آسان، جهت‌یابی در برنامه، منطقی بودن قسمت‌های مختلف و طراحی ظاهر برنامه',
     questions: [
@@ -139,6 +224,7 @@ export const UMARS_SECTIONS: SurveySection[] = [
   },
   {
     id: 'C',
+    label: 'زیبایی',
     title: 'بخش C: زیبایی‌شناسی (Aesthetics)',
     subtitle: 'طراحی و گرافیک برنامه، جذابیت بصری کلی برنامه، طرح رنگ و هماهنگی و یکپارچگی برنامه',
     questions: [
@@ -185,6 +271,7 @@ export const UMARS_SECTIONS: SurveySection[] = [
   },
   {
     id: 'D',
+    label: 'اطلاعات',
     title: 'بخش D: اطلاعات (Information)',
     subtitle: 'حاوی اطلاعات مانند متن، بازخورد، معیارها و مراجع با کیفیت بالا از منبع معتبر',
     questions: [
@@ -248,6 +335,7 @@ export const UMARS_SECTIONS: SurveySection[] = [
   },
   {
     id: 'E',
+    label: 'کیفیت ذهنی',
     title: 'بخش E: کیفیت ذهنی برنامه (Subjective Quality)',
     subtitle: 'ارزیابی کلی و دیدگاه شخصی شما نسبت به ارزش برنامه',
     questions: [
@@ -307,6 +395,7 @@ export const UMARS_SECTIONS: SurveySection[] = [
   },
   {
     id: 'F',
+    label: 'اثربخشی',
     title: 'بخش F: اثربخشی اپلیکیشن (Perceived Impact)',
     subtitle: 'تاثیر برنامه بر آگاهی، دانش، نگرش و رفتار تخصصی تجویز و پایش دارو در سالمندان',
     questions: [
@@ -392,4 +481,140 @@ export const UMARS_SECTIONS: SurveySection[] = [
   },
 ];
 
-export const ALL_QUESTIONS = UMARS_SECTIONS.flatMap((section) => section.questions);
+export const UMARS_QUESTIONS = UMARS_SECTIONS.flatMap(
+  (section) => section.questions,
+);
+
+export const SURVEY_SECTIONS: SurveySection[] = [
+  DEMOGRAPHICS_SECTION,
+  ...UMARS_SECTIONS,
+];
+
+export const ALL_QUESTIONS = SURVEY_SECTIONS.flatMap(
+  (section) => section.questions,
+);
+
+export const TOTAL_QUESTIONS = ALL_QUESTIONS.length;
+
+/** Key of the local queue/cache of responses (see `UmarsSurveyModal`). */
+export const STORAGE_KEY = 'gp-umars-submissions-v2';
+
+export interface SurveyStep {
+  sectionId: string;
+  index: number;
+}
+
+export const FIRST_STEP: SurveyStep = {
+  sectionId: SURVEY_SECTIONS[0].id,
+  index: 0,
+};
+
+/** Moves one question forward/backward across section boundaries; `null` at either end. */
+export function findStep(
+  current: SurveyStep,
+  direction: 1 | -1,
+): SurveyStep | null {
+  const sectionIndex = SURVEY_SECTIONS.findIndex(
+    (section) => section.id === current.sectionId,
+  );
+  if (sectionIndex < 0) return null;
+  const section = SURVEY_SECTIONS[sectionIndex];
+  const index = current.index + direction;
+  if (index >= 0 && index < section.questions.length)
+    return { sectionId: section.id, index };
+  const neighbour = SURVEY_SECTIONS[sectionIndex + direction];
+  if (!neighbour) return null;
+  return {
+    sectionId: neighbour.id,
+    index: direction === 1 ? 0 : neighbour.questions.length - 1,
+  };
+}
+
+export function isValidAnswer(
+  question: SurveyQuestion,
+  value: number | string | undefined,
+) {
+  if (value === undefined || value === '') return false;
+  if (isNumberQuestion(question)) {
+    const numeric = typeof value === 'number' ? value : Number(value);
+    return (
+      Number.isInteger(numeric) &&
+      numeric >= question.min &&
+      numeric <= question.max
+    );
+  }
+  return question.options.some((option) => option.value === value);
+}
+
+/** Demographics questions still unanswered or invalid — gates the final submission. */
+export function missingDemographics(answers: Record<string, number | string>) {
+  return DEMOGRAPHICS_SECTION.questions.filter(
+    (question) => !isValidAnswer(question, answers[question.id]),
+  );
+}
+
+export function umarsScore(answers: Record<string, number | string>) {
+  const values = UMARS_QUESTIONS.filter(
+    (question) =>
+      isValidAnswer(question, answers[question.id]) &&
+      typeof answers[question.id] === 'number',
+  ).map((question) => answers[question.id] as number);
+  const total = values.reduce((sum, value) => sum + value, 0);
+  return {
+    answered: values.length,
+    total,
+    mean: values.length ? total / values.length : 0,
+  };
+}
+
+export function answerLabel(
+  question: SurveyQuestion,
+  value: number | string | undefined,
+) {
+  if (value === undefined || value === '') return '—';
+  if (isNumberQuestion(question)) return String(value);
+  return (
+    question.options.find((option) => option.value === value)?.label ??
+    String(value)
+  );
+}
+
+/**
+ * Builds the payload stored on the server, or `null` when the demographics are
+ * incomplete so the caller can surface a validation message instead of sending
+ * a request the API would reject.
+ */
+export function buildSubmission(
+  answers: Record<string, number | string>,
+  id: string,
+  createdAt: string,
+): SurveySubmissionPayload | null {
+  const age =
+    typeof answers.age === 'number' ? answers.age : Number(answers.age);
+  const gender = answers.gender;
+  const occupation = answers.occupation;
+  if (!Number.isInteger(age) || age < 15 || age > 120) return null;
+  if (typeof gender !== 'string' || !genders.includes(gender as Gender))
+    return null;
+  if (
+    typeof occupation !== 'string' ||
+    !occupations.includes(occupation as Occupation)
+  )
+    return null;
+  const scores: SurveyAnswers = {};
+  for (const question of UMARS_QUESTIONS) {
+    const value = answers[question.id];
+    if (typeof value === 'number' && isValidAnswer(question, value))
+      scores[question.id] = value;
+  }
+  return {
+    id,
+    createdAt,
+    demographics: {
+      age,
+      gender: gender as Gender,
+      occupation: occupation as Occupation,
+    },
+    answers: scores,
+  };
+}

@@ -1,4 +1,9 @@
-import { registrySchema, type DrugRecord } from "../types/types";
+import {
+  registrySchema,
+  type DrugRecord,
+  type SurveyResponse,
+  type SurveySubmissionPayload,
+} from "../types/types";
 import { replaceRegistry } from "./db";
 export interface Session {
   user: { email: string } | null;
@@ -104,3 +109,17 @@ export const deleteMedication = (id: string) =>
 export const replaceServerRegistry = (medications: DrugRecord[]) =>
   mutate("/admin/registry", "PUT", { medications });
 export const resetServerRegistry = () => mutate("/admin/reset", "POST");
+/** Public, unauthenticated: stores one anonymous UMARS response. */
+export const submitSurveyResponse = (payload: SurveySubmissionPayload) =>
+  request<{ id: string; receivedAt: string; duplicate: boolean }>("/survey", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+export const fetchSurveyResponses = () =>
+  request<{ count: number; responses: SurveyResponse[] }>("/admin/survey");
+export const resetSurveyResponses = () =>
+  request<{ ok: true; removed: number }>("/admin/survey/reset", {
+    method: "POST",
+  });
+/** Direct download URL; the session cookie authenticates the browser request. */
+export const surveyCsvUrl = "/api/admin/survey.csv";

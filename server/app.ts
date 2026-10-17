@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import { DatabaseSync } from "node:sqlite";
 import {
   randomBytes,
+  randomUUID,
   scrypt as scryptCb,
   timingSafeEqual,
   createHash,
@@ -16,8 +17,20 @@ import { promisify } from "node:util";
 import { mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { z } from "zod";
-import { registrySchema, drugSchema } from "../src/types/types";
+import {
+  registrySchema,
+  drugSchema,
+  surveySubmissionSchema,
+  type Gender,
+  type Occupation,
+  type SurveyAnswers,
+} from "../src/types/types";
 import { seedData } from "../src/data/seedData";
+import {
+  GENDER_LABELS,
+  OCCUPATION_LABELS,
+  UMARS_QUESTIONS,
+} from "../src/data/umarsQuestions";
 const scrypt = promisify(scryptCb);
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 const token = () => randomBytes(32).toString("base64url");
@@ -59,6 +72,13 @@ export async function createApp(config: Config) {
  CREATE TABLE IF NOT EXISTS login_attempts(key TEXT PRIMARY KEY,count INTEGER NOT NULL,reset_at INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS audit_log(id INTEGER PRIMARY KEY,actor TEXT NOT NULL,action TEXT NOT NULL,target TEXT NOT NULL,created_at TEXT NOT NULL);
  INSERT OR IGNORE INTO schema_migrations(version) VALUES(1); COMMIT;`);
+  // Migration v2: anonymous UMARS survey responses (no identity, no IP stored)
+  // plus a sliding-window counter for abuse-prone public endpoints.
+  db.exec(`BEGIN;
+ CREATE TABLE IF NOT EXISTS survey_responses(id TEXT PRIMARY KEY,created_at TEXT NOT NULL,received_at TEXT NOT NULL,age INTEGER NOT NULL,gender TEXT NOT NULL,occupation TEXT NOT NULL,answers TEXT NOT NULL,answered INTEGER NOT NULL,total INTEGER NOT NULL,mean REAL NOT NULL);
+ CREATE INDEX IF NOT EXISTS survey_responses_received ON survey_responses(received_at);
+ CREATE TABLE IF NOT EXISTS rate_limits(key TEXT PRIMARY KEY,count INTEGER NOT NULL,reset_at INTEGER NOT NULL);
+ INSERT OR IGNORE INTO schema_migrations(version) VALUES(2); COMMIT;`);
   if (!db.prepare("SELECT id FROM admins LIMIT 1").get()) {
     if (
       !config.adminEmail ||
@@ -163,6 +183,56 @@ export async function createApp(config: Config) {
       "INSERT INTO audit_log(actor,action,target,created_at) VALUES(?,?,?,?)",
     ).run(actor, action, target, new Date(now()).toISOString());
   }
+  /** Sliding-window request counter for abuse-prone public endpoints. */
+  function consume(key: string, limit: number, windowMs: number) {
+    db.prepare("DELETE FROM rate_limits WHERE reset_at<=?").run(now());
+    const row = db
+      .prepare("SELECT count,reset_at FROM rate_limits WHERE key=?")
+      .get(key) as { count: number; reset_at: number } | undefined;
+    if (row && row.count >= limit)
+      return {
+        allowed: false,
+        retryAfter: Math.max(1, Math.ceil((row.reset_at - now()) / 1000)),
+      };
+    db.prepare(
+      "INSERT INTO rate_limits(key,count,reset_at) VALUES(?,1,?) ON CONFLICT(key) DO UPDATE SET count=count+1",
+    ).run(key, now() + windowMs);
+    return { allowed: true, retryAfter: 0 };
+  }
+  interface SurveyRow {
+    id: string;
+    created_at: string;
+    received_at: string;
+    age: number;
+    gender: string;
+    occupation: string;
+    answers: string;
+    answered: number;
+    total: number;
+    mean: number;
+  }
+  /** Newest first; identical shape to the client-side `SurveyResponse` type. */
+  function readResponses() {
+    const rows = db
+      .prepare("SELECT * FROM survey_responses ORDER BY received_at DESC")
+      .all() as unknown as SurveyRow[];
+    return rows.map((row) => ({
+      id: row.id,
+      createdAt: row.created_at,
+      receivedAt: row.received_at,
+      demographics: {
+        age: row.age,
+        gender: row.gender as Gender,
+        occupation: row.occupation as Occupation,
+      },
+      answers: JSON.parse(row.answers) as SurveyAnswers,
+      score: { answered: row.answered, total: row.total, mean: row.mean },
+    }));
+  }
+  /** Escapes a single CSV cell; Persian text with commas/quotes stays intact. */
+  function csvCell(value: string) {
+    return /[",\r\n]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value;
+  }
   function readRegistry() {
     const row = db.prepare("SELECT * FROM registry WHERE id=1").get() as {
       data: string;
@@ -217,6 +287,46 @@ export async function createApp(config: Config) {
     res.json({ status: "ok" });
   });
   app.get("/api/registry", (_req, res) => res.json(readRegistry()));
+  // Public endpoint: stores one anonymous UMARS response. The global Origin
+  // check above blocks cross-site posts and `consume` caps bulk submissions;
+  // the client-supplied id makes retries after a network failure idempotent.
+  app.post("/api/survey", (req, res) => {
+    const input = surveySubmissionSchema.parse(req.body);
+    const createdAt = new Date(input.createdAt).getTime();
+    if (createdAt > now() + 5 * 60 * 1000)
+      return void res.status(400).json({ message: "زمان پاسخ معتبر نیست." });
+    const limit = consume(hash("survey:" + req.ip), 20, 60 * 60 * 1000);
+    if (!limit.allowed) {
+      res.setHeader("Retry-After", String(limit.retryAfter));
+      return void res.status(429).json({
+        message:
+          "تعداد پاسخ‌های ارسالی از این دستگاه بیش از حد مجاز است. کمی بعد دوباره تلاش کنید.",
+      });
+    }
+    const id = input.id ?? randomUUID();
+    const values = Object.values(input.answers);
+    const total = values.reduce((sum, value) => sum + value, 0);
+    const receivedAt = new Date(now()).toISOString();
+    const result = db
+      .prepare(
+        "INSERT INTO survey_responses(id,created_at,received_at,age,gender,occupation,answers,answered,total,mean) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO NOTHING",
+      )
+      .run(
+        id,
+        new Date(createdAt).toISOString(),
+        receivedAt,
+        input.demographics.age,
+        input.demographics.gender,
+        input.demographics.occupation,
+        JSON.stringify(input.answers),
+        values.length,
+        total,
+        values.length ? total / values.length : 0,
+      );
+    res
+      .status(201)
+      .json({ id, receivedAt, duplicate: Number(result.changes) === 0 });
+  });
   app.get("/api/auth/session", (req, res) => {
     const current = session(req);
     res.json(
@@ -346,6 +456,57 @@ export async function createApp(config: Config) {
         medications: readRegistry().medications,
       }),
   );
+  app.get("/api/admin/survey", (_req, res) => {
+    const responses = readResponses();
+    res.json({ count: responses.length, responses });
+  });
+  app.get("/api/admin/survey.csv", (_req, res) => {
+    const responses = readResponses();
+    const header = [
+      "شناسه",
+      "زمان پاسخ",
+      "زمان دریافت",
+      "سن",
+      "جنسیت",
+      "شغل",
+      ...UMARS_QUESTIONS.map((q) => `سوال ${q.number}: ${q.title}`),
+      "تعداد پاسخ‌ها",
+      "مجموع امتیاز",
+      "میانگین امتیاز",
+    ];
+    const rows = responses.map((response) => [
+      response.id,
+      response.createdAt,
+      response.receivedAt,
+      String(response.demographics.age),
+      GENDER_LABELS[response.demographics.gender] ??
+        response.demographics.gender,
+      OCCUPATION_LABELS[response.demographics.occupation] ??
+        response.demographics.occupation,
+      ...UMARS_QUESTIONS.map((q) => {
+        const score = response.answers[q.id];
+        return score === undefined ? "" : String(score);
+      }),
+      String(response.score.answered),
+      String(response.score.total),
+      response.score.mean.toFixed(2),
+    ]);
+    const csv = [header, ...rows]
+      .map((row) => row.map(csvCell).join(","))
+      .join("\r\n");
+    res.attachment(
+      `geriapharm-umars-${new Date(now()).toISOString().slice(0, 10)}.csv`,
+    );
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    // The BOM is what makes Excel read the Persian columns as UTF-8.
+    res.send("\uFEFF" + csv + "\r\n");
+  });
+  app.post("/api/admin/survey/reset", (_req, res) => {
+    const result = db.prepare("DELETE FROM survey_responses").run();
+    const removed = Number(result.changes);
+    audit(res.locals.session.email, "reset_survey", String(removed));
+    res.json({ ok: true, removed });
+  });
   app.put("/api/admin/medications/:id", (req, res) => {
     const drug = drugSchema.parse(req.body);
     if (drug.id !== req.params.id)

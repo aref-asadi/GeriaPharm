@@ -1073,6 +1073,7 @@ export default function App() {
         isOpen={surveyOpen}
         onClose={() => setSurveyOpen(false)}
         isAdmin={Boolean(session.user)}
+        online={online}
       />
 
     </div>

@@ -566,18 +566,6 @@ export function Checker({
             <ShieldCheck size={23} />
             گزارش ایمنی نسخه
           </h2>
-          <div className="heading-tools">
-            {activeBeersGroups.length > 0 && (
-              <Button variant="ghost" onClick={toggleAllGroups}>
-                {areAllOpen ? (
-                  <ChevronUp size={16} />
-                ) : (
-                  <ChevronDown size={16} />
-                )}
-                {areAllOpen ? "بستن همه گروه‌ها" : "باز کردن همه گروه‌ها"}
-              </Button>
-            )}
-          </div>
         </div>
         <div className="print-header">
           <h1>خلاصه پرونده دارویی سالمند</h1>
@@ -588,38 +576,6 @@ export function Checker({
             )}
           </p>
         </div>
-        {meds.length > 0 && (
-          <div className="stats-grid">
-            <div className="stat-tile">
-              <b>{number(stats.totalDrugs)}</b>
-              <span>کل داروها</span>
-            </div>
-            <div
-              className={
-                "stat-tile " + (stats.pimCount > 0 ? "tone-danger" : "")
-              }
-            >
-              <b>{number(stats.pimCount)}</b>
-              <span>داروی نامناسب (PIM)</span>
-            </div>
-            <div
-              className={
-                "stat-tile " + (stats.acbScore >= 3 ? "tone-warn" : "")
-              }
-            >
-              <b>{number(stats.acbScore)}</b>
-              <span>بار آنتی‌کولینرژیک</span>
-            </div>
-            <div
-              className={
-                "stat-tile " + (stats.cnsCount >= 3 ? "tone-info" : "")
-              }
-            >
-              <b>{number(stats.cnsCount)}</b>
-              <span>داروی فعال بر CNS</span>
-            </div>
-          </div>
-        )}
         {/* Geriatric Multi-Dimensional Risk Panel */}
         {meds.length > 0 && (
           <GeriatricPanel panel={panel} breakdown={breakdownRows} />
@@ -847,6 +803,16 @@ export function Checker({
         {filter !== "All" && (
           <Button variant="ghost" onClick={() => setFilter("All")}>
             نمایش همه هشدارها
+          </Button>
+        )}
+        {activeBeersGroups.length > 0 && (
+          <Button variant="ghost" onClick={toggleAllGroups}>
+            {areAllOpen ? (
+              <ChevronUp size={16} />
+            ) : (
+              <ChevronDown size={16} />
+            )}
+            {areAllOpen ? "بستن همه گروه‌ها" : "باز کردن همه گروه‌ها"}
           </Button>
         )}
         {!meds.length ? (

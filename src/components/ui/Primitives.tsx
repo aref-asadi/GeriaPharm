@@ -266,8 +266,8 @@ export function MedicationListItem({
 }) {
   return (
     <article className="med-card med-list-row flex flex-col md:flex-row md:items-center justify-between p-4 md:p-5 gap-3 hover:shadow-md transition">
-      <div className="flex-1 min-w-0 flex items-start gap-3.5">
-        <div className="pt-0.5">
+      <div className="flex-1 min-w-0 flex flex-col md:flex-row md:items-start gap-2 md:gap-3.5">
+        <div className="md:pt-0.5">
           <RiskBadge drug={drug} />
         </div>
         <div className="min-w-0 flex-1">

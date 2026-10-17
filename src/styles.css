@@ -2431,6 +2431,7 @@ td small {
     font-size: 11px;
   }
   .category-grid {
+    grid-template-columns: 1fr;
     gap: 12px;
   }
   .category-card {
