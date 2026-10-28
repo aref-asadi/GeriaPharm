@@ -54,7 +54,7 @@ import {
 } from "./components/ui/Primitives";
 import { GlossaryModal } from "./components/GlossaryModal";
 import { UmarsSurveyModal } from "./components/UmarsSurveyModal";
-import { TourGuide, tourIsDone } from "./components/TourGuide";
+import { TourGuide } from "./components/TourGuide";
 import { tables, fa, number, date, drugName, matchesSearch } from "./lib/fa";
 import {
   applyTheme,
@@ -143,7 +143,7 @@ export default function App() {
     [sortBy, setSortBy] = useState<"name" | "category" | "risk">("name"),
     [surveyOpen, setSurveyOpen] = useState(false),
     [glossaryOpen, setGlossaryOpen] = useState(false),
-    [tourOpen, setTourOpen] = useState(() => !tourIsDone());
+    [tourOpen, setTourOpen] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const {
     offlineReady: [offlineReady],
@@ -447,6 +447,15 @@ export default function App() {
             <ClipboardList size={16} aria-hidden />
             <span>ارزیابی UMARS</span>
           </button>
+          <button
+            type="button"
+            onClick={() => { setTourOpen(true); setMobileOpen(false); }}
+            className="tour-button sidebar-tour"
+            title="راهنمای تعاملی بخش‌های سایت"
+          >
+            <Compass size={16} aria-hidden />
+            <span>راهنمای سایت</span>
+          </button>
         </div>
         <div className="sidebar-bottom">
           <div className="edition">
@@ -481,15 +490,6 @@ export default function App() {
             <strong>{nav.find((n) => n.id === page)?.label}</strong>
           </div>
           <div className="top-right">
-            <button
-              type="button"
-              onClick={() => setTourOpen(true)}
-              className="tour-button"
-              title="راهنمای تعاملی بخش‌های سایت"
-            >
-              <Compass size={14} aria-hidden />
-              <span>راهنمای سایت</span>
-            </button>
             <button
               type="button"
               data-tour="glossary-btn"
@@ -1095,6 +1095,7 @@ export default function App() {
       <TourGuide
         open={tourOpen}
         onClose={() => setTourOpen(false)}
+        navigateTo={navigate}
       />
 
     </div>

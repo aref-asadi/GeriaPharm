@@ -54,6 +54,14 @@ const STEPS: TourStep[] = [
   },
 ];
 
+/** Map a tour target to the page it lives on, so the guide can navigate there first. */
+const TOUR_PAGE_MAP: Record<string, string> = {
+  "regimen-link": "regimen",
+  "bookmarks-link": "bookmarks",
+  "library-link": "library",
+  "ai-cdss": "regimen",
+};
+
 interface TargetRect {
   top: number;
   left: number;
@@ -73,9 +81,11 @@ export function tourIsDone(): boolean {
 export function TourGuide({
   open,
   onClose,
+  navigateTo,
 }: {
   open: boolean;
   onClose: () => void;
+  navigateTo?: (id: string) => void;
 }) {
   const [step, setStep] = useState(0);
   const [targetRect, setTargetRect] = useState<TargetRect | null>(null);
@@ -90,10 +100,17 @@ export function TourGuide({
         const r = el.getBoundingClientRect();
         setTargetRect({ top: r.top, left: r.left, width: r.width, height: r.height });
       }, 350);
+    } else if (navigateTo) {
+      const pageId = TOUR_PAGE_MAP[current.selector];
+      if (pageId) {
+        navigateTo(pageId);
+        return;
+      }
+      setTargetRect(null);
     } else {
       setTargetRect(null);
     }
-  }, [current.selector]);
+  }, [current.selector, navigateTo]);
 
   useEffect(() => {
     if (open) locate();
@@ -119,11 +136,15 @@ export function TourGuide({
 
   if (!open) return null;
 
-  const TOOLTIP_W = 340;
-  const TOOLTIP_H = 220;
-  const PAD = 16;
+  const DESKTOP_W = 340;
+  const MOBILE_BP = 640;
+  const PAD = 14;
   const vw = window.innerWidth;
   const vh = window.innerHeight;
+  const isMobile = vw < MOBILE_BP;
+  const tooltipW = isMobile ? Math.min(vw - PAD * 2, DESKTOP_W) : DESKTOP_W;
+  // Mobile needs more vertical room for wrapped Persian/Arabic text.
+  const tooltipH = isMobile ? 320 : 220;
 
   let tooltipStyle: React.CSSProperties;
 
@@ -131,21 +152,29 @@ export function TourGuide({
     const spaceBelow = vh - targetRect.top - targetRect.height;
     const spaceAbove = targetRect.top;
     let top: number;
-    if (spaceBelow >= TOOLTIP_H + PAD) {
+    if (spaceBelow >= tooltipH + PAD) {
       top = targetRect.top + targetRect.height + PAD;
-    } else if (spaceAbove >= TOOLTIP_H + PAD) {
-      top = targetRect.top - TOOLTIP_H - PAD;
+    } else if (spaceAbove >= tooltipH + PAD) {
+      top = targetRect.top - tooltipH - PAD;
     } else {
-      top = Math.max(PAD, vh / 2 - TOOLTIP_H / 2);
+      top = Math.max(PAD, vh / 2 - tooltipH / 2);
     }
-    let left = targetRect.left + targetRect.width / 2 - TOOLTIP_W / 2;
-    left = Math.max(PAD, Math.min(left, vw - TOOLTIP_W - PAD));
-    tooltipStyle = { top, left, width: TOOLTIP_W };
+    let left = targetRect.left + targetRect.width / 2 - tooltipW / 2;
+    left = Math.max(PAD, Math.min(left, vw - tooltipW - PAD));
+    tooltipStyle = {
+      top,
+      left,
+      width: tooltipW,
+      maxHeight: vh - PAD * 2,
+      overflowY: "auto",
+    };
   } else {
     tooltipStyle = {
-      top: Math.max(PAD, vh / 2 - TOOLTIP_H / 2),
-      left: Math.max(PAD, vw / 2 - TOOLTIP_W / 2),
-      width: TOOLTIP_W,
+      top: Math.max(PAD, vh / 2 - tooltipH / 2),
+      left: Math.max(PAD, vw / 2 - tooltipW / 2),
+      width: tooltipW,
+      maxHeight: vh - PAD * 2,
+      overflowY: "auto",
     };
   }
 
@@ -153,7 +182,19 @@ export function TourGuide({
     <>
       <div
         className="fixed inset-0 z-[9998]"
-        style={{ background: "rgba(16,23,34,0.65)", backdropFilter: "blur(2px)" }}
+        style={{
+          background: "rgba(16,23,34,0.65)",
+          backdropFilter: "blur(2px)",
+          WebkitBackdropFilter: "blur(2px)",
+          ...(targetRect
+            ? {
+                maskImage: `radial-gradient(circle at ${targetRect.left + targetRect.width / 2}px ${targetRect.top + targetRect.height / 2}px, transparent ${Math.max(targetRect.width, targetRect.height) / 2 + 12}px, black ${Math.max(targetRect.width, targetRect.height) / 2 + 14}px)`,
+                WebkitMaskImage: `radial-gradient(circle at ${targetRect.left + targetRect.width / 2}px ${targetRect.top + targetRect.height / 2}px, transparent ${Math.max(targetRect.width, targetRect.height) / 2 + 12}px, black ${Math.max(targetRect.width, targetRect.height) / 2 + 14}px)`,
+                maskPosition: "0 0",
+                WebkitMaskPosition: "0 0",
+              }
+            : {}),
+        }}
         onClick={finish}
         aria-hidden="true"
       />
