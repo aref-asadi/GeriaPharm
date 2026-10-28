@@ -394,7 +394,12 @@ button {
   padding: 10px 12px 0;
 }
 .sidebar-actions {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 0 4px;
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
 }
 .edition {
   display: flex;
@@ -2410,6 +2415,23 @@ td small {
   .sidebar-actions .sidebar-survey:hover {
     background: rgb(var(--tint) / 0.15);
     border-color: rgb(var(--tint) / 0.3);
+  }
+  .sidebar-actions .sidebar-tour {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 9px 14px;
+    border-radius: var(--radius-buttons);
+    font-size: 13px;
+    font-weight: 500;
+    background: transparent;
+    color: var(--text-2);
+    text-align: right;
+  }
+  .sidebar-actions .sidebar-tour:hover {
+    background: var(--surface);
+    color: var(--text-1);
   }
   main {
     padding: 27px 18px 100px;

@@ -144,6 +144,7 @@ export default function App() {
     [surveyOpen, setSurveyOpen] = useState(false),
     [glossaryOpen, setGlossaryOpen] = useState(false),
     [tourOpen, setTourOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const heading = useRef<HTMLHeadingElement>(null);
   const {
     offlineReady: [offlineReady],
@@ -250,6 +251,11 @@ export default function App() {
     if (theme !== "system") return;
     return watchSystemTheme(() => applyTheme("system"));
   }, [theme]);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
   function setNote(id: string, text: string) {
     const next = { ...notes };
     if (text.trim()) next[id] = text;
@@ -1096,6 +1102,7 @@ export default function App() {
         open={tourOpen}
         onClose={() => setTourOpen(false)}
         navigateTo={navigate}
+        isMobile={isMobile}
       />
 
     </div>
