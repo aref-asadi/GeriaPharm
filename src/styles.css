@@ -401,6 +401,25 @@ button {
   border-top: 1px solid var(--line);
   margin-top: 8px;
 }
+.sidebar-actions .sidebar-sync,
+.sidebar-actions .sidebar-tour {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: var(--radius-buttons);
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--text-2);
+  text-align: right;
+}
+.sidebar-actions .sidebar-sync:hover:not(:disabled),
+.sidebar-actions .sidebar-tour:hover {
+  background: var(--surface);
+  color: var(--text-1);
+}
 .edition {
   display: flex;
   align-items: center;

@@ -12,73 +12,79 @@ interface TourStep {
 const STEPS: TourStep[] = [
   {
     selector: '[data-tour="nav"]',
-    title: "Ù†Ø§ÙˆØ¨Ø±ÛŒ Ø§ØµÙ„ÛŒ",
+    title: "ناوبری اصلی",
     description:
-      "Ø§Ø² Ø§ÛŒÙ† Ù†ÙˆØ§Ø± Ø¨Ø±Ø§ÛŒ Ø¬Ø§Ø¨Ù‡â€ŒØ¬Ø§ÛŒÛŒ Ø¨ÛŒÙ† Ø¨Ø®Ø´â€ŒÙ‡Ø§ÛŒ Ø³Ø§Ù…Ø§Ù†Ù‡ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ú©Ù†ÛŒØ¯: Ø®Ø§Ù†Ù‡ØŒ Ù…Ø±Ø¬Ø¹ Ø¯Ø§Ø±ÙˆÙ‡Ø§ØŒ Ø¨Ø±Ø±Ø³ÛŒ Ù†Ø³Ø®Ù‡ØŒ Ù†Ø´Ø§Ù†Ú©â€ŒÙ‡Ø§ Ùˆ Ù…Ø¯ÛŒØ±ÛŒØª.",
+      "از این نوار برای جابه‌جایی بین بخش‌های سامانه استفاده کنید: خانه، مرجع داروها، بررسی نسخه، نشانک‌ها و مدیریت.",
   },
   {
     selector: '[data-tour="library-link"]',
-    title: "Ù…Ø±Ø¬Ø¹ Ø¯Ø§Ø±ÙˆÙ‡Ø§",
+    title: "مرجع داروها",
     description:
-      "Ù¾Ø§ÛŒÚ¯Ø§Ù‡ Ú©Ø§Ù…Ù„ Ø¯Ø§Ø±ÙˆÙ‡Ø§ÛŒ Ø³Ø§Ù„Ù…Ù†Ø¯ÛŒ Ø¨Ø± Ø§Ø³Ø§Ø³ Ù…Ø¹ÛŒØ§Ø±Ù‡Ø§ÛŒ Ø¨ÛŒØ±Ø² Û²Û°Û²Û³. Ø¬Ø³ØªØ¬ÙˆØŒ ÙÛŒÙ„ØªØ± Ø¨Ø± Ø§Ø³Ø§Ø³ Ú¯Ø±ÙˆÙ‡ Ø¯Ø±Ù…Ø§Ù†ÛŒ Ùˆ Ù…Ø±ØªØ¨â€ŒØ³Ø§Ø²ÛŒ Ø¨Ø± Ø§Ø³Ø§Ø³ Ø³Ø·Ø­ Ø®Ø·Ø± Ø¯Ø± Ø¯Ø³ØªØ±Ø³ Ø§Ø³Øª.",
+      "پایگاه کامل داروهای سالمندی بر اساس معیارهای بیرز ۲۰۲۳. جستجو، فیلتر بر اساس گروه درمانی و مرتب‌سازی بر اساس سطح خطر در دسترس است.",
   },
   {
     selector: '[data-tour="regimen-link"]',
-    title: "Ø¨Ø±Ø±Ø³ÛŒ Ù†Ø³Ø®Ù‡",
+    title: "بررسی نسخه",
     description:
-      "Ø¯Ø§Ø±ÙˆÙ‡Ø§ÛŒ Ø¨ÛŒÙ…Ø§Ø± Ø±Ø§ ÙˆØ§Ø±Ø¯ Ú©Ù†ÛŒØ¯. Ø³Ø§Ù…Ø§Ù†Ù‡ ØªØ¯Ø§Ø®Ù„â€ŒÙ‡Ø§ØŒ Ù‡Ø´Ø¯Ø§Ø±Ù‡Ø§ÛŒ Ø¨ÛŒØ±Ø²ØŒ Ø±ÛŒØ³Ú© ADRØŒ Ø¨Ø§Ø± Ø¢Ù†ØªÛŒâ€ŒÚ©ÙˆÙ„ÛŒÙ†Ø±Ú˜ÛŒÚ© Ùˆ Ù¾Ø±ÙˆØªÚ©Ù„ Ù‚Ø·Ø¹ ØªØ¯Ø±ÛŒØ¬ÛŒ Ø±Ø§ Ø¨Ù„Ø§Ø¯Ø±Ù†Ú¯ Ù…Ø­Ø§Ø³Ø¨Ù‡ Ù…ÛŒâ€ŒÚ©Ù†Ø¯.",
+      "داروهای بیمار را وارد کنید. سامانه تداخل‌ها، هشدارهای بیرز، ریسک ADR، بار آنتی‌کولینرژیک و پروتکل قطع تدریجی را بلادرنگ محاسبه می‌کند.",
   },
   {
     selector: '[data-tour="ai-cdss"]',
-    title: "Ù…ÙˆØªÙˆØ± Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ (Edge AI CDSS)",
+    title: "موتور هوش مصنوعی (Edge AI CDSS)",
     description:
-      "Ù¾Ø³ Ø§Ø² Ø§ÙØ²ÙˆØ¯Ù† Ø¯Ø§Ø±Ùˆ Ø¨Ù‡ Ù†Ø³Ø®Ù‡ØŒ Ø§ÛŒÙ† Ù¾Ù†Ù„ Ø§Ù…ØªÛŒØ§Ø² Ø±ÛŒØ³Ú© ADRØŒ Ù¾Ø±ÙˆØªÚ©Ù„â€ŒÙ‡Ø§ÛŒ Deprescribing Ùˆ Ù¾ÛŒØ´Ù†Ù‡Ø§Ø¯Ù‡Ø§ÛŒ Ø¬Ø§ÛŒÚ¯Ø²ÛŒÙ† Ø§ÛŒÙ…Ù†â€ŒØªØ± Ø¨Ø± Ù¾Ø§ÛŒÙ‡ Ø´ÙˆØ§Ù‡Ø¯ Ø¨ÛŒØ±Ø² Û²Û°Û²Û³ Ø±Ø§ Ù†Ø´Ø§Ù† Ù…ÛŒâ€ŒØ¯Ù‡Ø¯.",
+      "پس از افزودن دارو به نسخه، این پنل امتیاز ریسک ADR، پروتکل‌های Deprescribing و پیشنهادهای جایگزین ایمن‌تر بر پایه شواهد بیرز ۲۰۲۳ را نشان می‌دهد.",
   },
   {
     selector: '[data-tour="bookmarks-link"]',
-    title: "Ù†Ø´Ø§Ù†Ú©â€ŒÙ‡Ø§",
+    title: "نشانک‌ها",
     description:
-      "Ø¨Ø§ Ù„Ù…Ø³ Ø¢ÛŒÚ©ÙˆÙ† Ù†Ø´Ø§Ù†Ú© Ø±ÙˆÛŒ Ù‡Ø± Ø¯Ø§Ø±ÙˆØŒ Ø¢Ù† Ø±Ø§ Ø°Ø®ÛŒØ±Ù‡ Ú©Ù†ÛŒØ¯. Ø¯Ø± Ø§ÛŒÙ† Ø¨Ø®Ø´ Ø¨Ù‡ Ø¯Ø§Ø±ÙˆÙ‡Ø§ÛŒ Ø°Ø®ÛŒØ±Ù‡â€ŒØ´Ø¯Ù‡ Ø¯Ø³ØªØ±Ø³ÛŒ Ø³Ø±ÛŒØ¹ Ø®ÙˆØ§Ù‡ÛŒØ¯ Ø¯Ø§Ø´Øª.",
+      "با لمس آیکون نشانک روی هر دارو، آن را ذخیره کنید. در این بخش به داروهای ذخیره‌شده دسترسی سریع خواهید داشت.",
   },
   {
     selector: '[data-tour="survey-btn"]',
-    title: "Ø§Ø±Ø²ÛŒØ§Ø¨ÛŒ UMARS",
+    title: "ارزیابی UMARS",
     description:
-      "Ù¾Ø±Ø³Ø´â€ŒÙ†Ø§Ù…Ù‡ Ø§Ø³ØªØ§Ù†Ø¯Ø§Ø±Ø¯ UMARS Ø¨Ø±Ø§ÛŒ Ø³Ù†Ø¬Ø´ Ø±Ø¶Ø§ÛŒØª Ø§Ø² Ø±Ú˜ÛŒÙ… Ø¯Ø§Ø±ÙˆÛŒÛŒ. Ù¾Ø§Ø³Ø®â€ŒÙ‡Ø§ Ø¨Ù‡ ØµÙˆØ±Øª Ù†Ø§Ø´Ù†Ø§Ø³ Ø«Ø¨Øª Ù…ÛŒâ€ŒØ´ÙˆÙ†Ø¯.",
+      "پرسش‌نامه استاندارد UMARS برای سنجش رضایت از رژیم دارویی. پاسخ‌ها به صورت ناشناس ثبت می‌شوند.",
   },
   {
     selector: '[data-tour="glossary-btn"]',
-    title: "Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ Ø§ØµØ·Ù„Ø§Ø­Ø§Øª",
+    title: "راهنمای اصطلاحات",
     description:
-      "Ù…Ø¹Ù†ÛŒ Ø§Ø®ØªØµØ§Ø±Ø§Øª ØªØ®ØµØµÛŒ Ù…Ø§Ù†Ù†Ø¯ PIMØŒ ACBØŒ FRIDØŒ STOPPFallØŒ DOAC Ùˆ Ø³Ø§ÛŒØ± Ù…ÙˆØ§Ø±Ø¯ Ø±Ø§ Ø¯Ø± Ø§ÛŒÙ† ÙØ±Ù‡Ù†Ú¯â€ŒÙ†Ø§Ù…Ù‡ Ø¨Ø§Ù„ÛŒÙ†ÛŒ Ø¨ÛŒØ§Ø¨ÛŒØ¯.",
+      "معنی اختصارات تخصصی مانند PIM، ACB، FRID، STOPPFall، DOAC و سایر موارد را در این فرهنگ‌نامه بالینی بیابید.",
   },
 ];
 
-/** Condensed mobile guide: core steps that fit small screens and the hamburger menu. */
+/** Mobile-only guide: menu and bottom navigation are highlighted instead of desktop controls. */
 const MOBILE_STEPS: TourStep[] = [
   {
-    selector: '[data-tour="nav"]',
-    title: "Ù†Ø§ÙˆØ¨Ø±ÛŒ Ø§ØµÙ„ÛŒ",
+    selector: '[data-tour="mobile-menu-button"]',
+    title: "فهرست موبایل",
     description:
-      "Ø§Ø² Ù†ÙˆØ§Ø± Ú©Ù†Ø§Ø±ÛŒ Ø¨Ø±Ø§ÛŒ Ø¬Ø§Ø¨Ù‡â€ŒØ¬Ø§ÛŒÛŒ Ø¨ÛŒÙ† Ø¨Ø®Ø´â€ŒÙ‡Ø§ÛŒ Ø³Ø§Ù…Ø§Ù†Ù‡ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ú©Ù†ÛŒØ¯.",
+      "برای باز کردن فهرست اصلی و رسیدن به قسمت‌های همگام‌سازی، مدیریت و راهنما، روی دکمه سه‌خط لمس کنید.",
   },
   {
-    selector: '[data-tour="regimen-link"]',
-    title: "Ø¨Ø±Ø±Ø³ÛŒ Ù†Ø³Ø®Ù‡",
+    selector: '[data-tour="mobile-nav"]',
+    title: "ناوبری سریع",
     description:
-      "Ø¯Ø§Ø±ÙˆÙ‡Ø§ÛŒ Ø¨ÛŒÙ…Ø§Ø± Ø±Ø§ ÙˆØ§Ø±Ø¯ Ú©Ù†ÛŒØ¯. ØªØ¯Ø§Ø®Ù„â€ŒÙ‡Ø§ØŒ Ø±ÛŒØ³Ú© ADR Ùˆ Ù¾Ø±ÙˆØªÚ©Ù„ Ù‚Ø·Ø¹ ØªØ¯Ø±ÛŒØ¬ÛŒ Ù…Ø­Ø§Ø³Ø¨Ù‡ Ù…ÛŒâ€ŒØ´ÙˆØ¯.",
+      "این نوار پایین همیشه در دسترس است و جابه‌جایی بین خانه، مرجع داروها، بررسی نسخه، نشانک‌ها و مدیریت را ساده می‌کند.",
   },
   {
-    selector: '[data-tour="ai-cdss"]',
-    title: "Ù…ÙˆØªÙˆØ± Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ",
+    selector: '[data-tour="mobile-library-link"]',
+    title: "مرجع داروها",
     description:
-      "Ø±ÛŒØ³Ú© ADRØŒ Ù¾Ø±ÙˆØªÚ©Ù„â€ŒÙ‡Ø§ÛŒ Deprescribing Ùˆ Ø¬Ø§ÛŒÚ¯Ø²ÛŒÙ†â€ŒÙ‡Ø§ÛŒ Ø§ÛŒÙ…Ù†â€ŒØªØ± Ø±Ø§ Ù†Ø´Ø§Ù† Ù…ÛŒâ€ŒØ¯Ù‡Ø¯.",
+      "از این مسیر وارد مرجع موبایل شوید؛ داروها را جستجو کرده و اطلاعات آنها را بدون نیاز به صفحه بزرگتر ببینید.",
   },
   {
-    selector: '[data-tour="bookmarks-link"]',
-    title: "Ù†Ø´Ø§Ù†Ú©â€ŒÙ‡Ø§",
+    selector: '[data-tour="mobile-regimen-link"]',
+    title: "بررسی نسخه در موبایل",
     description:
-      "Ø¯Ø§Ø±ÙˆÙ‡Ø§ÛŒ Ù…ÙˆØ±Ø¯ Ø¹Ù„Ø§Ù‚Ù‡ Ø±Ø§ Ø¨Ø§ Ø¢ÛŒÚ©ÙˆÙ† Ù†Ø´Ø§Ù†Ú© Ø°Ø®ÛŒØ±Ù‡ Ùˆ Ø¨Ù‡ Ø¢Ù†â€ŒÙ‡Ø§ Ø¯Ø³ØªØ±Ø³ÛŒ Ø³Ø±ÛŒØ¹ Ø¯Ø§Ø´ØªÙ‡ Ø¨Ø§Ø´ÛŒØ¯.",
+      "داروهای بیمار را به‌صورت متناسب با صفحه کوچک وارد کنید و هشدارها و ریسک‌ها را مشاهده نمایید.",
+  },
+  {
+    selector: '[data-tour="mobile-bookmarks-link"]',
+    title: "نشانک‌های موبایل",
+    description:
+      "داروهای نشانک‌گذاری‌شده را با یک لمس از نوار پایین باز کنید و بعداً سریع به آنها برگردید.",
   },
 ];
 
@@ -87,6 +93,9 @@ const TOUR_PAGE_MAP: Record<string, string> = {
   "regimen-link": "regimen",
   "bookmarks-link": "bookmarks",
   "library-link": "library",
+  "mobile-regimen-link": "regimen",
+  "mobile-bookmarks-link": "bookmarks",
+  "mobile-library-link": "library",
   "ai-cdss": "regimen",
 };
 
@@ -133,7 +142,8 @@ export function TourGuide({
         setTargetRect({ top: r.top, left: r.left, width: r.width, height: r.height });
       }, 350);
     } else if (navigateTo) {
-      const pageId = TOUR_PAGE_MAP[current.selector];
+      const tourId = current.selector.match(/data-tour="([^"]+)"/)?.[1];
+      const pageId = tourId ? TOUR_PAGE_MAP[tourId] : undefined;
       if (pageId) {
         navigateTo(pageId);
         return;
@@ -249,7 +259,7 @@ export function TourGuide({
       <div
         role="dialog"
         aria-modal="true"
-        aria-label={`Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ Ø³Ø§Ù…Ø§Ù†Ù‡ â€” Ù…Ø±Ø­Ù„Ù‡ ${step + 1} Ø§Ø² ${total}`}
+        aria-label={`راهنمای سامانه — مرحله ${step + 1} از ${total}`}
         className="fixed z-[10000] rounded-[28px] bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/50 p-5 shadow-2xl"
         style={tooltipStyle}
       >
@@ -257,14 +267,14 @@ export function TourGuide({
           <div className="flex items-center gap-2">
             <Compass size={15} className="text-[#4541fe] shrink-0" />
             <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-              Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ Ø³Ø§Ù…Ø§Ù†Ù‡ Â· {step + 1} Ø§Ø² {total}
+              راهنمای سامانه · {step + 1} از {total}
             </span>
           </div>
           <button
             type="button"
             onClick={finish}
             className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
-            aria-label="Ø¨Ø³ØªÙ† Ø±Ø§Ù‡Ù†Ù…Ø§"
+            aria-label="بستن راهنما"
           >
             <X size={16} />
           </button>
@@ -298,7 +308,7 @@ export function TourGuide({
             onClick={finish}
             className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
           >
-            Ø±Ø¯ Ú©Ø±Ø¯Ù†
+            رد کردن
           </button>
           <div className="flex items-center gap-2">
             <button
@@ -308,14 +318,14 @@ export function TourGuide({
               className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
             >
               <ChevronRight size={13} aria-hidden />
-              Ù‚Ø¨Ù„ÛŒ
+              قبلی
             </button>
             <button
               type="button"
               onClick={next}
               className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-full bg-[#4541fe] hover:bg-[#3733db] text-white transition-colors"
             >
-              {step === total - 1 ? "Ù¾Ø§ÛŒØ§Ù†" : "Ø¨Ø¹Ø¯ÛŒ"}
+              {step === total - 1 ? "پایان" : "بعدی"}
               {step < total - 1 && <ChevronLeft size={13} aria-hidden />}
             </button>
           </div>
@@ -324,4 +334,3 @@ export function TourGuide({
     </>
   );
 }
-

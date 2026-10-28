@@ -446,21 +446,21 @@ export default function App() {
           </button>
           <button
             type="button"
-            className="survey-button sidebar-survey"
-            onClick={() => { setSurveyOpen(true); setMobileOpen(false); }}
-            title="فرم ارزیابی و نظرسنجی UMARS"
-          >
-            <ClipboardList size={16} aria-hidden />
-            <span>ارزیابی UMARS</span>
-          </button>
-          <button
-            type="button"
             onClick={() => { setTourOpen(true); setMobileOpen(false); }}
             className="tour-button sidebar-tour"
             title="راهنمای تعاملی بخش‌های سایت"
           >
             <Compass size={16} aria-hidden />
             <span>راهنمای سایت</span>
+          </button>
+          <button
+            type="button"
+            className="survey-button sidebar-survey"
+            onClick={() => { setSurveyOpen(true); setMobileOpen(false); }}
+            title="فرم ارزیابی و نظرسنجی UMARS"
+          >
+            <ClipboardList size={16} aria-hidden />
+            <span>ارزیابی UMARS</span>
           </button>
         </div>
         <div className="sidebar-bottom">
@@ -487,6 +487,7 @@ export default function App() {
             <IconButton
               label="باز کردن فهرست"
               className="menu-button"
+              data-tour="mobile-menu-button"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               <Menu size={22} />
@@ -904,10 +905,11 @@ export default function App() {
           </footer>
         </main>
       </div>
-      <nav className="mobile-nav" aria-label="ناوبری تلفن همراه">
+      <nav className="mobile-nav" data-tour="mobile-nav" aria-label="ناوبری تلفن همراه">
         {nav.map((n) => (
           <button
             key={n.id}
+            data-tour={n.id === "library" ? "mobile-library-link" : n.id === "regimen" ? "mobile-regimen-link" : n.id === "bookmarks" ? "mobile-bookmarks-link" : `mobile-${n.id}-link`}
             aria-current={page === n.id ? "page" : undefined}
             className={page === n.id ? "active" : ""}
             onClick={() => navigate(n.id)}
