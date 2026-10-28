@@ -583,7 +583,7 @@ export function Checker({
 
         {/* MODULE 1: Local Edge AI CDSS Decision Support Panel */}
         {meds.length > 0 && (
-          <div className="edge-ai-cdss-panel mb-6 w-full min-w-0 p-6 rounded-[36px] bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/50 shadow-xl space-y-6">
+          <div data-tour="ai-cdss" className="edge-ai-cdss-panel mb-6 w-full min-w-0 p-6 rounded-[36px] bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/50 shadow-xl space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="w-10 h-10 shrink-0 rounded-2xl bg-indigo-500/15 text-[#4541fe] flex items-center justify-center">
@@ -646,18 +646,22 @@ export function Checker({
               </div>
             </div>
             {/* 1.2 Deprescribing & Tapering Protocols */}
-            {deprescribingProtocols.length > 0 && (
-              <div className="space-y-3">
-                <div className="flex items-start gap-2 text-sm font-bold text-slate-900 dark:text-white min-w-0">
-                  <CalendarCheck
-                    size={18}
-                    className="text-[#4541fe] shrink-0 mt-0.5"
-                  />
-                  <span className="break-words">
-                    پروتکل‌های هوشمند کاهش تدریجی و قطع دارو (Deprescribing
-                    Roadmap)
-                  </span>
-                </div>
+            <div className="space-y-3">
+              <div className="flex items-start gap-2 text-sm font-bold text-slate-900 dark:text-white min-w-0">
+                <CalendarCheck
+                  size={18}
+                  className="text-[#4541fe] shrink-0 mt-0.5"
+                />
+                <span className="break-words">
+                  پروتکل‌های هوشمند کاهش تدریجی و قطع دارو (Deprescribing
+                  Roadmap)
+                </span>
+              </div>
+              {deprescribingProtocols.length === 0 ? (
+                <p className="text-xs text-slate-500 dark:text-slate-400 pr-1">
+                  برای داروهای موجود در نسخه، پروتکل قطع تدریجی با پایه شواهد شناسایی نشد.
+                </p>
+              ) : (
                 <div className="grid gap-3">
                   {deprescribingProtocols.map((proto) => (
                     <div
@@ -714,13 +718,12 @@ export function Checker({
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             {/* 1.3 Local Vector/Similarity Drug Substitutions */}
-            {drugSubstitutions.length > 0 && (
-              <div className="space-y-3">
-                <div className="flex items-start gap-2 text-sm font-bold text-slate-900 dark:text-white min-w-0">
+            <div className="space-y-3">
+              <div className="flex items-start gap-2 text-sm font-bold text-slate-900 dark:text-white min-w-0">
                   <ArrowRightLeft
                     size={18}
                     className="text-[#fe0f83] shrink-0 mt-0.5"
@@ -729,6 +732,11 @@ export function Checker({
                     پیشنهادهای جایگزینی ایمن‌تر (Drug Substitutions)
                   </span>
                 </div>
+              {drugSubstitutions.length === 0 ? (
+                <p className="text-xs text-slate-500 dark:text-slate-400 pr-1">
+                  برای داروهای وارد شده، جایگزین ایمن‌تر با پایه شواهد شناسایی نشد. وارد کردن داروهای مرتبط با شواهد بیرز ۲۰۲۳ (مثل وارفارین، دیازپام، آمیتریپتیلین و…) توصیه می‌شود.
+                </p>
+              ) : (
                 <div className="grid gap-3">
                   {drugSubstitutions.map((sub) => (
                     <div
@@ -769,8 +777,8 @@ export function Checker({
                     </div>
                   ))}
                 </div>
-              </div>
             )}
+              </div>
           </div>
         )}
 

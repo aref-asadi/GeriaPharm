@@ -25,6 +25,7 @@ import {
   List,
   LayoutGrid,
   ClipboardList,
+  Compass,
   StickyNote,
 } from "lucide-react";
 import { getAllMedications } from "./services/db";
@@ -53,6 +54,7 @@ import {
 } from "./components/ui/Primitives";
 import { GlossaryModal } from "./components/GlossaryModal";
 import { UmarsSurveyModal } from "./components/UmarsSurveyModal";
+import { TourGuide, tourIsDone } from "./components/TourGuide";
 import { tables, fa, number, date, drugName, matchesSearch } from "./lib/fa";
 import {
   applyTheme,
@@ -140,7 +142,8 @@ export default function App() {
     [viewMode, setViewMode] = useState<"list" | "grid">("list"),
     [sortBy, setSortBy] = useState<"name" | "category" | "risk">("name"),
     [surveyOpen, setSurveyOpen] = useState(false),
-    [glossaryOpen, setGlossaryOpen] = useState(false);
+    [glossaryOpen, setGlossaryOpen] = useState(false),
+    [tourOpen, setTourOpen] = useState(() => !tourIsDone());
   const heading = useRef<HTMLHeadingElement>(null);
   const {
     offlineReady: [offlineReady],
@@ -393,12 +396,15 @@ export default function App() {
           {nav.map((n) => (
             <button
               key={n.id}
+              data-tour="nav"
               aria-current={page === n.id ? "page" : undefined}
               className={"nav-item " + (page === n.id ? "active" : "")}
               onClick={() => navigate(n.id)}
             >
               <n.icon size={21} />
-              <span>{n.label}</span>
+              <span data-tour={n.id === "regimen" ? "regimen-link" : n.id === "bookmarks" ? "bookmarks-link" : n.id === "library" ? "library-link" : "nav"}>
+                {n.label}
+              </span>
               {n.id === "regimen" && regimen.length > 0 && (
                 <span className="nav-count">{number(regimen.length)}</span>
               )}
@@ -477,6 +483,16 @@ export default function App() {
           <div className="top-right">
             <button
               type="button"
+              onClick={() => setTourOpen(true)}
+              className="tour-button"
+              title="راهنمای تعاملی بخش‌های سایت"
+            >
+              <Compass size={14} aria-hidden />
+              <span>راهنمای سایت</span>
+            </button>
+            <button
+              type="button"
+              data-tour="glossary-btn"
               onClick={() => setGlossaryOpen(true)}
               className="glossary-button"
               title="راهنمای اصطلاحات و اختصارات بیرز"
@@ -512,6 +528,7 @@ export default function App() {
             </button>
             <button
               type="button"
+              data-tour="survey-btn"
               onClick={() => setSurveyOpen(true)}
               className="survey-button topbar-overflow"
               title="فرم ارزیابی و نظرسنجی UMARS"
@@ -1074,6 +1091,10 @@ export default function App() {
         onClose={() => setSurveyOpen(false)}
         isAdmin={Boolean(session.user)}
         online={online}
+      />
+      <TourGuide
+        open={tourOpen}
+        onClose={() => setTourOpen(false)}
       />
 
     </div>
