@@ -144,7 +144,7 @@ export default function App() {
     [surveyOpen, setSurveyOpen] = useState(false),
     [glossaryOpen, setGlossaryOpen] = useState(false),
     [tourOpen, setTourOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 800);
   const heading = useRef<HTMLHeadingElement>(null);
   const {
     offlineReady: [offlineReady],
@@ -252,7 +252,7 @@ export default function App() {
     return watchSystemTheme(() => applyTheme("system"));
   }, [theme]);
   useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < 640);
+    const onResize = () => setIsMobile(window.innerWidth <= 800);
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -401,7 +401,7 @@ export default function App() {
           {nav.map((n) => (
             <button
               key={n.id}
-              data-tour={n.id === "regimen" ? "regimen-link" : n.id === "bookmarks" ? "bookmarks-link" : n.id === "library" ? "library-link" : undefined}
+              data-tour={n.id === "home" ? "home-link" : n.id === "regimen" ? "regimen-link" : n.id === "bookmarks" ? "bookmarks-link" : n.id === "library" ? "library-link" : undefined}
               aria-current={page === n.id ? "page" : undefined}
               className={"nav-item " + (page === n.id ? "active" : "")}
               onClick={() => navigate(n.id)}
@@ -419,6 +419,7 @@ export default function App() {
         </nav>
         <div className="sidebar-actions">
           <button
+            data-tour={isMobile ? "mobile-sync-btn" : "sync-btn"}
             className="sync-status sidebar-sync"
             onClick={() => void refresh()}
             disabled={syncing}
@@ -445,6 +446,16 @@ export default function App() {
           </button>
           <button
             type="button"
+            data-tour={isMobile ? "mobile-glossary-btn" : "glossary-btn"}
+            className="sidebar-glossary"
+            onClick={() => { setGlossaryOpen(true); setMobileOpen(false); }}
+            title="راهنمای اصطلاحات و اختصارات بیرز"
+          >
+            <BookOpen size={16} aria-hidden />
+            <span>راهنمای اصطلاحات</span>
+          </button>
+          <button
+            type="button"
             onClick={() => { setTourOpen(true); setMobileOpen(false); }}
             className="tour-button sidebar-tour"
             title="راهنمای تعاملی بخش‌های سایت"
@@ -454,23 +465,13 @@ export default function App() {
           </button>
           <button
             type="button"
-            data-tour="mobile-survey-btn"
+            data-tour={isMobile ? "mobile-survey-btn" : "survey-btn"}
             className="survey-button sidebar-survey"
             onClick={() => { setSurveyOpen(true); setMobileOpen(false); }}
             title="فرم ارزیابی و نظرسنجی UMARS"
           >
             <ClipboardList size={16} aria-hidden />
             <span>ارزیابی UMARS</span>
-          </button>
-          <button
-            type="button"
-            data-tour="mobile-glossary-btn"
-            className="sidebar-glossary"
-            onClick={() => { setGlossaryOpen(true); setMobileOpen(false); }}
-            title="راهنمای اصطلاحات و اختصارات بیرز"
-          >
-            <BookOpen size={16} aria-hidden />
-            <span>راهنمای اصطلاحات</span>
           </button>
         </div>
         <div className="sidebar-bottom">
@@ -506,16 +507,6 @@ export default function App() {
             <strong>{nav.find((n) => n.id === page)?.label}</strong>
           </div>
           <div className="top-right">
-            <button
-              type="button"
-              data-tour="glossary-btn"
-              onClick={() => setGlossaryOpen(true)}
-              className="glossary-button"
-              title="راهنمای اصطلاحات و اختصارات بیرز"
-            >
-              <BookOpen size={14} aria-hidden />
-              <span>راهنمای اصطلاحات</span>
-            </button>
             <ThemeToggle value={theme} onChange={setTheme} />
           </div>
         </header>

@@ -10,94 +10,24 @@ interface TourStep {
 }
 
 const STEPS: TourStep[] = [
-  {
-    selector: '[data-tour="desktop-nav"]',
-    title: "ناوبری اصلی",
-    description:
-      "از این منوی سمت راست برای جابه‌جایی بین بخش‌های سامانه استفاده کنید: خانه، مرجع داروها، بررسی نسخه، نشانک‌ها و مدیریت.",
-  },
-  {
-    selector: '[data-tour="library-link"]',
-    title: "مرجع داروها",
-    description:
-      "پایگاه کامل داروهای سالمندی بر اساس معیارهای بیرز ۲۰۲۳. جستجو، فیلتر بر اساس گروه درمانی و مرتب‌سازی بر اساس سطح خطر در دسترس است.",
-  },
-  {
-    selector: '[data-tour="regimen-link"]',
-    title: "بررسی نسخه",
-    description:
-      "داروهای بیمار را وارد کنید. سامانه تداخل‌ها، هشدارهای بیرز، ریسک ADR، بار آنتی‌کولینرژیک و پروتکل قطع تدریجی را بلادرنگ محاسبه می‌کند.",
-  },
-  {
-    selector: '[data-tour="ai-cdss"]',
-    title: "موتور هوش مصنوعی (Edge AI CDSS)",
-    description:
-      "پس از افزودن دارو به نسخه، این پنل امتیاز ریسک ADR، پروتکل‌های Deprescribing و پیشنهادهای جایگزین ایمن‌تر بر پایه شواهد بیرز ۲۰۲۳ را نشان می‌دهد.",
-  },
-  {
-    selector: '[data-tour="bookmarks-link"]',
-    title: "نشانک‌ها",
-    description:
-      "با لمس آیکون نشانک روی هر دارو، آن را ذخیره کنید. در این بخش به داروهای ذخیره‌شده دسترسی سریع خواهید داشت.",
-  },
-  {
-    selector: '[data-tour="survey-btn"]',
-    title: "ارزیابی UMARS",
-    description:
-      "پرسش‌نامه استاندارد UMARS برای سنجش رضایت از رژیم دارویی. پاسخ‌ها به صورت ناشناس ثبت می‌شوند.",
-  },
-  {
-    selector: '[data-tour="glossary-btn"]',
-    title: "راهنمای اصطلاحات",
-    description:
-      "معنی اختصارات تخصصی مانند PIM، ACB، FRID، STOPPFall، DOAC و سایر موارد را در این فرهنگ‌نامه بالینی بیابید.",
-  },
+  { selector: '[data-tour="home-link"]', title: "خانه", description: "از صفحه خانه به مرور سریع داروها و آغاز کار در سامانه دسترسی دارید." },
+  { selector: '[data-tour="library-link"]', title: "مرجع داروها", description: "پایگاه داروهای سالمندی را جستجو کنید، بر اساس گروه درمانی فیلتر کنید و داروها را بر اساس سطح ریسک مرور کنید." },
+  { selector: '[data-tour="regimen-link"]', title: "بررسی نسخه", description: "داروهای بیمار را وارد کنید تا تداخل‌ها، هشدارهای بیرز، ریسک ADR، بار آنتی‌کولینرژیک و راهبردهای قطع تدریجی ارزیابی شوند." },
+  { selector: '[data-tour="bookmarks-link"]', title: "نشانک‌ها", description: "داروهای مهم را با نشانک ذخیره کنید و برای مراجعه سریع‌تر بعدی در بخش نشانک‌ها ببینید." },
+  { selector: '[data-tour="sync-btn"]', title: "همگام‌سازی", description: "با این گزینه آخرین فهرست دارویی و تغییرات سامانه را از سرور دریافت کنید و اطلاعات آفلاین را به‌روز نگه دارید." },
+  { selector: '[data-tour="glossary-btn"]', title: "راهنمای اصطلاحات", description: "معنی اختصارات تخصصی مانند PIM، ACB، FRID، STOPPFall، DOAC و سایر واژه‌های بالینی را در فرهنگ‌نامه ببینید." },
+  { selector: '[data-tour="survey-btn"]', title: "ارزیابی UMARS", description: "پرسش‌نامه استاندارد UMARS را تکمیل کنید تا رضایت و کیفیت تجربه استفاده از رژیم دارویی سنجیده شود." },
 ];
 
-/** Mobile guide mirrors the seven desktop topics while targeting mobile controls and content. */
+/** Mobile controls use distinct selectors but contain the same guidance as desktop. */
 const MOBILE_STEPS: TourStep[] = [
-  {
-    selector: '[data-tour="mobile-menu-button"]',
-    title: "ناوبری اصلی",
-    description:
-      "با لمس دکمه سه‌خط، فهرست موبایل را باز کنید. از این فهرست می‌توانید به بخش‌های سامانه و ابزارهای کناری دسترسی داشته باشید.",
-  },
-  {
-    selector: '[data-tour="mobile-library-link"]',
-    title: "مرجع داروها",
-    description:
-      "از این دکمه در نوار پایین وارد مرجع داروها شوید؛ جستجو، فیلتر گروه درمانی و مرتب‌سازی خطر را در صفحه موبایل انجام دهید.",
-  },
-  {
-    selector: '[data-tour="mobile-regimen-link"]',
-    title: "بررسی نسخه",
-    description:
-      "با استفاده از این دکمه در نوار پایین، داروهای بیمار را وارد کنید تا تداخل‌ها، هشدارهای بیرز، ریسک ADR و پروتکل‌های قطع تدریجی محاسبه شوند.",
-  },
-  {
-    selector: '[data-tour="mobile-ai-cdss"]',
-    title: "موتور هوش مصنوعی (Edge AI CDSS)",
-    description:
-      "پس از افزودن دارو در صفحه موبایل، بخش هوشمند اینجا امتیاز ریسک ADR، پیشنهادهای Deprescribing و جایگزین‌های ایمن‌تر را نشان می‌دهد.",
-  },
-  {
-    selector: '[data-tour="mobile-bookmarks-link"]',
-    title: "نشانک‌ها",
-    description:
-      "از دکمه نشانک‌ها در نوار پایین وارد داروهای ذخیره‌شده شوید؛ می‌توانید داروها را با آیکون نشانک در صفحات دیگر ذخیره کنید.",
-  },
-  {
-    selector: '[data-tour="mobile-survey-btn"]',
-    title: "ارزیابی UMARS",
-    description:
-      "این گزینه را در فهرست موبایل انتخاب کنید تا پرسش‌نامه استاندارد UMARS را برای سنجش رضایت از رژیم دارویی تکمیل کنید.",
-  },
-  {
-    selector: '[data-tour="mobile-glossary-btn"]',
-    title: "راهنمای اصطلاحات",
-    description:
-      "این گزینه را از فهرست موبایل باز کنید تا معنی اختصارات تخصصی مانند PIM، ACB، FRID، STOPPFall و DOAC را ببینید.",
-  },
+  { selector: '[data-tour="mobile-home-link"]', title: "خانه", description: "از صفحه خانه به مرور سریع داروها و آغاز کار در سامانه دسترسی دارید." },
+  { selector: '[data-tour="mobile-library-link"]', title: "مرجع داروها", description: "پایگاه داروهای سالمندی را جستجو کنید، بر اساس گروه درمانی فیلتر کنید و داروها را بر اساس سطح ریسک مرور کنید." },
+  { selector: '[data-tour="mobile-regimen-link"]', title: "بررسی نسخه", description: "داروهای بیمار را وارد کنید تا تداخل‌ها، هشدارهای بیرز، ریسک ADR، بار آنتی‌کولینرژیک و راهبردهای قطع تدریجی ارزیابی شوند." },
+  { selector: '[data-tour="mobile-bookmarks-link"]', title: "نشانک‌ها", description: "داروهای مهم را با نشانک ذخیره کنید و برای مراجعه سریع‌تر بعدی در بخش نشانک‌ها ببینید." },
+  { selector: '[data-tour="mobile-sync-btn"]', title: "همگام‌سازی", description: "با این گزینه آخرین فهرست دارویی و تغییرات سامانه را از سرور دریافت کنید و اطلاعات آفلاین را به‌روز نگه دارید." },
+  { selector: '[data-tour="mobile-glossary-btn"]', title: "راهنمای اصطلاحات", description: "معنی اختصارات تخصصی مانند PIM، ACB، FRID، STOPPFall، DOAC و سایر واژه‌های بالینی را در فرهنگ‌نامه ببینید." },
+  { selector: '[data-tour="mobile-survey-btn"]', title: "ارزیابی UMARS", description: "پرسش‌نامه استاندارد UMARS را تکمیل کنید تا رضایت و کیفیت تجربه استفاده از رژیم دارویی سنجیده شود." },
 ];
 
 /** Map a tour target to the page it lives on, so the guide can navigate there first. */
@@ -108,6 +38,7 @@ const TOUR_PAGE_MAP: Record<string, string> = {
   "mobile-regimen-link": "regimen",
   "mobile-bookmarks-link": "bookmarks",
   "mobile-library-link": "library",
+  "mobile-home-link": "home",
   "mobile-menu-button": "home",
   "ai-cdss": "regimen",
   "mobile-ai-cdss": "regimen",
@@ -153,7 +84,8 @@ export function TourGuide({
     if (isMobile && setMobileMenuOpen) {
       const keepMenuOpen =
         current.selector.includes("mobile-survey-btn") ||
-        current.selector.includes("mobile-glossary-btn");
+        current.selector.includes("mobile-glossary-btn") ||
+        current.selector.includes("mobile-sync-btn");
       setMobileMenuOpen(keepMenuOpen);
     }
 
@@ -257,24 +189,32 @@ export function TourGuide({
 
   return (
     <>
-      <div
-        className="fixed inset-0 z-[9998]"
-        style={{
+      {targetRect ? (() => {
+        const rect = targetRect;
+        const paneStyle = (style: React.CSSProperties): React.CSSProperties => ({
+          position: "fixed",
+          zIndex: 9998,
           background: "rgba(16,23,34,0.65)",
           backdropFilter: "blur(2px)",
           WebkitBackdropFilter: "blur(2px)",
-          ...(targetRect
-            ? {
-                maskImage: `radial-gradient(circle at ${targetRect.left + targetRect.width / 2}px ${targetRect.top + targetRect.height / 2}px, transparent ${Math.max(targetRect.width, targetRect.height) / 2 + 12}px, black ${Math.max(targetRect.width, targetRect.height) / 2 + 14}px)`,
-                WebkitMaskImage: `radial-gradient(circle at ${targetRect.left + targetRect.width / 2}px ${targetRect.top + targetRect.height / 2}px, transparent ${Math.max(targetRect.width, targetRect.height) / 2 + 12}px, black ${Math.max(targetRect.width, targetRect.height) / 2 + 14}px)`,
-                maskPosition: "0 0",
-                WebkitMaskPosition: "0 0",
-              }
-            : {}),
-        }}
-        onClick={finish}
-        aria-hidden="true"
-      />
+          ...style,
+        });
+        return (
+          <>
+            <div aria-hidden="true" onClick={finish} style={paneStyle({ top: 0, left: 0, right: 0, height: Math.max(0, rect.top - 5) })} />
+            <div aria-hidden="true" onClick={finish} style={paneStyle({ top: rect.top - 5, left: 0, width: Math.max(0, rect.left - 5), height: rect.height + 10 })} />
+            <div aria-hidden="true" onClick={finish} style={paneStyle({ top: rect.top - 5, left: rect.left + rect.width + 5, right: 0, height: rect.height + 10 })} />
+            <div aria-hidden="true" onClick={finish} style={paneStyle({ top: rect.top + rect.height + 5, left: 0, right: 0, bottom: 0 })} />
+          </>
+        );
+      })() : (
+        <div
+          className="fixed inset-0 z-[9998]"
+          style={{ background: "rgba(16,23,34,0.65)", backdropFilter: "blur(2px)", WebkitBackdropFilter: "blur(2px)" }}
+          onClick={finish}
+          aria-hidden="true"
+        />
+      )}
 
       {targetRect && (
         <div
