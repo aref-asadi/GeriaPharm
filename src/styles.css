@@ -306,6 +306,9 @@ button {
   background: var(--surface);
   border-left: 1px solid var(--line);
   padding: 31px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
   z-index: 10;
 }
 .brand {
@@ -2677,9 +2680,6 @@ td small {
   }
   .avatar {
     display: none;
-  }
-  .sync-status span {
-    font-size: 10px;
   }
   .category-card h3 {
     font-size: 15px;
