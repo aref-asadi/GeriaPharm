@@ -397,18 +397,17 @@ export default function App() {
             <strong>GeriaPharm</strong>
           </div>
         </a>
-        <div className="sidebar-label">فضای کار بالینی</div>
-        <nav aria-label="ناوبری اصلی">
+        <nav aria-label="ناوبری اصلی" data-tour="desktop-nav">
           {nav.map((n) => (
             <button
               key={n.id}
-              data-tour="nav"
+              data-tour={n.id === "regimen" ? "regimen-link" : n.id === "bookmarks" ? "bookmarks-link" : n.id === "library" ? "library-link" : undefined}
               aria-current={page === n.id ? "page" : undefined}
               className={"nav-item " + (page === n.id ? "active" : "")}
               onClick={() => navigate(n.id)}
             >
               <n.icon size={21} />
-              <span data-tour={n.id === "regimen" ? "regimen-link" : n.id === "bookmarks" ? "bookmarks-link" : n.id === "library" ? "library-link" : "nav"}>
+              <span>
                 {n.label}
               </span>
               {n.id === "regimen" && regimen.length > 0 && (
@@ -455,12 +454,23 @@ export default function App() {
           </button>
           <button
             type="button"
+            data-tour="mobile-survey-btn"
             className="survey-button sidebar-survey"
             onClick={() => { setSurveyOpen(true); setMobileOpen(false); }}
             title="فرم ارزیابی و نظرسنجی UMARS"
           >
             <ClipboardList size={16} aria-hidden />
             <span>ارزیابی UMARS</span>
+          </button>
+          <button
+            type="button"
+            data-tour="mobile-glossary-btn"
+            className="sidebar-glossary"
+            onClick={() => { setGlossaryOpen(true); setMobileOpen(false); }}
+            title="راهنمای اصطلاحات و اختصارات بیرز"
+          >
+            <BookOpen size={16} aria-hidden />
+            <span>راهنمای اصطلاحات</span>
           </button>
         </div>
         <div className="sidebar-bottom">
@@ -492,7 +502,6 @@ export default function App() {
             >
               <Menu size={22} />
             </IconButton>
-            <span>فضای کار بالینی</span>
             <ChevronLeft size={15} />
             <strong>{nav.find((n) => n.id === page)?.label}</strong>
           </div>
@@ -508,41 +517,6 @@ export default function App() {
               <span>راهنمای اصطلاحات</span>
             </button>
             <ThemeToggle value={theme} onChange={setTheme} />
-            <button
-              className="sync-status topbar-overflow"
-              onClick={() => void refresh()}
-              disabled={syncing}
-              title={
-                lastSync
-                  ? "آخرین تغییر فهرست: " + date(lastSync)
-                  : "دریافت آخرین نسخه فهرست"
-              }
-            >
-              {!online ? (
-                <WifiOff size={16} />
-              ) : (
-                <RefreshCw size={15} className={syncing ? "spin" : ""} />
-              )}
-              <span>
-                {syncing
-                  ? "در حال همگام‌سازی"
-                  : !online
-                    ? "حالت آفلاین"
-                    : synced
-                      ? "متصل به سرور"
-                      : "نسخه ذخیره‌شده"}
-              </span>
-            </button>
-            <button
-              type="button"
-              data-tour="survey-btn"
-              onClick={() => setSurveyOpen(true)}
-              className="survey-button topbar-overflow"
-              title="فرم ارزیابی و نظرسنجی UMARS"
-            >
-              <ClipboardList size={16} aria-hidden />
-              <span>ارزیابی UMARS</span>
-            </button>
           </div>
         </header>
         <main id="main-content">
@@ -1105,6 +1079,7 @@ export default function App() {
         onClose={() => setTourOpen(false)}
         navigateTo={navigate}
         isMobile={isMobile}
+        setMobileMenuOpen={setMobileOpen}
       />
 
     </div>

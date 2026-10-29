@@ -11,10 +11,10 @@ interface TourStep {
 
 const STEPS: TourStep[] = [
   {
-    selector: '[data-tour="nav"]',
+    selector: '[data-tour="desktop-nav"]',
     title: "ناوبری اصلی",
     description:
-      "از این نوار برای جابه‌جایی بین بخش‌های سامانه استفاده کنید: خانه، مرجع داروها، بررسی نسخه، نشانک‌ها و مدیریت.",
+      "از این منوی سمت راست برای جابه‌جایی بین بخش‌های سامانه استفاده کنید: خانه، مرجع داروها، بررسی نسخه، نشانک‌ها و مدیریت.",
   },
   {
     selector: '[data-tour="library-link"]',
@@ -54,37 +54,49 @@ const STEPS: TourStep[] = [
   },
 ];
 
-/** Mobile-only guide: menu and bottom navigation are highlighted instead of desktop controls. */
+/** Mobile guide mirrors the seven desktop topics while targeting mobile controls and content. */
 const MOBILE_STEPS: TourStep[] = [
   {
     selector: '[data-tour="mobile-menu-button"]',
-    title: "فهرست موبایل",
+    title: "ناوبری اصلی",
     description:
-      "برای باز کردن فهرست اصلی و رسیدن به قسمت‌های همگام‌سازی، مدیریت و راهنما، روی دکمه سه‌خط لمس کنید.",
-  },
-  {
-    selector: '[data-tour="mobile-nav"]',
-    title: "ناوبری سریع",
-    description:
-      "این نوار پایین همیشه در دسترس است و جابه‌جایی بین خانه، مرجع داروها، بررسی نسخه، نشانک‌ها و مدیریت را ساده می‌کند.",
+      "با لمس دکمه سه‌خط، فهرست موبایل را باز کنید. از این فهرست می‌توانید به بخش‌های سامانه و ابزارهای کناری دسترسی داشته باشید.",
   },
   {
     selector: '[data-tour="mobile-library-link"]',
     title: "مرجع داروها",
     description:
-      "از این مسیر وارد مرجع موبایل شوید؛ داروها را جستجو کرده و اطلاعات آنها را بدون نیاز به صفحه بزرگتر ببینید.",
+      "از این دکمه در نوار پایین وارد مرجع داروها شوید؛ جستجو، فیلتر گروه درمانی و مرتب‌سازی خطر را در صفحه موبایل انجام دهید.",
   },
   {
     selector: '[data-tour="mobile-regimen-link"]',
-    title: "بررسی نسخه در موبایل",
+    title: "بررسی نسخه",
     description:
-      "داروهای بیمار را به‌صورت متناسب با صفحه کوچک وارد کنید و هشدارها و ریسک‌ها را مشاهده نمایید.",
+      "با استفاده از این دکمه در نوار پایین، داروهای بیمار را وارد کنید تا تداخل‌ها، هشدارهای بیرز، ریسک ADR و پروتکل‌های قطع تدریجی محاسبه شوند.",
+  },
+  {
+    selector: '[data-tour="mobile-ai-cdss"]',
+    title: "موتور هوش مصنوعی (Edge AI CDSS)",
+    description:
+      "پس از افزودن دارو در صفحه موبایل، بخش هوشمند اینجا امتیاز ریسک ADR، پیشنهادهای Deprescribing و جایگزین‌های ایمن‌تر را نشان می‌دهد.",
   },
   {
     selector: '[data-tour="mobile-bookmarks-link"]',
-    title: "نشانک‌های موبایل",
+    title: "نشانک‌ها",
     description:
-      "داروهای نشانک‌گذاری‌شده را با یک لمس از نوار پایین باز کنید و بعداً سریع به آنها برگردید.",
+      "از دکمه نشانک‌ها در نوار پایین وارد داروهای ذخیره‌شده شوید؛ می‌توانید داروها را با آیکون نشانک در صفحات دیگر ذخیره کنید.",
+  },
+  {
+    selector: '[data-tour="mobile-survey-btn"]',
+    title: "ارزیابی UMARS",
+    description:
+      "این گزینه را در فهرست موبایل انتخاب کنید تا پرسش‌نامه استاندارد UMARS را برای سنجش رضایت از رژیم دارویی تکمیل کنید.",
+  },
+  {
+    selector: '[data-tour="mobile-glossary-btn"]',
+    title: "راهنمای اصطلاحات",
+    description:
+      "این گزینه را از فهرست موبایل باز کنید تا معنی اختصارات تخصصی مانند PIM، ACB، FRID، STOPPFall و DOAC را ببینید.",
   },
 ];
 
@@ -96,7 +108,9 @@ const TOUR_PAGE_MAP: Record<string, string> = {
   "mobile-regimen-link": "regimen",
   "mobile-bookmarks-link": "bookmarks",
   "mobile-library-link": "library",
+  "mobile-menu-button": "home",
   "ai-cdss": "regimen",
+  "mobile-ai-cdss": "regimen",
 };
 
 interface TargetRect {
@@ -120,11 +134,13 @@ export function TourGuide({
   onClose,
   navigateTo,
   isMobile = false,
+  setMobileMenuOpen,
 }: {
   open: boolean;
   onClose: () => void;
   navigateTo?: (id: string) => void;
   isMobile?: boolean;
+  setMobileMenuOpen?: (open: boolean) => void;
 }) {
   const [step, setStep] = useState(0);
   const [targetRect, setTargetRect] = useState<TargetRect | null>(null);
@@ -134,25 +150,44 @@ export function TourGuide({
   const total = allSteps.length;
 
   const locate = useCallback(() => {
-    const el = document.querySelector<HTMLElement>(current.selector);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      setTimeout(() => {
-        const r = el.getBoundingClientRect();
-        setTargetRect({ top: r.top, left: r.left, width: r.width, height: r.height });
-      }, 350);
-    } else if (navigateTo) {
-      const tourId = current.selector.match(/data-tour="([^"]+)"/)?.[1];
-      const pageId = tourId ? TOUR_PAGE_MAP[tourId] : undefined;
-      if (pageId) {
-        navigateTo(pageId);
-        return;
-      }
-      setTargetRect(null);
-    } else {
-      setTargetRect(null);
+    if (isMobile && setMobileMenuOpen) {
+      const keepMenuOpen =
+        current.selector.includes("mobile-survey-btn") ||
+        current.selector.includes("mobile-glossary-btn");
+      setMobileMenuOpen(keepMenuOpen);
     }
-  }, [current.selector, navigateTo]);
+
+    setTimeout(() => {
+      const el = document.querySelector<HTMLElement>(current.selector);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        setTimeout(() => {
+          const r = el.getBoundingClientRect();
+          setTargetRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+        }, 350);
+      } else if (navigateTo) {
+        const tourId = current.selector.match(/data-tour="([^"]+)"/)?.[1];
+        const pageId = tourId ? TOUR_PAGE_MAP[tourId] : undefined;
+        if (pageId) {
+          navigateTo(pageId);
+          setTimeout(() => {
+            const retry = document.querySelector<HTMLElement>(current.selector);
+            if (retry) {
+              retry.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              setTimeout(() => {
+                const r = retry.getBoundingClientRect();
+                setTargetRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+              }, 350);
+            }
+          }, 700);
+          return;
+        }
+        setTargetRect(null);
+      } else {
+        setTargetRect(null);
+      }
+    }, 350);
+  }, [current.selector, navigateTo, isMobile, setMobileMenuOpen]);
 
   useEffect(() => {
     if (open) locate();

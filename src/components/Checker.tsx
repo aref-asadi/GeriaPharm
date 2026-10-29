@@ -583,7 +583,7 @@ export function Checker({
 
         {/* MODULE 1: Local Edge AI CDSS Decision Support Panel */}
           <div data-tour="ai-cdss" className="edge-ai-cdss-panel mb-6 w-full min-w-0 p-6 rounded-[36px] bg-white dark:bg-[#101722] border border-indigo-100 dark:border-indigo-900/50 shadow-xl space-y-6">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
+            <div data-tour="mobile-ai-cdss" className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="w-10 h-10 shrink-0 rounded-2xl bg-indigo-500/15 text-[#4541fe] flex items-center justify-center">
                   <BrainCircuit size={22} />
